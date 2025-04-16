@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -12,24 +12,24 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
-import { useForm } from '../../components/hook/useForm'
-import { useDispatch } from 'react-redux'
-import { loginThunk } from '../../services/auth'
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilLockLocked, cilUser } from "@coreui/icons";
+import { useForm } from "../../components/hook/useForm";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../services/auth";
 
 const Login = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { form, onChange } = useForm()
+  const { form, onChange } = useForm();
 
   async function onLogin(e) {
-    e.preventDefault()
+    e.preventDefault();
 
-    const response = dispatch(loginThunk(form))
-    if (response) navigate('/')
+    const response = dispatch(loginThunk(form));
+    if (response) navigate("/");
   }
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -41,7 +41,9 @@ const Login = () => {
                 <CCardBody>
                   <CForm onSubmit={onLogin}>
                     <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
+                    <p className="text-body-secondary">
+                      Sign In to your account
+                    </p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
@@ -50,8 +52,8 @@ const Login = () => {
                         placeholder="Username"
                         autoComplete="username"
                         onChange={onChange}
-                        value={form.username || ''}
-                        name={'username'}
+                        value={form.username || ""}
+                        name={"username"}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -63,8 +65,8 @@ const Login = () => {
                         placeholder="Password"
                         autoComplete="current-password"
                         onChange={onChange}
-                        value={form.password || ''}
-                        name={'password'}
+                        value={form.password || ""}
+                        name={"password"}
                       />
                     </CInputGroup>
                     <CRow>
@@ -82,16 +84,25 @@ const Login = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
+              <CCard
+                className="text-white bg-primary py-5"
+                style={{ width: "44%" }}
+              >
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
                     </p>
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
+                      <CButton
+                        color="primary"
+                        className="mt-3"
+                        active
+                        tabIndex={-1}
+                      >
                         Register Now!
                       </CButton>
                     </Link>
@@ -103,7 +114,7 @@ const Login = () => {
         </CRow>
       </CContainer>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

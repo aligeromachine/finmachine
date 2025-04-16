@@ -1,135 +1,150 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { apiClient } from '../utils/requests'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiClient } from "../utils/requests";
 
 const initialState = {
   token: null,
-  loading: 'empty',
-}
+  loading: "empty",
+};
 
-export const loginThunk = createAsyncThunk('dataAuth/loginThunk', async (data) => {
-  const response = await apiClient.post('/auth/login/', data)
+export const loginThunk = createAsyncThunk(
+  "dataAuth/loginThunk",
+  async (data) => {
+    const response = await apiClient.post("/auth/login/", data);
 
-  if (!response.token) return Promise.reject(response.message)
+    if (!response.token) return Promise.reject(response.message);
 
-  localStorage.setItem('refreshToken', response.token.access)
-  localStorage.setItem('accessToken', response.token.refresh)
+    localStorage.setItem("refreshToken", response.token.access);
+    localStorage.setItem("accessToken", response.token.refresh);
 
-  return response.token
-})
+    return response.token;
+  },
+);
 
-export const refreshThunk = createAsyncThunk('dataAuth/refreshThunk', async () => {
-  const response = await apiClient.post('/auth/protected/', {
-    access: localStorage.getItem('accessToken'),
-  })
+export const refreshThunk = createAsyncThunk(
+  "dataAuth/refreshThunk",
+  async () => {
+    const response = await apiClient.post("/auth/protected/", {
+      access: localStorage.getItem("accessToken"),
+    });
 
-  if (!response.token) {
-    if (response.message === 'Invalid token') {
-      return Promise.reject(response.message)
+    if (!response.token) {
+      if (response.message === "Invalid token") {
+        return Promise.reject(response.message);
+      }
+
+      if (response.message === "Token expired") {
+        const response = await apiClient.post("/auth/refresh/", {
+          refresh: localStorage.getItem("refreshToken"),
+        });
+        if (!response.token) return Promise.reject(response.message);
+
+        return response.token;
+      }
     }
 
-    if (response.message === 'Token expired') {
-      const response = await apiClient.post('/auth/refresh/', {
-        refresh: localStorage.getItem('refreshToken'),
-      })
-      if (!response.token) return Promise.reject(response.message)
+    return response.token;
+  },
+);
 
-      return response.token
-    }
-  }
+export const registerThunk = createAsyncThunk(
+  "dataAuth/registerThunk",
+  async (data) => {
+    const response = await apiClient.post("/auth/register/", data);
 
-  return response.token
-})
+    if (!response.token) return Promise.reject(response.message);
 
-export const registerThunk = createAsyncThunk('dataAuth/registerThunk', async (data) => {
-  const response = await apiClient.post('/auth/register/', data)
+    return response.user_id;
+  },
+);
 
-  if (!response.token) return Promise.reject(response.message)
+export const logoutThunk = createAsyncThunk(
+  "dataAuth/logoutThunk",
+  async () => {
+    const response = await apiClient.post("/auth/register/", {
+      refresh: localStorage.getItem("refreshToken"),
+    });
 
-  return response.user_id
-})
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
 
-export const logoutThunk = createAsyncThunk('dataAuth/logoutThunk', async () => {
-  const response = await apiClient.post('/auth/register/', {
-    refresh: localStorage.getItem('refreshToken'),
-  })
+    return response;
+  },
+);
 
-  localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
+export const changeThunk = createAsyncThunk(
+  "dataAuth/changeThunk",
+  async (data) => {
+    const response = await apiClient.post("/auth/change/", data);
 
-  return response
-})
+    if (!response.token) return Promise.reject(response.message);
 
-export const changeThunk = createAsyncThunk('dataAuth/changeThunk', async (data) => {
-  const response = await apiClient.post('/auth/change/', data)
-
-  if (!response.token) return Promise.reject(response.message)
-
-  return response
-})
+    return response;
+  },
+);
 
 export const dataAuth = createSlice({
-  name: 'dataAuth',
+  name: "dataAuth",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
 
       .addCase(loginThunk.pending, (state) => {
-        state.loading = 'loading'
-        state.token = null
+        state.loading = "loading";
+        state.token = null;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
-        state.loading = 'idle'
-        state.token = action.payload.access
+        state.loading = "idle";
+        state.token = action.payload.access;
       })
       .addCase(loginThunk.rejected, (state) => {
-        state.loading = 'failed'
+        state.loading = "failed";
       })
 
       .addCase(refreshThunk.pending, (state) => {
-        state.loading = 'loading'
-        state.token = null
+        state.loading = "loading";
+        state.token = null;
       })
       .addCase(refreshThunk.fulfilled, (state, action) => {
-        state.loading = 'idle'
-        state.token = action.payload.access
+        state.loading = "idle";
+        state.token = action.payload.access;
       })
       .addCase(refreshThunk.rejected, (state) => {
-        state.loading = 'failed'
+        state.loading = "failed";
       })
 
       .addCase(registerThunk.pending, (state) => {
-        state.loading = 'loading'
-        state.token = null
+        state.loading = "loading";
+        state.token = null;
       })
       .addCase(registerThunk.fulfilled, (state) => {
-        state.loading = 'idle'
+        state.loading = "idle";
       })
       .addCase(registerThunk.rejected, (state) => {
-        state.loading = 'failed'
+        state.loading = "failed";
       })
 
       .addCase(logoutThunk.pending, (state) => {
-        state.loading = 'loading'
-        state.token = null
+        state.loading = "loading";
+        state.token = null;
       })
       .addCase(logoutThunk.fulfilled, (state) => {
-        state.loading = 'idle'
+        state.loading = "idle";
       })
       .addCase(logoutThunk.rejected, (state) => {
-        state.loading = 'failed'
+        state.loading = "failed";
       })
 
       .addCase(changeThunk.pending, (state) => {
-        state.loading = 'loading'
+        state.loading = "loading";
       })
       .addCase(changeThunk.fulfilled, (state) => {
-        state.loading = 'idle'
+        state.loading = "idle";
       })
       .addCase(changeThunk.rejected, (state) => {
-        state.loading = 'failed'
-      })
+        state.loading = "failed";
+      });
   },
-})
+});
 
-export default dataAuth.reducer
+export default dataAuth.reducer;

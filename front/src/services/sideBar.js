@@ -1,26 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   sidebarShow: true,
   sidebarUnfoldable: false,
-  theme: 'light',
-}
+  theme: "light",
+};
 
 const sideBar = createSlice({
-  name: 'sideBar',
+  name: "sideBar",
   initialState,
   reducers: {
     changeSideShow: (state, action) => {
-      state.sidebarShow = action.payload
+      state.sidebarShow = action.payload;
     },
     changeSideUnfo: (state, action) => {
-      state.sidebarUnfoldable = action.payload
+      state.sidebarUnfoldable = action.payload;
     },
     changeTheme: (state, action) => {
-      state.theme = action.payload
+      state.theme = action.payload;
     },
   },
-})
+});
 
-export const { changeSideShow, changeSideUnfo, changeTheme } = sideBar.actions
-export default sideBar.reducer
+export const { changeSideShow, changeSideUnfo, changeTheme } = sideBar.actions;
+export default sideBar.reducer;

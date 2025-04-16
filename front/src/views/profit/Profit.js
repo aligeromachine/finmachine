@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   CCard,
   CCardBody,
@@ -10,40 +10,40 @@ import {
   CTabList,
   CTabPanel,
   CTabs,
-} from '@coreui/react'
-import { useEffect } from 'react'
-import BasicTable from '../../components/table/BasicTable'
-import { useSelector, useDispatch } from 'react-redux'
-import { getBuysThunk } from '../../services/dataBuys'
+} from "@coreui/react";
+import { useEffect } from "react";
+import BasicTable from "../../components/table/BasicTable";
+import { useSelector, useDispatch } from "react-redux";
+import { getBuysThunk } from "../../services/dataBuys";
 
 const columns = [
   {
-    accessorKey: 'name', // Accessor key for the "name" field from data object
-    header: 'Name', // Column header
+    accessorKey: "name", // Accessor key for the "name" field from data object
+    header: "Name", // Column header
     size: 100,
   },
   {
-    accessorKey: 'category',
-    header: 'Category',
+    accessorKey: "category",
+    header: "Category",
   },
   {
-    accessorKey: 'price',
-    header: 'Price',
+    accessorKey: "price",
+    header: "Price",
     cell: (info) => `$${info.getValue().toFixed(2)}`, // Format price as currency
   },
   {
-    accessorKey: 'inStock',
-    header: 'In Stock',
+    accessorKey: "inStock",
+    header: "In Stock",
   },
-]
+];
 
 const DataProfit = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getBuysThunk())
-  }, [dispatch])
+    dispatch(getBuysThunk());
+  }, [dispatch]);
 
-  const { buys } = useSelector((store) => store.dataBuys)
+  const { buys } = useSelector((store) => store.dataBuys);
 
   return (
     <CRow>
@@ -71,7 +71,7 @@ const DataProfit = () => {
         </CCard>
       </CCol>
     </CRow>
-  )
-}
+  );
+};
 
-export default DataProfit
+export default DataProfit;

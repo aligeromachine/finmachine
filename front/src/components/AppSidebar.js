@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   CCloseButton,
@@ -8,17 +8,20 @@ import {
   CSidebarHeader,
   CSidebarToggler,
   CSidebarBrand,
-} from '@coreui/react'
+} from "@coreui/react";
 
-import { AppSidebarNav } from './AppSidebarNav'
-import { changeSideShow, changeSideUnfo } from '../services/sideBar'
+import { AppSidebarNav } from "./AppSidebarNav";
+import { changeSideShow, changeSideUnfo } from "../services/sideBar";
 
 // sidebar nav config
-import navigation from '../_nav'
+import navigation from "../_nav";
 
 const AppSidebar = () => {
-  const dispatch = useDispatch()
-  const { sidebarShow, sidebarUnfoldable } = useSelector((state) => state.sideBar)
+  const dispatch = useDispatch();
+  const { sidebarShow, sidebarUnfoldable } = useSelector(
+    (state) => state.sideBar,
+  );
+  const image = import.meta.env.DEV ? "./chart.png" : "/static/chart.png";
 
   return (
     <CSidebar
@@ -28,21 +31,27 @@ const AppSidebar = () => {
       unfoldable={sidebarUnfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch(changeSideShow(visible))
+        dispatch(changeSideShow(visible));
       }}
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-          <img src="./chart.png" height={24} width={24} />
+          <img src={image} height={24} width={24} />
         </CSidebarBrand>
-        <CCloseButton className="d-lg-none" dark onClick={() => dispatch(changeSideShow(false))} />
+        <CCloseButton
+          className="d-lg-none"
+          dark
+          onClick={() => dispatch(changeSideShow(false))}
+        />
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
-        <CSidebarToggler onClick={() => dispatch(changeSideUnfo(!sidebarUnfoldable))} />
+        <CSidebarToggler
+          onClick={() => dispatch(changeSideUnfo(!sidebarUnfoldable))}
+        />
       </CSidebarFooter>
     </CSidebar>
-  )
-}
+  );
+};
 
-export default React.memo(AppSidebar)
+export default React.memo(AppSidebar);

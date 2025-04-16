@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit'
-import sideBar from './sideBar'
-import dataBuys from './dataBuys'
-import dataAuth from './auth'
+import { configureStore } from "@reduxjs/toolkit";
+import sideBar from "./sideBar";
+import dataBuys from "./dataBuys";
+import dataAuth from "./auth";
 
 const store = configureStore({
   reducer: {
@@ -9,6 +9,6 @@ const store = configureStore({
     dataBuys,
     dataAuth,
   },
-})
+});
 
-export default store
+export default store;
