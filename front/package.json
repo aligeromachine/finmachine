@@ -1,6 +1,5 @@
 {
   "name": "money",
-  "version": "0.0.1",
   "description": "Money - cash expense accounting program",
   "homepage": ".",
   "scripts": {
