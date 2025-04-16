@@ -21,10 +21,24 @@ import {
   cilUser,
 } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { logoutThunk } from "../../services/auth";
 
 import avatar8 from "../../assets/images/avatars/8.jpg";
 
 const AppHeaderDropdown = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  async function onLogout(e) {
+    e.preventDefault();
+
+    const response = dispatch(logoutThunk());
+    if (response) navigate("/login");
+  }
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle
@@ -92,9 +106,9 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={onLogout}>
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          Logout
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

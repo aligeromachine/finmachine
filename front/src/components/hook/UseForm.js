@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-export const useForm = () => {
+export const UseForm = () => {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
 

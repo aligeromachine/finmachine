@@ -16,12 +16,13 @@ import { changeSideShow, changeSideUnfo } from "../services/sideBar";
 // sidebar nav config
 import navigation from "../_nav";
 
+import imageIco from "../assets/brand/chart.png";
+
 const AppSidebar = () => {
   const dispatch = useDispatch();
   const { sidebarShow, sidebarUnfoldable } = useSelector(
     (state) => state.sideBar,
   );
-  const image = import.meta.env.DEV ? "./chart.png" : "/static/chart.png";
 
   return (
     <CSidebar
@@ -36,7 +37,7 @@ const AppSidebar = () => {
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-          <img src={image} height={24} width={24} />
+          <img src={imageIco} height={24} width={24} />
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"

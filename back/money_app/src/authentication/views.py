@@ -8,13 +8,7 @@ from authentication.model import AuthLogin, AuthRefresh, AuthAccess, AuthRegiste
 
 @check_post
 def custom_logout(request: HttpRequest):
-    request.session.flush()  # Clears the session completely
-    response = redirect('login')
-    # Set headers to prevent caching of the logout page
-    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
-    response['Pragma'] = 'no-cache'
-    response['Expires'] = '0'
-    return response
+    return token_response(token={}, code=200)
 
 @check_post
 @parse_auth(AuthLogin)

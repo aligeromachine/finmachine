@@ -1,4 +1,5 @@
 import { API_URL } from "./const";
+import { getWithExpiry } from "./storage";
 
 export const apiClient = {
   get: async (endpoint) => {
@@ -7,7 +8,7 @@ export const apiClient = {
     return response.json();
   },
   post: async (endpoint, data) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getWithExpiry("accessToken");
     const response = await fetch(`${API_URL}${endpoint}`, {
       method: "POST",
       headers: {

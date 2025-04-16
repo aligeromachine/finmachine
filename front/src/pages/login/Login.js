@@ -15,7 +15,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
-import { useForm } from "../../components/hook/useForm";
+import { UseForm } from "../../components/hook/UseForm";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../../services/auth";
 
@@ -23,13 +23,12 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { form, onChange } = useForm();
+  const { form, onChange } = UseForm();
 
   async function onLogin(e) {
     e.preventDefault();
 
-    const response = dispatch(loginThunk(form));
-    if (response) navigate("/");
+    dispatch(loginThunk(form));
   }
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
