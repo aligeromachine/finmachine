@@ -6,11 +6,6 @@ def get_env(key: str, conv: bool = False):
     
     return os.environ.get(key)
 
-def create_log():
-    return {
-        "LEVEL":            get_env('LOG_LEVEL'),
-    }
-
 def create_connect():
     return {
         'NAME':             get_env('POSTGRES_NAME'),
@@ -18,6 +13,19 @@ def create_connect():
         'PASSWORD':         get_env('POSTGRES_PASSWORD'),
         'HOST':             get_env('POSTGRES_HOST'),
         'PORT':             get_env('POSTGRES_PORT'),
+    }
+
+def create_service():
+    return {
+        'DEBUG':            get_env('SERVICE_DEBUG', True),
+        'KEY':              get_env('SERVICE_KEY'),
+        'ALLOWED':          get_env('SERVICE_ALLOWED'),
+        'CORS':             get_env('SERVICE_CORS'),
+    }
+
+def create_log():
+    return {
+        "LEVEL":            get_env('LOG_LEVEL'),
     }
 
 def create_celery():
@@ -31,18 +39,19 @@ def create_money():
         'EXPIRED':          get_env('MONEY_EXPIRED'),
     }
 
-def create_service():
+def create_jwt():
     return {
-        'DEBUG':            get_env('SERVICE_DEBUG', True),
-        'KEY':              get_env('SERVICE_KEY'),
-        'ALLOWED':          get_env('SERVICE_ALLOWED'),
-        'CORS':             get_env('SERVICE_CORS'),
+        'SECRET_KEY':       get_env('JWT_SECRET_KEY'),
+        'ALGORITHM':        get_env('JWT_ALGORITHM'),
+        'ACCESS_LIFETIME':  get_env('JWT_ACCESS_LIFETIME'),
+        'REFRESH_LIFETIME': get_env('JWT_REFRESH_LIFETIME'),
     }
 
-ENV_APP = {
-    'LOG':                  create_log(),
+ENV_APP = {    
     'CONNECT':              create_connect(),
+    'SERVICE':              create_service(),
+    'LOG':                  create_log(),
     'CELERY':               create_celery(),
     'MONEY':                create_money(),
-    'SERVICE':              create_service(),
+    'AUTH':                 create_jwt(),
 }

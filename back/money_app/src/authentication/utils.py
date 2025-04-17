@@ -5,37 +5,33 @@ import jwt
 from datetime import datetime, timezone
 from pydantic import BaseModel
 from authentication.model import validate_dict
-from service.settings import (
-    JWT_ACCESS_TOKEN_LIFETIME, 
-    JWT_REFRESH_TOKEN_LIFETIME, 
-    JWT_SECRET_KEY, 
-    JWT_ALGORITHM)
+from authentication.config import ACCESS_LIFETIME, REFRESH_LIFETIME, ALGORITHM, SECRET_KEY
 
 def create_jwt_tokens(user_id: int):
     access_payload = {
         'user_id': user_id,
         'type': 'access',
-        'exp': datetime.now(timezone.utc) + JWT_ACCESS_TOKEN_LIFETIME,
+        'exp': datetime.now(timezone.utc) + ACCESS_LIFETIME,
         'iat': datetime.now(timezone.utc)
     }
 
     refresh_payload = {
         'user_id': user_id,
         'type': 'refresh',
-        'exp': datetime.now(timezone.utc) + JWT_REFRESH_TOKEN_LIFETIME,
+        'exp': datetime.now(timezone.utc) + REFRESH_LIFETIME,
         'iat': datetime.now(timezone.utc)
     }
     
     access_token = jwt.encode(
         access_payload,
-        JWT_SECRET_KEY,
-        algorithm=JWT_ALGORITHM
+        SECRET_KEY,
+        algorithm=ALGORITHM
     )
     
     refresh_token = jwt.encode(
         refresh_payload,
-        JWT_SECRET_KEY,
-        algorithm=JWT_ALGORITHM
+        SECRET_KEY,
+        algorithm=ALGORITHM
     )
     
     return {
@@ -49,8 +45,8 @@ def verify_jwt_token(token: str):
     try:
         payload = jwt.decode(
             token,
-            JWT_SECRET_KEY,
-            algorithms=[JWT_ALGORITHM]
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
         )        
     except jwt.ExpiredSignatureError:
         err = 'Invalid token'

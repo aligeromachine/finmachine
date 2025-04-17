@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from service.settings import JWT_ACCESS_TOKEN_LIFETIME, JWT_REFRESH_TOKEN_LIFETIME, JWT_ALGORITHM, JWT_SECRET_KEY
+from authentication.config import ACCESS_LIFETIME, REFRESH_LIFETIME, ALGORITHM, SECRET_KEY
 import jwt
 from datetime import datetime, timezone
 
@@ -9,27 +9,27 @@ def create_jwt_tokens(sender, instance, created, **kwargs):
         access_payload = {
             'user_id': instance.id,
             'type': 'access',
-            'exp': datetime.now(timezone.utc) + JWT_ACCESS_TOKEN_LIFETIME,
+            'exp': datetime.now(timezone.utc) + ACCESS_LIFETIME,
             'iat': datetime.now(timezone.utc)
         }
         
         refresh_payload = {
             'user_id': instance.id,
             'type': 'refresh',
-            'exp': datetime.now(timezone.utc) + JWT_REFRESH_TOKEN_LIFETIME,
+            'exp': datetime.now(timezone.utc) + REFRESH_LIFETIME,
             'iat': datetime.now(timezone.utc)
         }
         
         access_token = jwt.encode(
             access_payload,
-            JWT_SECRET_KEY,
-            algorithm=JWT_ALGORITHM
+            SECRET_KEY,
+            algorithm=ALGORITHM
         )
         
         refresh_token = jwt.encode(
             refresh_payload,
-            JWT_SECRET_KEY,
-            algorithm=JWT_ALGORITHM
+            SECRET_KEY,
+            algorithm=ALGORITHM
         )
         
         print(f'JWT Tokens for superuser {instance.username}:')
