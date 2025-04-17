@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { loadToken, setCredentials } from "../../services/auth";
+import { loadToken, setCredentials, refreshThunk } from "../../services/auth";
 import { Preloader } from "../preloader/Preloader";
 
 export const Token = () => {

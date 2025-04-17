@@ -1,3 +1,5 @@
+import { safeJsonParse } from "./func";
+
 export const setWithExpiry = (key, value, ttl) => {
   const now = new Date();
   const item = {
@@ -14,7 +16,13 @@ export const getWithExpiry = (key) => {
     return null;
   }
 
-  const item = JSON.parse(itemStr);
+  const result = safeJsonParse(itemStr);
+  if (!result.success) {
+    localStorage.removeItem(key);
+    return null;
+  }
+
+  const item = result.data;
   const now = new Date();
 
   if (now.getTime() > item.expiry) {
