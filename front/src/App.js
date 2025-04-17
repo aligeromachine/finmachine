@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CSpinner, useColorModes } from "@coreui/react";
 import { GuestGuard, AuthGuard } from "./components/auth/Protect";
+import { Token } from "./components/auth/Token";
 import "./scss/style.scss";
 
 // We use those styles to show code examples, you should remove them in your application.
@@ -48,6 +49,7 @@ const App = () => {
           </div>
         }
       >
+        <Token />
         <Routes>
           <Route
             exact

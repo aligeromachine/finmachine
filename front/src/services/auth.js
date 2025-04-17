@@ -80,12 +80,18 @@ export const changeThunk = createAsyncThunk(
   },
 );
 
+export const loadToken = () => {
+  const token = getWithExpiry("accessToken");
+  return token;
+};
+
 export const dataAuth = createSlice({
   name: "dataAuth",
   initialState,
   reducers: {
-    loadToken: (state) => {
-      state.token = getWithExpiry("access_token");
+    setCredentials: (state, action) => {
+      state.token = action.payload;
+      state.loading = "idle";
     },
   },
   extraReducers: (builder) => {
@@ -150,6 +156,6 @@ export const dataAuth = createSlice({
   },
 });
 
-export const { loadToken } = dataAuth.actions;
+export const { setCredentials } = dataAuth.actions;
 
 export default dataAuth.reducer;

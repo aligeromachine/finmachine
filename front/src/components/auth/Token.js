@@ -1,19 +1,19 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 
-import { refreshThunk } from "../../services/auth";
+import { loadToken, setCredentials } from "../../services/auth";
 import { Preloader } from "../preloader/Preloader";
 
 export const Token = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(refreshThunk());
+    const token = loadToken();
+    if (token) {
+      dispatch(setCredentials(token));
+    } else {
+      dispatch(refreshThunk());
+    }
   }, [dispatch]);
-
-  const user = useSelector((store) => store.dataAuth.loading) !== "idle";
-
-  return <Preloader isLoading={user} />;
 };
