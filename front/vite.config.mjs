@@ -2,10 +2,11 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
 import autoprefixer from "autoprefixer";
+import { execSync } from "child_process"; // Добавляем импорт
 
 export default defineConfig(() => {
   return {
-    base: "./",
+    base: "/static/",
     build: {
       outDir: "../back/data/static/",
     },
@@ -29,7 +30,22 @@ export default defineConfig(() => {
         },
       },
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      {
+        name: "execute-shell-script",
+        closeBundle() {
+          try {
+            console.log("Running post-build script...");
+            execSync("./copy_script.sh");
+            console.log("Post-build script completed successfully");
+          } catch (error) {
+            console.error("Error executing post-build script:", error);
+            process.exit(1);
+          }
+        },
+      },
+    ],
     resolve: {
       alias: [
         {
