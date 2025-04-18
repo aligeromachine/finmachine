@@ -1,24 +1,31 @@
 import { API_URL } from "./const";
 import { getWithExpiry } from "./storage";
 
+const createHeaders = (method) => {
+  const token = getWithExpiry("accessToken");
+  return {
+    method: method,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  };
+};
 export const apiClient = {
   get: async (endpoint) => {
-    const response = await fetch(`${API_URL}${endpoint}`);
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...createHeaders("GET"),
+    });
     if (!response.ok) throw new Error(response.statusText);
-    return response.json();
+    return await response.json();
   },
   post: async (endpoint, data) => {
-    const token = getWithExpiry("accessToken");
     const response = await fetch(`${API_URL}${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        ...(token ? { authorization: token } : {}),
-      },
+      ...createHeaders("POST"),
       body: JSON.stringify(data),
     });
     if (!response.ok) throw new Error(response.statusText);
-    return response.json();
+    return await response.json();
   },
   // Добавьте другие методы по необходимости
 };

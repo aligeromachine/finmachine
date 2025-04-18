@@ -1,4 +1,4 @@
-export function safeJsonParse(jsonString) {
+export const safeJsonParse = (jsonString) => {
   try {
     return {
       success: true,
@@ -10,4 +10,18 @@ export function safeJsonParse(jsonString) {
       error: error.message,
     };
   }
-}
+};
+
+export const isEmpty = (obj) => {
+  if (!obj) {
+    return true;
+  }
+  return Object.keys(obj).length === 0;
+};
+
+export const verifiedDict = () => {
+  const queryString = Object.entries(newErrors)
+    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+    .join("&");
+  return queryString;
+};

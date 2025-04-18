@@ -10,13 +10,13 @@ class JWTAuthenticationBackend:
     def authenticate(self, request: HttpRequest, token: str = None):
         if token is None:
             return None
-            
-        payload = verify_jwt_token(token)
-        if 'error' in payload:
+        
+        payload, _ = verify_jwt_token(token)
+        if not payload:
             return None
-            
+
         try:
-            user = User.objects.get(id=payload['user_id'])
+            user = User.objects.get(pk=payload['user_id'])
             return user
         except User.DoesNotExist:
             return None

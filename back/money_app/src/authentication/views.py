@@ -47,7 +47,7 @@ def refresh_token_view(request: HttpRequest, data: AuthRefresh):
 def register_view(request: HttpRequest, data: AuthRegister):
     
     if User.objects.filter(username=data.username).exists():
-        return token_response(msg='User alredy exist', code=402)
+        return token_response(msg='User already exist')
         
     user: AbstractUser = User.objects.create_user(
         username=data.username,
@@ -55,6 +55,6 @@ def register_view(request: HttpRequest, data: AuthRegister):
         email=data.email
     )
     if not user:
-        return token_response(msg='User canot create', code=403)
+        return token_response(msg='User canot create')
     
     return token_response(token={'user_id': user.pk})

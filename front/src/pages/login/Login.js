@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -21,14 +21,12 @@ import { loginThunk } from "../../services/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { form, onChange } = UseForm();
+  const { formData, onChange } = UseForm();
 
   async function onLogin(e) {
     e.preventDefault();
 
-    dispatch(loginThunk(form));
+    dispatch(loginThunk(formData));
   }
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -51,7 +49,7 @@ const Login = () => {
                         placeholder="Username"
                         autoComplete="username"
                         onChange={onChange}
-                        value={form.username || ""}
+                        value={formData.username || ""}
                         name={"username"}
                       />
                     </CInputGroup>
@@ -64,7 +62,7 @@ const Login = () => {
                         placeholder="Password"
                         autoComplete="current-password"
                         onChange={onChange}
-                        value={form.password || ""}
+                        value={formData.password || ""}
                         name={"password"}
                       />
                     </CInputGroup>

@@ -1,6 +1,10 @@
 from django.http import JsonResponse, HttpRequest
+
+from authentication.middleware import jwt_auth_required
 # from api.back.v1.main import task_response
 
+
+@jwt_auth_required
 def content_respo(request: HttpRequest, *args, **kwargs):
 
     ls: list = [

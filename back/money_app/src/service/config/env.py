@@ -42,7 +42,7 @@ def create_money():
 def create_jwt():
     return {
         'SECRET_KEY':       get_env('JWT_SECRET_KEY'),
-        'ALGORITHM':        get_env('JWT_ALGORITHM'),
+        'ALGORITHM_JWT':    get_env('JWT_ALGORITHM'),
         'ACCESS_LIFETIME':  get_env('JWT_ACCESS_LIFETIME'),
         'REFRESH_LIFETIME': get_env('JWT_REFRESH_LIFETIME'),
     }

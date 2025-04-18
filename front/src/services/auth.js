@@ -6,6 +6,14 @@ import { setWithExpiry, getWithExpiry, removeItem } from "../utils/storage";
 const initialState = {
   token: null,
   loading: "empty",
+  register: false,
+  registerErr: "",
+  registerLoading: "empty",
+};
+
+export const loadToken = () => {
+  const token = getWithExpiry("accessToken");
+  return token;
 };
 
 export const loginThunk = createAsyncThunk(
@@ -44,17 +52,6 @@ export const refreshThunk = createAsyncThunk(
   },
 );
 
-export const registerThunk = createAsyncThunk(
-  "dataAuth/registerThunk",
-  async (data) => {
-    const response = await apiClient.post("/auth/register/", data);
-
-    if (!response.token) return Promise.reject(response.message);
-
-    return response.user_id;
-  },
-);
-
 export const logoutThunk = createAsyncThunk(
   "dataAuth/logoutThunk",
   async () => {
@@ -80,10 +77,15 @@ export const changeThunk = createAsyncThunk(
   },
 );
 
-export const loadToken = () => {
-  const token = getWithExpiry("accessToken");
-  return token;
-};
+export const registerThunk = createAsyncThunk(
+  "dataAuth/registerThunk",
+  async (data, { rejectWithValue }) => {
+    const response = await apiClient.post("/auth/register/", data);
+    if (!response.token) return rejectWithValue(response.message);
+
+    return true;
+  },
+);
 
 export const dataAuth = createSlice({
   name: "dataAuth",
@@ -92,6 +94,11 @@ export const dataAuth = createSlice({
     setCredentials: (state, action) => {
       state.token = action.payload;
       state.loading = "idle";
+    },
+    setRegister: (state) => {
+      state.registerLoading = "empty";
+      state.register = false;
+      state.registerErr = "";
     },
   },
   extraReducers: (builder) => {
@@ -121,17 +128,6 @@ export const dataAuth = createSlice({
         state.loading = "failed";
       })
 
-      .addCase(registerThunk.pending, (state) => {
-        state.loading = "loading";
-        state.token = null;
-      })
-      .addCase(registerThunk.fulfilled, (state) => {
-        state.loading = "idle";
-      })
-      .addCase(registerThunk.rejected, (state) => {
-        state.loading = "failed";
-      })
-
       .addCase(logoutThunk.pending, (state) => {
         state.loading = "loading";
         state.token = null;
@@ -152,10 +148,24 @@ export const dataAuth = createSlice({
       })
       .addCase(changeThunk.rejected, (state) => {
         state.loading = "failed";
+      })
+
+      .addCase(registerThunk.pending, (state) => {
+        state.registerLoading = "loading";
+        state.register = false;
+        state.registerErr = "";
+      })
+      .addCase(registerThunk.fulfilled, (state, action) => {
+        state.registerLoading = "idle";
+        state.register = action.payload;
+      })
+      .addCase(registerThunk.rejected, (state, action) => {
+        state.registerLoading = "failed";
+        state.registerErr = action.payload;
       });
   },
 });
 
-export const { setCredentials } = dataAuth.actions;
+export const { setCredentials, setRegister } = dataAuth.actions;
 
 export default dataAuth.reducer;
