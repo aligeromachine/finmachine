@@ -1,0 +1,16 @@
+# Игнорируемые правила
+ignore = ["E501", "F401"]
+
+# Максимальная длина строки
+line-length = 150
+
+# Исключаемые файлы/папки
+exclude = [
+    ".git",
+    "__pycache__",
+    "migrations",
+    "venv",
+    "config",
+    "celery.py",
+    "settings.py"
+]

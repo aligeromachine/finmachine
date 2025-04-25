@@ -1,0 +1,82 @@
+services:
+
+  db_app:
+    image: postgres
+    container_name: db_app
+    restart: always        
+    env_file:
+      - ./env/db_app.env
+    volumes:
+      - /home/money_postgres:/var/lib/postgresql/data/
+
+  db_view:
+    image: dpage/pgadmin4
+    container_name: db_view
+    restart: always
+    env_file:
+      - ./env/db_view.env
+    volumes:
+      - /home/money_pgadmin:/var/lib/pgadmin # sudo chown -R 5050:5050 pgadmin
+
+  redis_money:
+    image: redis
+    restart: always
+    container_name: redis_money
+
+  money_nginx:
+    image: nginx:latest
+    container_name: money_nginx
+    restart: always
+    command: ["nginx", "-g", "daemon off;"]
+    ports: [ "443:443", "5050:5050", "5555:5555" ]
+    volumes:
+      - ./data:/home/data
+      - ./money_nginx/ssl.key:/home/ssl.key
+      - ./money_nginx/ssl.pem:/home/ssl.pem
+      - ./money_nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./money_nginx/money.conf:/etc/nginx/conf.d/money.conf
+      - ./money_nginx/pgagmin.conf:/etc/nginx/conf.d/pgagmin.conf
+      - ./money_nginx/flower.conf:/etc/nginx/conf.d/flower.conf
+      - ./money_nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  money_app:
+    image: back-money_app
+    # build: money_app
+    container_name: money_app
+    # restart: always
+    command: bash -c "gunicorn --bind 0.0.0.0:8000 --workers 4 service.wsgi:application"
+    volumes:
+      - ./data:/home/data
+      - ./money_app/src:/home/src
+    env_file:
+      - ./env/money.env
+
+  celery_app:
+    image: back-money_app
+    container_name: celery_app
+    command: bash -c "celery -A service worker -l info" 
+    volumes:
+      - ./data:/home/data
+      - ./money_app/src:/home/src
+    env_file:
+      - ./env/money.env
+  
+  celery_beat:
+    image: back-money_app
+    container_name: celery_beat_app
+    command: bash -c "celery -A service beat -l info"
+    volumes:
+      - ./data:/home/data
+      - ./money_app/src:/home/src
+    env_file:
+      - ./env/money.env
+
+  flower_app:
+    image: back-money_app
+    container_name: flower_app
+    command: bash -c "celery -A service --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1 flower --port=5555 --persistent=True --basic_auth=user:password"
+    volumes:
+      - ./data:/home/data
+      - ./money_app/src:/home/src
+    env_file:
+      - ./env/money.env

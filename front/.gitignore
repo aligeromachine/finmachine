@@ -1,0 +1,58 @@
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Зависимости
+/node_modules
+/.pnp
+.pnp.js
+
+# Тестирование
+/coverage
+
+# Продакшн-билд
+/build
+/dist
+dist-ssr
+/.next
+/out
+
+# Кэш
+/.cache
+
+# Логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs
+*.log
+
+# Переменные окружения
+.env*.local
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Настройки ОС
+.DS_Store
+Thumbs.db
+
+# Vite специфичные файлы
+*.local
