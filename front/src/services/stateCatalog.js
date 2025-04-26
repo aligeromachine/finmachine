@@ -12,7 +12,7 @@ const initialState = {
 export const getCatalogThunk = createAsyncThunk(
   "stateCatalog/getCatalogThunk",
   async (data) => {
-    const response = await apiClient.post("/profit/table/", data);
+    const response = await apiClient.post("/catalog/table/", data);
     return response;
   },
 );

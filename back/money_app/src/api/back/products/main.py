@@ -10,7 +10,7 @@ from api.back.products.query import SQL_PRODUCTS, PRODUCTS_TOTAL
 logger = logging.getLogger(__name__)
 
 @draw_response
-def update_profit_data(item: ProductsMessage):
+def update_products_data(item: ProductsMessage):
     params = [item.user_id, item.offset * item.limit, item.limit]
     ls = []
     for it in Products.objects.raw(raw_query=SQL_PRODUCTS, params=params):
@@ -33,7 +33,7 @@ def update_profit_data(item: ProductsMessage):
 def invoke_response(request: HttpRequest, item: ProductsMessage):
     respo = {"data": "err", "message": "undefinded"}
 
-    if item.command == "update_profit_data":
-        respo = update_profit_data(item=item)
+    if item.command == "update_products_data":
+        respo = update_products_data(item=item)
 
     return respo

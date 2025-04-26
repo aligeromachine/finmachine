@@ -12,7 +12,7 @@ const initialState = {
 export const getProductsThunk = createAsyncThunk(
   "stateProducts/getProductsThunk",
   async (data) => {
-    const response = await apiClient.post("/profit/table/", data);
+    const response = await apiClient.post("/products/table/", data);
     return response;
   },
 );

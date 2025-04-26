@@ -12,10 +12,10 @@ import { productsReducer } from "./stateProducts";
 
 const store = configureStore({
   reducer: {
-    barReducer,
-    buysReducer,
     tokenReducer,
     registerReducer,
+    barReducer,
+    buysReducer,
     cardsReducer,
     shopReducer,
     sourceReducer,

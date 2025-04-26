@@ -125,3 +125,47 @@ export const columnsSource = [
     header: "Action",
   },
 ];
+
+export const columnsProducts = [
+  {
+    accessorKey: "id",
+    header: "Id",
+    size: 100,
+  },
+  {
+    accessorKey: "created",
+    header: "Created",
+  },
+  {
+    accessorKey: "cats",
+    header: "Catalog",
+  },
+  {
+    accessorKey: "title",
+    header: "Title",
+  },
+  {
+    accessorKey: null,
+    header: "Action",
+  },
+];
+
+export const columnsCatalog = [
+  {
+    accessorKey: "id",
+    header: "Id",
+    size: 100,
+  },
+  {
+    accessorKey: "created",
+    header: "Created",
+  },
+  {
+    accessorKey: "title",
+    header: "Title",
+  },
+  {
+    accessorKey: null,
+    header: "Action",
+  },
+];

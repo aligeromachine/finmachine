@@ -14,18 +14,22 @@ import {
 import { useEffect } from "react";
 import BasicTable from "../../components/table/BasicTable";
 import { useSelector, useDispatch } from "react-redux";
-import { getBuysThunk } from "../../services/stateBuys";
 import { create_params } from "../../utils/func";
-import { columnsBuy } from "../../utils/headers";
+import { getProductsThunk } from "../../services/stateProducts";
+import { getCatalogThunk } from "../../services/stateCatalog";
+import { columnsProducts, columnsCatalog } from "../../utils/headers";
 
 const DataProducts = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const data = create_params("update_money_data", 0, 100);
-    dispatch(getBuysThunk(data));
+    const dataP = create_params("update_products_data", 0, 100);
+    dispatch(getProductsThunk(dataP));
+    const dataS = create_params("update_catalog_data", 0, 100);
+    dispatch(getCatalogThunk(dataS));
   }, [dispatch]);
 
-  const { draw } = useSelector((store) => store.buysReducer);
+  const drawProd = useSelector((store) => store.productsReducer.draw);
+  const drawCat = useSelector((store) => store.catalogReducer.draw);
 
   return (
     <CRow>
@@ -42,10 +46,10 @@ const DataProducts = () => {
               </CTabList>
               <CTabContent>
                 <CTabPanel className="p-3" itemKey="product">
-                  <BasicTable data={draw} columns={columnsBuy} />
+                  <BasicTable data={drawProd} columns={columnsProducts} />
                 </CTabPanel>
                 <CTabPanel className="p-3" itemKey="catalog">
-                  <div>TEST</div>
+                  <BasicTable data={drawCat} columns={columnsCatalog} />
                 </CTabPanel>
               </CTabContent>
             </CTabs>
