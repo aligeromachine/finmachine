@@ -1,12 +1,24 @@
 import React from "react";
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
-import { useEffect } from "react";
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CButton,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
+} from "@coreui/react";
+import { useEffect, useState } from "react";
 import BasicTable from "../../components/table/BasicTable";
 import { useSelector, useDispatch } from "react-redux";
 import { getShopThunk } from "../../services/stateShop";
 import { create_params } from "../../utils/func";
 import { columnsShop } from "../../utils/headers";
-
+import { UseModal } from "../../components/hook/UseModal";
 const DataShop = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,6 +36,7 @@ const DataShop = () => {
             <strong>DataShop</strong>
           </CCardHeader>
           <CCardBody>
+            <UseModal title={"Add Shop"} />
             <BasicTable data={draw} columns={columnsShop} />
           </CCardBody>
         </CCard>
