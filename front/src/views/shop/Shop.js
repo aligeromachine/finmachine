@@ -18,7 +18,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getShopThunk } from "../../services/stateShop";
 import { create_params } from "../../utils/func";
 import { columnsShop } from "../../utils/headers";
-import { UseModal } from "../../components/hook/UseModal";
+import { ShopModal } from "../../components/modal/shop/Canvas";
+
 const DataShop = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,7 +37,7 @@ const DataShop = () => {
             <strong>DataShop</strong>
           </CCardHeader>
           <CCardBody>
-            <UseModal title={"Add Shop"} />
+            <ShopModal title={"Add Shop"} />
             <BasicTable data={draw} columns={columnsShop} />
           </CCardBody>
         </CCard>
