@@ -1,7 +1,7 @@
 from django.urls import path
 from api.view.func.views import (
-    current_time, 
-    current_date, 
+    current_time,
+    current_date,
     week_range,
     month_range,
     day_range)

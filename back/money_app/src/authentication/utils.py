@@ -42,7 +42,7 @@ def verify_jwt_token(token: str):
             token,
             SECRET_KEY,
             algorithms=[ALGORITHM]
-        )        
+        )
     except jwt.ExpiredSignatureError:
         err = 'Invalid token'
     except jwt.InvalidTokenError:

@@ -2,18 +2,15 @@ import logging
 import os
 import re
 from money.libs.ext_utils import (
-    AbsPath, 
+    AbsPath,
     CreateDirectory,
-    DaysDeltaNow,
-    RandomName)
+    DaysDeltaNow)
 from service.settings import MEDIA_ROOT
 from datetime import datetime, timedelta
-import time
 from money.libs.ext_c import (
-    CONST, 
+    CONST,
     PathNames)
 from django.db import models
-from functools import wraps
 from django.contrib.auth.models import User
 
 logger = logging.getLogger(__name__)
@@ -100,7 +97,7 @@ def date_to_tuple_dashboard(dt: str, context: dict):
     end = context["end"]
 
     if dt == CONST.empty:
-        return begin, end 
+        return begin, end
 
     dt_arr = dt.split('to')
 

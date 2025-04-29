@@ -19,7 +19,7 @@ def current_date(request: HttpRequest, *args, **kwargs):
 def week_range(request: HttpRequest, *args, **kwargs):
     return JsonResponse(context_range_week())
 
-def month_range(request: HttpRequest, *args, **kwargs):    
+def month_range(request: HttpRequest, *args, **kwargs):
     return JsonResponse(context_range_month())
 
 def day_range(request: HttpRequest, *args, **kwargs):

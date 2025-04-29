@@ -1,22 +1,22 @@
 SQL_CATALOG = """
-SELECT 
-    catalog.id, 
-    catalog.created, 
+SELECT
+    catalog.id,
+    catalog.created,
     catalog.title
-FROM 
+FROM
     content.catalog catalog
-WHERE 
+WHERE
     catalog.user_id = %s
-ORDER BY 
+ORDER BY
     catalog.id desc
 OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
 """
 CATALOG_TOTAL = """
-SELECT 
+SELECT
     1 id,
     count(1) c
-FROM 
+FROM
     content.catalog catalog
-WHERE 
+WHERE
     catalog.user_id = %s
 """

@@ -1,33 +1,33 @@
 SQL_BUY = """
-SELECT 
-    buy.id, 
-    buy.created, 
-    buy.title, 
-    buy.amount,  
-    shop.title shop, 
+SELECT
+    buy.id,
+    buy.created,
+    buy.title,
+    buy.amount,
+    shop.title shop,
     prod.title prod
-FROM 
+FROM
     content.buy buy
-JOIN 
+JOIN
     content.shop shop on buy.shop_id = shop.id
-JOIN 
+JOIN
     content.products prod on buy.products_id = prod.id
-WHERE 
+WHERE
     buy.user_id = %s
-ORDER BY 
+ORDER BY
     buy.id desc
 OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
 """
 BUY_TOTAL = """
-SELECT 
+SELECT
     1 id,
     count(1) c
-FROM 
+FROM
     content.buy buy
-JOIN 
+JOIN
     content.shop shop on buy.shop_id = shop.id
-JOIN 
+JOIN
     content.products prod on buy.products_id = prod.id
-WHERE 
+WHERE
     buy.user_id = %s
 """

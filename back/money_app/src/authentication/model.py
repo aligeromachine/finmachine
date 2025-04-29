@@ -4,7 +4,7 @@ from pydantic import BaseModel
 logger = logging.getLogger(__name__)
 
 class AuthLogin(BaseModel):
-    username: str 
+    username: str
     password: str
 
 class AuthRegister(AuthLogin):

@@ -1,24 +1,24 @@
 SQL_CARDS = """
-SELECT 
-    cards.id, 
-    cards.created, 
-    cards.title, 
-    cards.amount, 
+SELECT
+    cards.id,
+    cards.created,
+    cards.title,
+    cards.amount,
     cards.number
-FROM 
+FROM
     content.cards cards
-WHERE 
+WHERE
     cards.user_id = %s
-ORDER BY 
+ORDER BY
     cards.id desc
 OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
 """
 CARDS_TOTAL = """
-SELECT 
+SELECT
     1 id,
     count(1) c
-FROM 
+FROM
     content.cards cards
-WHERE 
+WHERE
     cards.user_id = %s
 """

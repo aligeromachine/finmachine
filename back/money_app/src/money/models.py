@@ -2,10 +2,10 @@ from django.db import models
 from django.conf import settings as st
 
 class TimeStampedMixin(models.Model):
-    created     = models.DateTimeField(auto_now_add=True)
-    title       = models.CharField(max_length=250)
-    state_id    = models.BigIntegerField(default=0)
-    user        = models.ForeignKey(
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=250)
+    state_id = models.BigIntegerField(default=0)
+    user = models.ForeignKey(
         st.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
@@ -29,7 +29,7 @@ class AmountMixin(TimeStampedMixin):
         abstract = True
 
 class Shop(TimeStampedMixin):
-    address     = models.CharField(max_length=250)
+    address = models.CharField(max_length=250)
 
     class Meta:
         db_table = "content\".\"shop"
@@ -49,7 +49,7 @@ class Catalog(TimeStampedMixin):
         verbose_name_plural = "Catalog"
 
 class Cards(AmountMixin):
-    number      = models.CharField(max_length=250)
+    number = models.CharField(max_length=250)
 
     class Meta:
         db_table = "content\".\"cards"
@@ -57,7 +57,7 @@ class Cards(AmountMixin):
         verbose_name_plural = "Cards"
 
 class Products(TimeStampedMixin):
-    catalog_id  = models.BigIntegerField(default=0)
+    catalog_id = models.BigIntegerField(default=0)
 
     class Meta:
         db_table = "content\".\"products"
@@ -65,7 +65,7 @@ class Products(TimeStampedMixin):
         verbose_name_plural = "Products"
 
 class Profit(AmountMixin):
-    source_id   = models.BigIntegerField(default=0)
+    source_id = models.BigIntegerField(default=0)
 
     class Meta:
         db_table = "content\".\"profit"
@@ -73,7 +73,7 @@ class Profit(AmountMixin):
         verbose_name_plural = "Profit"
 
 class Buy(AmountMixin):
-    shop_id    = models.BigIntegerField(default=0)
+    shop_id = models.BigIntegerField(default=0)
     products_id = models.BigIntegerField(default=0)
 
     class Meta:
@@ -82,7 +82,7 @@ class Buy(AmountMixin):
         verbose_name_plural = "Buy"
 
 class MoneyAggregation(models.Model):
-    period       = models.SmallIntegerField(default=0)  
+    period = models.SmallIntegerField(default=0)
     total_profit = models.DecimalField(
         max_digits=15,
         decimal_places=2,
@@ -95,7 +95,7 @@ class MoneyAggregation(models.Model):
         default=0.00,
         verbose_name="Sum Buy",
     )
-    user        = models.ForeignKey(
+    user = models.ForeignKey(
         st.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )

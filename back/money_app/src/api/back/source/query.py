@@ -1,22 +1,22 @@
 SQL_SOURCE = """
-SELECT 
-    src.id, 
-    src.created, 
+SELECT
+    src.id,
+    src.created,
     src.title
-FROM 
+FROM
     content.source src
-WHERE 
+WHERE
     src.user_id = %s
-ORDER BY 
+ORDER BY
     src.id desc
 OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
 """
 SOURCE_TOTAL = """
-SELECT 
+SELECT
     1 id,
     count(1) c
-FROM 
+FROM
     content.source src
-WHERE 
+WHERE
     src.user_id = %s
 """

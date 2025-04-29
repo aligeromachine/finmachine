@@ -55,7 +55,7 @@ def DevMasscanConf(filename: str, delta: int, rpath: str):
     ret_ls = []
 
     content = ReadFileContent(pth=filename)
-    pat_raw = r'range\s?=\s?(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(/\d{1,2})?'   
+    pat_raw = r'range\s?=\s?(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(/\d{1,2})?'
 
     # range = 0.0.0.0/24
     pat = f'{pat_raw}'
@@ -75,7 +75,7 @@ def DevMasscanConf(filename: str, delta: int, rpath: str):
 
     nf = os.path.basename(filename)
 
-    os.unlink(filename)    
+    os.unlink(filename)
 
     for index, it in enumerate(range(0, len(res), len_ranges)):
         rng = res[it:it + len_ranges]

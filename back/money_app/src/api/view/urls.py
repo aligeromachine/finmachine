@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-
+# flake8: noqa: E241
 urlpatterns = [
     path(route='func/',     view=include('api.view.func.urls')),
     path(route='dash/',     view=include('api.view.dash.urls')),

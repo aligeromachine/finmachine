@@ -1,6 +1,5 @@
 from functools import wraps
 
-
 def draw_response(func):
     @wraps(func)
     def wrapper(*args, **kwargs):

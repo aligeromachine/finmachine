@@ -7,4 +7,4 @@ class MoneyConfig(AppConfig):
 
     def ready(self):
         pass
-        # import money.signals 
+        # import money.signals
