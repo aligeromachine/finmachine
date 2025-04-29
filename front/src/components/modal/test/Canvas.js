@@ -1,3 +1,4 @@
+import { useState, useCallback } from "react";
 import {
   CButton,
   CModal,
@@ -5,9 +6,13 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
+  CRow,
+  CCol,
+  CFormInput,
 } from "@coreui/react";
 import { UseModal } from "../../hook/UseModal";
-import { ContentShop } from "./Content";
+import { LayoutGutters2Example } from "./Content";
+import { InputGroupSizingExample } from "./Content2";
 
 export const ShopModal = ({ title }) => {
   const { visible, refreshModal, closeModal } = UseModal();
@@ -24,10 +29,11 @@ export const ShopModal = ({ title }) => {
       </CButton>
       <CModal size="lg" visible={visible} onClose={closeModal}>
         <CModalHeader>
-          <CModalTitle id="LiveDemoExampleLabel">Shop Data</CModalTitle>
+          <CModalTitle id="LiveDemoExampleLabel">Modal title</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <ContentShop />
+          <InputGroupSizingExample />
+          <LayoutGutters2Example />
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={closeModal}>

@@ -18,12 +18,13 @@ import { cilLockLocked, cilUser } from "@coreui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { registerThunk, setRegister } from "../../services/stateRegister";
 import { UseForm } from "../../components/hook/UseForm";
-import { isEmpty } from "../../utils/func";
+import { UseValidRegister } from "./Validate";
+import { RedLable } from "../../components/redflag/RedLable";
 
 const Register = () => {
   const dispatch = useDispatch();
   const { formData, onChange } = UseForm();
-  const [validate, setValidate] = useState({});
+  const { validate, validateForm } = UseValidRegister();
 
   const { register, error, loading } = useSelector(
     (store) => store.registerReducer,
@@ -33,37 +34,10 @@ const Register = () => {
     dispatch(setRegister());
   }, [dispatch]);
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.username) {
-      newErrors.username = "Имя обязательно";
-    }
-
-    if (!formData.email) {
-      newErrors.email = "Email обязателен";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Некорректный email";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Пароль обязателен";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Пароль должен быть не менее 6 символов";
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Пароли не совпадают";
-    }
-
-    setValidate(newErrors);
-    return isEmpty(newErrors);
-  };
-
   async function onRegister(e) {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!validateForm(formData)) {
       return;
     }
 
@@ -89,9 +63,7 @@ const Register = () => {
                       User create success!
                     </CFormLabel>
                   )}
-                  {error && (
-                    <CFormLabel className="text-danger">{error}</CFormLabel>
-                  )}
+                  <RedLable title={error} />
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
@@ -104,9 +76,7 @@ const Register = () => {
                       name={"username"}
                     />
                   </CInputGroup>
-                  {validate.username && (
-                    <p className="text-sm mt-1">{validate.username}</p>
-                  )}
+                  <RedLable title={validate.username} />
                   <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput
@@ -117,11 +87,7 @@ const Register = () => {
                       name={"email"}
                     />
                   </CInputGroup>
-                  {validate.email && (
-                    <CFormLabel className="text-danger">
-                      {validate.email}
-                    </CFormLabel>
-                  )}
+                  <RedLable title={validate.email} />
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilLockLocked} />
@@ -135,11 +101,7 @@ const Register = () => {
                       name={"password"}
                     />
                   </CInputGroup>
-                  {validate.password && (
-                    <CFormLabel className="text-danger">
-                      {validate.password}
-                    </CFormLabel>
-                  )}
+                  <RedLable title={validate.password} />
                   <CInputGroup className="mb-4">
                     <CInputGroupText>
                       <CIcon icon={cilLockLocked} />
@@ -153,11 +115,7 @@ const Register = () => {
                       name={"confirmPassword"}
                     />
                   </CInputGroup>
-                  {validate.confirmPassword && (
-                    <CFormLabel className="text-danger">
-                      {validate.confirmPassword}
-                    </CFormLabel>
-                  )}
+                  <RedLable title={validate.confirmPassword} />
                   <div className="d-grid">
                     <CButton color="success" type="submit">
                       Create Account
