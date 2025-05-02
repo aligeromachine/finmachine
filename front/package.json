@@ -30,7 +30,8 @@
     "react-router-dom": "^7.1.5",
     "redux": "5.0.1",
     "redux-thunk": "^3.1.0",
-    "simplebar-react": "^3.3.0"
+    "simplebar-react": "^3.3.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

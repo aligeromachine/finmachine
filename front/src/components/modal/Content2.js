@@ -29,6 +29,16 @@ export const InputGroupSizingExample = () => {
           aria-describedby="inputGroup-sizing-lg"
         />
       </CInputGroup>
+
+      <CInputGroup size="lg" className="mb-3">
+        <CInputGroupText id="shop_title" style={{ width: "150px" }}>
+          Title
+        </CInputGroupText>
+        <CFormInput
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-lg"
+        />
+      </CInputGroup>
     </>
   );
 };

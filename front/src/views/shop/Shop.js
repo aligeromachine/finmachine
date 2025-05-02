@@ -12,22 +12,13 @@ import {
   CModalHeader,
   CModalTitle,
 } from "@coreui/react";
-import { useEffect, useState } from "react";
 import BasicTable from "../../components/table/BasicTable";
-import { useSelector, useDispatch } from "react-redux";
-import { getShopThunk } from "../../services/stateShop";
-import { create_params } from "../../utils/func";
 import { columnsShop } from "../../utils/headers";
-import { ShopModal } from "../../components/modal/shop/Canvas";
+import { ShopModal } from "./modal/Canvas";
+import { ShopFetcher } from "./DataFetcher";
 
 const DataShop = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const data = create_params("update_shop_data", 0, 100);
-    dispatch(getShopThunk(data));
-  }, [dispatch]);
-
-  const { draw } = useSelector((store) => store.shopReducer);
+  const draw = ShopFetcher();
 
   return (
     <CRow>
