@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 export const UseModal = () => {
   const [visible, setVisible] = useState(false);
 
-  const refreshModal = useCallback(() => {
+  const openModal = useCallback(() => {
     setVisible(!visible);
   }, []);
 
@@ -13,7 +13,7 @@ export const UseModal = () => {
 
   return {
     visible,
-    refreshModal,
+    openModal,
     closeModal,
   };
 };

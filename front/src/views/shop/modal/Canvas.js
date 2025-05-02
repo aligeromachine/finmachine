@@ -12,11 +12,12 @@ import { UseForm } from "../../../components/hook/UseForm";
 import { UseValidShop } from "./Validate";
 import { useDispatch } from "react-redux";
 import { addShopThunk } from "../../../services/stateShop";
+import { ToastLive } from "../../../components/toast/SimpleToast";
 
 export const ShopModal = ({ title }) => {
   const dispatch = useDispatch();
 
-  const { visible, refreshModal, closeModal } = UseModal();
+  const { visible, openModal, closeModal } = UseModal();
   const { formData, onChange } = UseForm();
   const { validate, validateForm } = UseValidShop();
 
@@ -27,7 +28,12 @@ export const ShopModal = ({ title }) => {
       return;
     }
 
-    dispatch(addShopThunk(formData));
+    const response = dispatch(addShopThunk(formData)).unwrap();
+    const result = await response;
+    if (result.data === "err") {
+      alert(result.message);
+      return;
+    }
     closeModal();
   }
 
@@ -36,7 +42,7 @@ export const ShopModal = ({ title }) => {
       <CButton
         color="secondary"
         className="mb-3"
-        onClick={refreshModal}
+        onClick={openModal}
         style={{ width: "150px" }}
       >
         {title}

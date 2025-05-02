@@ -3,7 +3,6 @@ import { apiClient } from "../utils/requests";
 import { create_params } from "../utils/func";
 
 const initialState = {
-  command: "update_shop_data",
   recordsTotal: 0,
   offset: 0,
   recordsDisplay: 100,
@@ -14,8 +13,8 @@ const initialState = {
 export const getShopThunk = createAsyncThunk(
   "stateShop/getShopThunk",
   async (_, { getState }) => {
-    const { command, offset, recordsDisplay } = getState().shopReducer;
-    const params = create_params(command, offset, recordsDisplay);
+    const { offset, recordsDisplay } = getState().shopReducer;
+    const params = create_params("update_shop_data", offset, recordsDisplay);
     const response = await apiClient.post("/shop/table/", params);
     return response;
   },
@@ -24,21 +23,22 @@ export const getShopThunk = createAsyncThunk(
 export const addShopThunk = createAsyncThunk(
   "stateShop/addShopThunk",
   async (data, { dispatch }) => {
-    const response = await apiClient.post("/shop/add/", data);
-    if (!response.data) return Promise.reject(response.message);
+    const params = {
+      command: "add_shop_data",
+      ...data,
+    };
+    const response = await apiClient.post("/shop/table/", params);
+    if (!response) return Promise.reject("Error response");
     await dispatch(getShopThunk());
+
+    return response;
   },
 );
+
 export const stateShop = createSlice({
   name: "stateShop",
   initialState: initialState,
-  reducers: {
-    setParams: (state) => {
-      state.loading = "empty";
-      state.register = false;
-      state.error = "";
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getShopThunk.pending, (state) => {

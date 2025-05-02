@@ -1,17 +1,5 @@
 import React from "react";
-import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
-  CButton,
-  CModal,
-  CModalBody,
-  CModalFooter,
-  CModalHeader,
-  CModalTitle,
-} from "@coreui/react";
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
 import BasicTable from "../../components/table/BasicTable";
 import { columnsShop } from "../../utils/headers";
 import { ShopModal } from "./modal/Canvas";
