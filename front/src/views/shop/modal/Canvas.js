@@ -10,16 +10,15 @@ import { UseModal } from "../../../components/hook/UseModal";
 import { ContentShop } from "./Content";
 import { UseForm } from "../../../components/hook/UseForm";
 import { UseValidShop } from "./Validate";
-import { useDispatch } from "react-redux";
 import { addShopThunk } from "../../../services/stateShop";
-import { ToastLive } from "../../../components/toast/SimpleToast";
+import { useState } from "react";
+import { RedCAlert } from "../../../components/redflag/RedCAlert";
 
 export const ShopModal = ({ title }) => {
-  const dispatch = useDispatch();
-
   const { visible, openModal, closeModal } = UseModal();
   const { formData, onChange } = UseForm();
   const { validate, validateForm } = UseValidShop();
+  const [respoErr, setRespoErr] = useState("");
 
   async function onClick(e) {
     e.preventDefault();
@@ -28,10 +27,9 @@ export const ShopModal = ({ title }) => {
       return;
     }
 
-    const response = dispatch(addShopThunk(formData)).unwrap();
-    const result = await response;
-    if (result.data === "err") {
-      alert(result.message);
+    const response = await addShopThunk(formData);
+    if (response.data === "err") {
+      setRespoErr(response.message);
       return;
     }
     closeModal();
@@ -57,6 +55,7 @@ export const ShopModal = ({ title }) => {
             onChange={onChange}
             validate={validate}
           />
+          <RedCAlert title={respoErr} />
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={closeModal}>

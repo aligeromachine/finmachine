@@ -1,7 +1,7 @@
 import React from "react";
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
-import BasicTable from "../../components/table/BasicTable";
-import { columnsShop } from "../../utils/headers";
+import { BasicTable } from "../../components/table/BasicTable";
+import { columnsShop } from "../../components/table/column/headers";
 import { ShopModal } from "./modal/Canvas";
 import { ShopFetcher } from "./DataFetcher";
 

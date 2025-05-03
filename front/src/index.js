@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import "core-js";
 
 import App from "./App";
-import store from "./services/store";
+import { store } from "./services/store";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>

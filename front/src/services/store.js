@@ -10,7 +10,7 @@ import { profitReducer } from "./stateProfit";
 import { catalogReducer } from "./stateCatalog";
 import { productsReducer } from "./stateProducts";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     tokenReducer,
     registerReducer,
@@ -24,5 +24,3 @@ const store = configureStore({
     productsReducer,
   },
 });
-
-export default store;

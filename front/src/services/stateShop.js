@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiClient } from "../utils/requests";
 import { create_params } from "../utils/func";
+import { store } from "./store"; // Импортируем Redux store
 
 const initialState = {
   recordsTotal: 0,
@@ -20,20 +21,16 @@ export const getShopThunk = createAsyncThunk(
   },
 );
 
-export const addShopThunk = createAsyncThunk(
-  "stateShop/addShopThunk",
-  async (data, { dispatch }) => {
-    const params = {
-      command: "add_shop_data",
-      ...data,
-    };
-    const response = await apiClient.post("/shop/table/", params);
-    if (!response) return Promise.reject("Error response");
-    await dispatch(getShopThunk());
-
-    return response;
-  },
-);
+export const addShopThunk = async (data) => {
+  const params = {
+    command: "add_shop_data",
+    ...data,
+  };
+  const response = await apiClient.post("/shop/table/", params);
+  if (!response) return Promise.reject("Error response");
+  await store.dispatch(getShopThunk());
+  return response;
+};
 
 export const stateShop = createSlice({
   name: "stateShop",

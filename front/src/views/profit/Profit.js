@@ -12,12 +12,15 @@ import {
   CTabs,
 } from "@coreui/react";
 import { useEffect } from "react";
-import BasicTable from "../../components/table/BasicTable";
+import { BasicTable } from "../../components/table/BasicTable";
+import {
+  columnsProfit,
+  columnsSource,
+} from "../../components/table/column/headers";
 import { useSelector, useDispatch } from "react-redux";
 import { create_params } from "../../utils/func";
 import { getProfitThunk } from "../../services/stateProfit";
 import { getSourceThunk } from "../../services/stateSource";
-import { columnsProfit, columnsSource } from "../../utils/headers";
 
 const DataProfit = () => {
   const dispatch = useDispatch();

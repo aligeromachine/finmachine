@@ -24,7 +24,7 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-function BasicTable({ data, columns }) {
+export function BasicTable({ data, columns }) {
   // Define states for global filtering and sorting
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState([]);
@@ -50,7 +50,6 @@ function BasicTable({ data, columns }) {
 
   return (
     <div>
-      {/* Global Filter Input */}
       <input
         type="text"
         value={globalFilter}
@@ -70,6 +69,7 @@ function BasicTable({ data, columns }) {
                   style={{
                     cursor: header.column.getCanSort() ? "pointer" : "default", // Indicate sortable columns with a pointer cursor
                   }}
+                  className="text-center"
                 >
                   {header.isPlaceholder
                     ? null
@@ -90,8 +90,7 @@ function BasicTable({ data, columns }) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {/* Render the cell content dynamically */}
+                <td key={cell.id} className="text-center">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -102,5 +101,3 @@ function BasicTable({ data, columns }) {
     </div>
   );
 }
-
-export default BasicTable;

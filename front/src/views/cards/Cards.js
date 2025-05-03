@@ -1,11 +1,11 @@
 import React from "react";
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
 import { useEffect } from "react";
-import BasicTable from "../../components/table/BasicTable";
+import { BasicTable } from "../../components/table/BasicTable";
+import { columnsCards } from "../../components/table/column/headers";
 import { useSelector, useDispatch } from "react-redux";
 import { getCardsThunk } from "../../services/stateCards";
 import { create_params } from "../../utils/func";
-import { columnsCards } from "../../utils/headers";
 
 const DataCards = () => {
   const dispatch = useDispatch();
