@@ -22,5 +22,6 @@ export const UseValidShop = () => {
   return {
     validate,
     validateForm,
+    setValidate,
   };
 };

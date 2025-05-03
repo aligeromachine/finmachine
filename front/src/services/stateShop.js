@@ -21,7 +21,7 @@ export const getShopThunk = createAsyncThunk(
   },
 );
 
-export const addShopThunk = async (data) => {
+export const addShopData = async (data) => {
   const params = {
     command: "add_shop_data",
     ...data,
@@ -30,6 +30,15 @@ export const addShopThunk = async (data) => {
   if (!response) return Promise.reject("Error response");
   await store.dispatch(getShopThunk());
   return response;
+};
+
+export const deleteShopRow = async (pk) => {
+  const params = {
+    command: "delete_shop_row",
+    pk,
+  };
+  await apiClient.post("/shop/table/", params);
+  await store.dispatch(getShopThunk());
 };
 
 export const stateShop = createSlice({

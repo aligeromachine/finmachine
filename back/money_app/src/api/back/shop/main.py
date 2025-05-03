@@ -36,6 +36,10 @@ def add_shop_data(item: ShopMessage):
 
     return {'data': 'ok', 'message': f'adding shop key: {max_id}'}
 
+def delete_shop_row(item: ShopMessage):
+    Shop.objects.filter(pk=item.pk).delete()
+    return {'data': 'ok', 'message': f'delete shop key: {item.pk}'}
+
 @validate_model(ShopMessage)
 def invoke_response(request: HttpRequest, item: ShopMessage):
     respo = {"data": "err", "message": "undefinded"}
@@ -45,5 +49,8 @@ def invoke_response(request: HttpRequest, item: ShopMessage):
     
     if item.command == "add_shop_data":
         respo = add_shop_data(item=item)
+    
+    if item.command == "delete_shop_row":
+        respo = delete_shop_row(item=item)
 
     return respo

@@ -10,28 +10,32 @@ import { UseModal } from "../../../components/hook/UseModal";
 import { ContentShop } from "./Content";
 import { UseForm } from "../../../components/hook/UseForm";
 import { UseValidShop } from "./Validate";
-import { addShopThunk } from "../../../services/stateShop";
+import { addShopData } from "../../../services/stateShop";
 import { useState } from "react";
 import { RedCAlert } from "../../../components/redflag/RedCAlert";
 
 export const ShopModal = ({ title }) => {
   const { visible, openModal, closeModal } = UseModal();
-  const { formData, onChange } = UseForm();
-  const { validate, validateForm } = UseValidShop();
+  const { formData, setForm, onChange } = UseForm();
+  const { validate, validateForm, setValidate } = UseValidShop();
   const [respoErr, setRespoErr] = useState("");
 
-  async function onClick(e) {
-    e.preventDefault();
-
+  async function onAdd() {
     if (!validateForm(formData)) {
       return;
     }
 
-    const response = await addShopThunk(formData);
+    const response = await addShopData(formData);
     if (response.data === "err") {
       setRespoErr(response.message);
       return;
     }
+    onClose();
+  }
+
+  function onClose() {
+    setValidate({});
+    setForm({});
     closeModal();
   }
 
@@ -45,7 +49,7 @@ export const ShopModal = ({ title }) => {
       >
         {title}
       </CButton>
-      <CModal size="lg" visible={visible} onClose={closeModal}>
+      <CModal size="lg" visible={visible} onClose={onClose}>
         <CModalHeader>
           <CModalTitle id="header_shop_modal">Shop Data</CModalTitle>
         </CModalHeader>
@@ -58,10 +62,10 @@ export const ShopModal = ({ title }) => {
           <RedCAlert title={respoErr} />
         </CModalBody>
         <CModalFooter>
-          <CButton color="secondary" onClick={closeModal}>
+          <CButton color="secondary" onClick={onClose}>
             Close
           </CButton>
-          <CButton color="primary" onClick={onClick}>
+          <CButton color="primary" onClick={onAdd}>
             Save changes
           </CButton>
         </CModalFooter>
