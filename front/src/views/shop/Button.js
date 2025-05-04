@@ -1,0 +1,18 @@
+import React from "react";
+import { CButton } from "@coreui/react";
+import { useModal } from "../../components/hook/ModalContext";
+
+export const Button = ({ title }) => {
+  const { openModal } = useModal();
+
+  return (
+    <CButton
+      color="secondary"
+      className="mb-3"
+      onClick={openModal}
+      style={{ width: "150px" }}
+    >
+      {title}
+    </CButton>
+  );
+};
