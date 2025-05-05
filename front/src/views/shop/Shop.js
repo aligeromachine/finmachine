@@ -3,8 +3,7 @@ import { CRow, CCol, CCard, CCardBody } from "@coreui/react";
 import { ModalProvider } from "../../components/hook/ModalContext";
 import { Header } from "./Header";
 import { Button } from "./Button";
-import { ShopModal } from "./modal/Canvas";
-import { ModalStaticBackdropExample } from "./modal/EditShop";
+import { ShopModal } from "./modal/ShopModal";
 import { Table } from "./Table";
 
 const DataShop = () => {
@@ -15,9 +14,8 @@ const DataShop = () => {
           <CCard className="mb-4">
             <Header title={"DataShop"} />
             <CCardBody>
-              <Button title={"Add Shop"} />
               <ShopModal />
-              <ModalStaticBackdropExample />
+              <Button title={"Add Shop"} />
               <Table />
             </CCardBody>
           </CCard>

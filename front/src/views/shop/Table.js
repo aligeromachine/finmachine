@@ -1,6 +1,7 @@
 import React from "react";
 import { BasicTable } from "../../components/table/BasicTable";
-import { columnsShop } from "../../components/table/column/headers";
+import { useModal } from "../../components/hook/ModalContext";
+import { columnsShop } from "./column/Header";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getShopThunk } from "../../services/stateShop";
@@ -11,6 +12,9 @@ export const Table = () => {
     dispatch(getShopThunk());
   }, [dispatch]);
 
+  const { openModal } = useModal();
+
+  const columns = columnsShop(openModal);
   const { draw } = useSelector((store) => store.shopReducer);
-  return <BasicTable data={draw} columns={columnsShop} />;
+  return <BasicTable data={draw} columns={columns} />;
 };

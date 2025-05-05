@@ -1,6 +1,3 @@
-import { handleDelete } from "./tableAction";
-import st from "./row.module.css";
-
 export const columnsBuy = [
   {
     accessorKey: "id", // Accessor key for the "name" field from data object
@@ -58,51 +55,6 @@ export const columnsCards = [
   {
     accessorKey: null,
     header: "Action",
-  },
-];
-
-export const columnsShop = [
-  {
-    accessorKey: "id",
-    header: "Id",
-    size: 100,
-  },
-  {
-    accessorKey: "created",
-    header: "Created",
-  },
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: "address",
-    header: "Address",
-  },
-  {
-    accessorKey: null,
-    header: "Action",
-    cell: ({ row }) => (
-      <span>
-        <i onClick={() => handleDelete(row.original.id)}>
-          <img
-            className={st.iconMl}
-            src={"/static/img/delete.png"}
-            height={24}
-            width={24}
-          />
-        </i>
-
-        <i onClick={() => handleDelete(row.original.id)}>
-          <img
-            className={st.iconMl}
-            src={"/static/img/edit.png"}
-            height={24}
-            width={24}
-          />
-        </i>
-      </span>
-    ),
   },
 ];
 

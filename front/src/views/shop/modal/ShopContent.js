@@ -22,7 +22,7 @@ export const ShopContent = ({
   onAdd,
 }) => {
   return (
-    <CModal size="lg" visible={visible} onClose={onClose}>
+    <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
         <CModalTitle id="header_shop_modal">Shop Data</CModalTitle>
       </CModalHeader>
