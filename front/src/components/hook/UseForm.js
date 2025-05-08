@@ -11,12 +11,14 @@ export const UseForm = () => {
     setForm({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSet = (e, func) => {
-    e.preventDefault();
-
-    dispatch(func(formData));
+  const onSet = (func) => {
+    dispatch(func({ ...formData }));
     setForm({});
   };
 
-  return { formData, setForm, onChange, onSet };
+  const onOpen = (data) => {
+    setForm({ ...formData, ...data });
+  };
+
+  return { formData, setForm, onChange, onSet, onOpen };
 };

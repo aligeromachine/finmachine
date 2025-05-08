@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   pk: 0,
-  formData: null,
+  formData: {},
 };
 
 const stateRow = createSlice({
@@ -10,11 +10,16 @@ const stateRow = createSlice({
   initialState,
   reducers: {
     setRowState: (state, action) => {
-      state.pk = action.payload.pk;
-      state.formData = action.payload.formData;
+      state.formData = { ...state.formData, ...action.payload };
+    },
+    setRowPk: (state, action) => {
+      state.pk = action.payload;
+    },
+    getRowState: (state) => {
+      return { ...state.formData };
     },
   },
 });
 
-export const { setRowState } = stateRow.actions;
+export const { setRowState, setRowPk, getRowState } = stateRow.actions;
 export const rowReducer = stateRow.reducer;

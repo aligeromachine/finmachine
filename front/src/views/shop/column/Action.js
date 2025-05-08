@@ -1,4 +1,4 @@
-import { deleteShopRow } from "../../../services/stateShop";
+import { deleteShopRow, getShopRow } from "../../../services/stateShop";
 import Swal from "sweetalert2";
 
 export const handleDelete = (id) => {
@@ -16,6 +16,6 @@ export const handleDelete = (id) => {
   });
 };
 
-export const handleEdit = (id) => {
-  console.log(id);
+export const handleEdit = async (id) => {
+  await getShopRow(id);
 };

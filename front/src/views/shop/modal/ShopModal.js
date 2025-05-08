@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ShopContent } from "./ShopContent";
-import { UseForm } from "../../../components/hook/UseForm";
 import { UseValidShop } from "./Validate";
-import { addShopData } from "../../../services/stateShop";
+import { addShopRow } from "../../../services/stateShop";
 import { useState } from "react";
 import { useModal } from "../../../components/hook/ModalContext";
+import { setRowState } from "../../../services/stateRow";
 
 export const ShopModal = () => {
-  const { isModalOpen, closeModal } = useModal();
-  const { formData, setForm, onChange } = UseForm();
-  const { validate, validateForm, setValidate } = UseValidShop();
+  const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();
+  const { validate, validateForm } = UseValidShop();
   const [respoErr, setRespoErr] = useState("");
 
   async function onAdd() {
@@ -17,24 +16,19 @@ export const ShopModal = () => {
       return;
     }
 
-    const response = await addShopData(formData);
+    onSet(setRowState);
+    const response = await addShopRow();
     if (response.data === "err") {
       setRespoErr(response.message);
       return;
     }
-    onClose();
-  }
-
-  function onClose() {
-    setValidate({});
-    setForm({});
     closeModal();
   }
 
   return (
     <ShopContent
       visible={isModalOpen}
-      onClose={onClose}
+      onClose={closeModal}
       formData={formData}
       onChange={onChange}
       validate={validate}

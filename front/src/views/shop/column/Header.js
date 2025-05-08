@@ -3,9 +3,9 @@ import { handleDelete, handleEdit } from "./Action";
 import st from "./row.module.css";
 
 export const columnsShop = (openModal) => {
-  const openWithEdit = (id) => {
+  const openWithEdit = async (id) => {
+    await handleEdit(id);
     openModal();
-    handleEdit(id);
   };
 
   return [

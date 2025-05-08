@@ -9,6 +9,7 @@ import { sourceReducer } from "./stateSource";
 import { profitReducer } from "./stateProfit";
 import { catalogReducer } from "./stateCatalog";
 import { productsReducer } from "./stateProducts";
+import { rowReducer } from "./stateRow";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     profitReducer,
     catalogReducer,
     productsReducer,
+    rowReducer,
   },
 });

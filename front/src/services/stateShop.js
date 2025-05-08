@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiClient } from "../utils/requests";
 import { create_params } from "../utils/func";
 import { store } from "./store"; // Импортируем Redux store
+import { setRowState, setRowPk } from "./stateRow";
 
 const initialState = {
   recordsTotal: 0,
@@ -11,24 +12,26 @@ const initialState = {
   loading: "loading" | "idle" | "failed",
 };
 
-export const getShopThunk = createAsyncThunk(
-  "stateShop/getShopThunk",
-  async (_, { getState }) => {
-    const { offset, recordsDisplay } = getState().shopReducer;
-    const params = create_params("update_shop_data", offset, recordsDisplay);
+export const getShopTable = createAsyncThunk(
+  "stateShop/getShopTable",
+  async () => {
+    const { offset, recordsDisplay } = store.getState().shopReducer;
+    const params = create_params("table_shop_data", offset, recordsDisplay);
     const response = await apiClient.post("/shop/table/", params);
     return response;
   },
 );
 
-export const addShopData = async (data) => {
+export const addShopRow = async () => {
+  const { pk, formData } = store.getState().rowReducer;
   const params = {
-    command: "add_shop_data",
-    ...data,
+    command: pk === 0 ? "add_shop_data" : "edit_shop_data",
+    pk,
+    ...formData,
   };
   const response = await apiClient.post("/shop/table/", params);
   if (!response) return Promise.reject("Error response");
-  await store.dispatch(getShopThunk());
+  await store.dispatch(getShopTable());
   return response;
 };
 
@@ -38,7 +41,17 @@ export const deleteShopRow = async (pk) => {
     pk,
   };
   await apiClient.post("/shop/table/", params);
-  await store.dispatch(getShopThunk());
+  await store.dispatch(getShopTable());
+};
+
+export const getShopRow = async (pk) => {
+  const params = {
+    command: "get_shop_row",
+    pk,
+  };
+  const response = await apiClient.post("/shop/table/", params);
+  store.dispatch(setRowPk(pk));
+  store.dispatch(setRowState(response));
 };
 
 export const stateShop = createSlice({
@@ -47,17 +60,17 @@ export const stateShop = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getShopThunk.pending, (state) => {
+      .addCase(getShopTable.pending, (state) => {
         state.loading = "loading";
       })
-      .addCase(getShopThunk.fulfilled, (state, action) => {
+      .addCase(getShopTable.fulfilled, (state, action) => {
         state.recordsTotal = action.payload.recordsTotal;
         state.offset = action.payload.offset;
         state.recordsDisplay = action.payload.recordsDisplay;
         state.draw = action.payload.draw;
         state.loading = "idle";
       })
-      .addCase(getShopThunk.rejected, (state) => {
+      .addCase(getShopTable.rejected, (state) => {
         state.loading = "failed";
       });
   },

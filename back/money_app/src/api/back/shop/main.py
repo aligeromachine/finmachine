@@ -11,7 +11,7 @@ from api.back.shop.query import SQL_SHOP, SHOP_TOTAL
 logger = logging.getLogger(__name__)
 
 @draw_response
-def update_shop_data(item: ShopMessage):
+def table_shop_data(item: ShopMessage):
     params = [item.user_id, item.offset * item.limit, item.limit]
     ls = []
     for it in Shop.objects.raw(raw_query=SQL_SHOP, params=params):
@@ -40,17 +40,44 @@ def delete_shop_row(item: ShopMessage):
     Shop.objects.filter(pk=item.pk).delete()
     return {'data': 'ok', 'message': f'delete shop key: {item.pk}'}
 
+def get_shop_row(item: ShopMessage):
+    data = {}
+
+    for it in Shop.objects.filter(pk=item.pk):
+        data["title"] = it.title
+        data["address"] = it.address
+
+    return data
+
+def edit_shop_data(item: ShopMessage):
+    try:
+        instance = Shop.objects.get(pk=item.pk)
+
+        instance.title = item.title
+        instance.address = item.address
+        instance.save()
+    except: # noqa
+        return {'data': 'err', 'message': 'pk does not exist'}
+
+    return {'data': 'ok', 'message': f'update {item.pk=}'}
+
 @validate_model(ShopMessage)
 def invoke_response(request: HttpRequest, item: ShopMessage):
     respo = {"data": "err", "message": "undefinded"}
 
-    if item.command == "update_shop_data":
-        respo = update_shop_data(item=item)
+    if item.command == "table_shop_data":
+        respo = table_shop_data(item=item)
     
     if item.command == "add_shop_data":
         respo = add_shop_data(item=item)
     
     if item.command == "delete_shop_row":
         respo = delete_shop_row(item=item)
+    
+    if item.command == "get_shop_row":
+        respo = get_shop_row(item=item)
+    
+    if item.command == "edit_shop_data":
+        respo = edit_shop_data(item=item)
 
     return respo
