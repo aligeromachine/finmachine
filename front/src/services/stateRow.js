@@ -15,11 +15,12 @@ const stateRow = createSlice({
     setRowPk: (state, action) => {
       state.pk = action.payload;
     },
-    getRowState: (state) => {
-      return { ...state.formData };
+    nullRowData: (state) => {
+      state.pk = 0;
+      state.formData = {};
     },
   },
 });
 
-export const { setRowState, setRowPk, getRowState } = stateRow.actions;
+export const { setRowState, setRowPk, nullRowData } = stateRow.actions;
 export const rowReducer = stateRow.reducer;

@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { store } from "../../services/store";
+import { nullRowData } from "../../services/stateRow";
 
 // Создаем контекст с начальными значениями
 const ModalContext = createContext({
@@ -22,11 +23,12 @@ export const ModalProvider = ({ children }) => {
 
   const openModal = useCallback(() => {
     const data = store.getState().rowReducer.formData;
-    console.log(data);
     setForm({ ...formData, ...data });
     setIsModalOpen(!isModalOpen);
   }, []);
+
   const closeModal = useCallback(() => {
+    dispatch(nullRowData());
     setIsModalOpen(false);
   }, []);
 
