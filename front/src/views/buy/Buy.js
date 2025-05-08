@@ -6,6 +6,7 @@ import { columnsBuy } from "../../components/table/column/headers";
 import { useSelector, useDispatch } from "react-redux";
 import { getBuysThunk } from "../../services/stateBuys";
 import { create_params } from "../../utils/func";
+import { ModalProvider } from "../../components/hook/ModalContext";
 
 const DataTransactions = () => {
   const dispatch = useDispatch();
@@ -17,18 +18,20 @@ const DataTransactions = () => {
   const { draw } = useSelector((store) => store.buysReducer);
 
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>DataTransactions</strong>
-          </CCardHeader>
-          <CCardBody>
-            <BasicTable data={draw} columns={columnsBuy} />
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+    <ModalProvider>
+      <CRow>
+        <CCol xs={12}>
+          <CCard className="mb-4">
+            <CCardHeader>
+              <strong>DataTransactions</strong>
+            </CCardHeader>
+            <CCardBody>
+              <BasicTable data={draw} columns={columnsBuy} />
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+    </ModalProvider>
   );
 };
 
