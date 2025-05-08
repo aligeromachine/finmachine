@@ -24,13 +24,13 @@ import {
   cilSun,
 } from "@coreui/icons";
 
-import { AppHeaderDropdown } from "./header/index";
-import { changeSideShow, changeTheme } from "../services/stateBar";
+import { AppHeaderDropdown } from "../content/AppHeaderDropdown";
+import { changeSideShow, changeTheme } from "../../services/stateBar";
 
-const AppHeader = () => {
+export const AppHeader = () => {
   const headerRef = useRef();
   const { colorMode, setColorMode } = useColorModes(
-    "coreui-free-react-admin-template-theme",
+    "coreui-react-color-scheme",
   );
 
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const AppHeader = () => {
           document.documentElement.scrollTop > 0,
         );
     });
-    setColorMode(theme);
+    setColorMode(colorMode);
   }, []);
 
   return (
@@ -131,5 +131,3 @@ const AppHeader = () => {
     </CHeader>
   );
 };
-
-export default AppHeader;

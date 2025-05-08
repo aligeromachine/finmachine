@@ -1,15 +1,14 @@
 import React, { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { CContainer, CSpinner } from "@coreui/react";
-const Page404 = React.lazy(() => import("../pages/page404/Page404"));
+import { routes } from "./routes";
 
-// routes config
-import routes from "../routes";
+const Page404 = React.lazy(() => import("../../pages/page404/Page404"));
 
 const AppContent = () => {
   return (
     <CContainer className="px-4" fluid>
-      <Suspense fallback={<CSpinner color="primary" />}>
+      <Suspense fallback={<CSpinner color="secondary" />}>
         <Routes>
           {routes.map((route, idx) => {
             return (

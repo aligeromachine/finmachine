@@ -11,12 +11,12 @@ import {
 } from "@coreui/react";
 
 import { AppSidebarNav } from "./AppSidebarNav";
-import { changeSideShow, changeSideUnfo } from "../services/stateBar";
+import { changeSideShow, changeSideUnfo } from "../../services/stateBar";
 
 // sidebar nav config
-import navigation from "../_nav";
+import navigation from "../../_nav";
 
-import imageIco from "../assets/brand/chart.png";
+import imageIco from "../../assets/brand/chart.png";
 
 const AppSidebar = () => {
   const dispatch = useDispatch();

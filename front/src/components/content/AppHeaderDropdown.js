@@ -28,7 +28,7 @@ import { logoutThunk } from "../../services/stateToken";
 
 import avatar8 from "../../assets/images/avatars/8.jpg";
 
-const AppHeaderDropdown = () => {
+export const AppHeaderDropdown = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -114,5 +114,3 @@ const AppHeaderDropdown = () => {
     </CDropdown>
   );
 };
-
-export default AppHeaderDropdown;
