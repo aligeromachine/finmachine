@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { ShopContent } from "./ShopContent";
-import { UseValidShop } from "./Validate";
-import { addShopRow } from "../../../services/stateShop";
+import React from "react";
+import { CardsContent } from "./CardsContent";
+import { UseValid } from "./Validate";
+import { addCardsRow } from "../../../services/stateCards";
 import { useState } from "react";
 import { useModal } from "../../../components/hook/ModalContext";
 import { setRowState } from "../../../services/stateRow";
 
-export const ShopModal = () => {
+export const CardsModal = () => {
   const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();
-  const { validate, validateForm } = UseValidShop();
+  const { validate, validateForm } = UseValid();
   const [respoErr, setRespoErr] = useState("");
 
   async function onAdd() {
@@ -17,7 +17,7 @@ export const ShopModal = () => {
     }
 
     onSet(setRowState);
-    const response = await addShopRow();
+    const response = await addCardsRow();
     if (response.data === "err") {
       setRespoErr(response.message);
       return;
@@ -26,7 +26,7 @@ export const ShopModal = () => {
   }
 
   return (
-    <ShopContent
+    <CardsContent
       visible={isModalOpen}
       onClose={closeModal}
       formData={formData}

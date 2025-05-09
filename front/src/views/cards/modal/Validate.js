@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { isEmpty } from "../../../utils/func";
 
-export const UseValidShop = () => {
+export const UseValid = () => {
   const [validate, setValidate] = useState({});
 
   const validateForm = useCallback((formData) => {
@@ -11,8 +11,14 @@ export const UseValidShop = () => {
       newErrors.title = "Title обязательно";
     }
 
-    if (!formData.address) {
-      newErrors.address = "Address обязательно";
+    if (!formData.amount) {
+      newErrors.amount = "Amount обязателен";
+    } else if (!/^\d*\.?\d*$/.test(formData.amount)) {
+      newErrors.amount = "Некорректный amount";
+    }
+
+    if (!formData.number) {
+      newErrors.number = "Number обязательно";
     }
 
     setValidate(newErrors);

@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { isEmpty } from "../../../utils/func";
 
-export const UseValidShop = () => {
+export const UseValid = () => {
   const [validate, setValidate] = useState({});
 
   const validateForm = useCallback((formData) => {

@@ -2,7 +2,7 @@ import React from "react";
 import { handleDelete, handleEdit } from "./Action";
 import st from "./row.module.css";
 
-export const columnsShop = (openModal) => {
+export const columnsTbl = (openModal) => {
   const openWithEdit = async (id) => {
     await handleEdit(id);
     openModal();
@@ -23,12 +23,12 @@ export const columnsShop = (openModal) => {
       header: "Title",
     },
     {
-      accessorKey: "number",
-      header: "Number",
+      accessorKey: "amount",
+      header: "Amount",
     },
     {
-      accessorKey: "amount",
-      header: "Price",
+      accessorKey: "number",
+      header: "Number",
     },
     {
       accessorKey: null,

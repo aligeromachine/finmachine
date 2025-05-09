@@ -30,9 +30,9 @@ export const CardsContent = ({
         <CForm className="row g-3">
           <CCol xs={12}>
             <CFormInput
-              id="input_title"
+              id="cards_title"
               label="Title"
-              placeholder="Magazine"
+              placeholder="Vtb"
               onChange={onChange}
               value={formData.title || ""}
               name={"title"}
@@ -41,14 +41,25 @@ export const CardsContent = ({
           </CCol>
           <CCol xs={12}>
             <CFormInput
-              id="input_address"
-              label="Address"
-              placeholder="Moscow City, Pavlova st.19"
+              id="cards_amount"
+              label="Amount"
+              placeholder="100.00"
               onChange={onChange}
-              value={formData.address || ""}
-              name={"address"}
+              value={formData.amount || ""}
+              name={"amount"}
             />
-            <RedLable title={validate.address} />
+            <RedLable title={validate.amount} />
+          </CCol>
+          <CCol xs={12}>
+            <CFormInput
+              id="cards_number"
+              label="Number"
+              placeholder="2200 1000 4000 5000"
+              onChange={onChange}
+              value={formData.number || ""}
+              name={"number"}
+            />
+            <RedLable title={validate.number} />
           </CCol>
         </CForm>
         <RedCAlert title={respoErr} />

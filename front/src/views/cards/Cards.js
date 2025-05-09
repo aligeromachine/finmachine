@@ -4,6 +4,7 @@ import { ModalProvider } from "../../components/hook/ModalContext";
 import { Header } from "../../components/view/Header";
 import { Button } from "../../components/view/Button";
 import { Table } from "./Table";
+import { CardsModal } from "./modal/CardsModal";
 
 export const DataCards = () => {
   return (
@@ -13,6 +14,7 @@ export const DataCards = () => {
           <CCard className="mb-4">
             <Header title={"DataCards"} />
             <CCardBody>
+              <CardsModal />
               <Button title={"Add Card"} />
               <Table />
             </CCardBody>

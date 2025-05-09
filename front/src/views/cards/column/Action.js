@@ -1,4 +1,4 @@
-import { deleteShopRow, getShopRow } from "../../../services/stateShop";
+import { deleteCardsRow, getCardsRow } from "../../../services/stateCards";
 import Swal from "sweetalert2";
 
 export const handleDelete = (id) => {
@@ -11,11 +11,11 @@ export const handleDelete = (id) => {
     cancelButtonText: "Отмена",
   }).then((result) => {
     if (result.isConfirmed) {
-      deleteShopRow(id);
+      deleteCardsRow(id);
     }
   });
 };
 
 export const handleEdit = async (id) => {
-  await getShopRow(id);
+  await getCardsRow(id);
 };
