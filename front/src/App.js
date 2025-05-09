@@ -1,22 +1,24 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { CSpinner, useColorModes } from "@coreui/react";
+import { CSpinner } from "@coreui/react";
 import { GuestGuard, AuthGuard } from "./components/auth/Protect";
 import { Token } from "./components/auth/Token";
-import "./scss/style.scss";
 
-// We use those styles to show code examples, you should remove them in your application.
+import "./scss/style.scss";
 import "./scss/examples.scss";
 
-// Containers
-const DefaultLayout = React.lazy(() => import("./layout/DefaultLayout"));
+function lazyImport(exportName) {
+  return React.lazy(async () => {
+    const module = await (() => import("./pages/"))();
+    return { default: module[exportName] };
+  });
+}
 
-// Pages
-const Login = React.lazy(() => import("./pages/login/Login"));
-const Register = React.lazy(() => import("./pages/register/Register"));
-const Page404 = React.lazy(() => import("./pages/page404/Page404"));
-const Page500 = React.lazy(() => import("./pages/page500/Page500"));
+const Layout = lazyImport("Layout");
+const Login = lazyImport("Login");
+const Register = lazyImport("Register");
+const Page404 = lazyImport("Page404");
+const Page500 = lazyImport("Page500");
 
 const App = () => {
   return (
@@ -57,7 +59,7 @@ const App = () => {
           <Route
             path="*"
             name="Home"
-            element={<AuthGuard inner={<DefaultLayout />} />}
+            element={<AuthGuard inner={<Layout />} />}
           />
         </Routes>
       </Suspense>

@@ -1,6 +1,6 @@
 import React from "react";
 import { CButton } from "@coreui/react";
-import { useModal } from "../../components/hook/ModalContext";
+import { useModal } from "../hook/ModalContext";
 
 export const Button = ({ title }) => {
   const { openModal } = useModal();

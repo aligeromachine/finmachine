@@ -19,7 +19,7 @@ import { UseForm } from "../../components/hook/UseForm";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../../services/stateToken";
 
-const Login = () => {
+export const Login = () => {
   const dispatch = useDispatch();
   const { formData, onChange } = UseForm();
 
@@ -113,5 +113,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

@@ -1,6 +1,6 @@
 import React from "react";
 
-function lazyNamedImport(exportName = "default") {
+function lazyImport(exportName) {
   return React.lazy(async () => {
     const module = await (() => import("../../views/"))();
     return { default: module[exportName] };
@@ -12,31 +12,31 @@ export const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    element: lazyNamedImport("Dashboard"),
+    element: lazyImport("Dashboard"),
   },
   {
     path: "/buy",
     name: "Buy",
-    element: lazyNamedImport("Buy"),
+    element: lazyImport("Buy"),
   },
   {
     path: "/cards",
     name: "Cards",
-    element: lazyNamedImport("Cards"),
+    element: lazyImport("Cards"),
   },
   {
     path: "/shop",
     name: "Shop",
-    element: lazyNamedImport("Shop"),
+    element: lazyImport("Shop"),
   },
   {
     path: "/products",
     name: "Products",
-    element: lazyNamedImport("Prod"),
+    element: lazyImport("Prod"),
   },
   {
     path: "/profit",
     name: "Profit",
-    element: lazyNamedImport("Profit"),
+    element: lazyImport("Profit"),
   },
 ];

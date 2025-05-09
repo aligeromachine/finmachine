@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCardsThunk } from "../../services/stateCards";
 import { create_params } from "../../utils/func";
 import { ModalProvider } from "../../components/hook/ModalContext";
+import { Header } from "../../components/view/Header";
+import { Button } from "../../components/view/Button";
 
 export const DataCards = () => {
   const dispatch = useDispatch();
@@ -18,17 +20,18 @@ export const DataCards = () => {
   const { draw } = useSelector((store) => store.cardsReducer);
 
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>DataCards</strong>
-          </CCardHeader>
-          <CCardBody>
-            <BasicTable data={draw} columns={columnsCards} />
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+    <ModalProvider>
+      <CRow>
+        <CCol xs={12}>
+          <CCard className="mb-4">
+            <Header title={"DataCards"} />
+            <CCardBody>
+              <Button title={"Add Card"} />
+              <BasicTable data={draw} columns={columnsCards} />
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+    </ModalProvider>
   );
 };

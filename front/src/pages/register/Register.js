@@ -21,7 +21,7 @@ import { UseForm } from "../../components/hook/UseForm";
 import { UseValidRegister } from "./Validate";
 import { RedLable } from "../../components/redflag/RedLable";
 
-const Register = () => {
+export const Register = () => {
   const dispatch = useDispatch();
   const { formData, onChange } = UseForm();
   const { validate, validateForm } = UseValidRegister();
@@ -130,5 +130,3 @@ const Register = () => {
     </div>
   );
 };
-
-export default Register;

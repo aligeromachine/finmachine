@@ -1,8 +1,8 @@
 import React from "react";
 import { CRow, CCol, CCard, CCardBody } from "@coreui/react";
 import { ModalProvider } from "../../components/hook/ModalContext";
-import { Header } from "./Header";
-import { Button } from "./Button";
+import { Header } from "../../components/view/Header";
+import { Button } from "../../components/view/Button";
 import { ShopModal } from "./modal/ShopModal";
 import { Table } from "./Table";
 
