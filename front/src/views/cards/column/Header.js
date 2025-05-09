@@ -23,8 +23,12 @@ export const columnsShop = (openModal) => {
       header: "Title",
     },
     {
-      accessorKey: "address",
-      header: "Address",
+      accessorKey: "number",
+      header: "Number",
+    },
+    {
+      accessorKey: "amount",
+      header: "Price",
     },
     {
       accessorKey: null,

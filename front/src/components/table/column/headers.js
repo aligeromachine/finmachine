@@ -30,34 +30,6 @@ export const columnsBuy = [
   },
 ];
 
-export const columnsCards = [
-  {
-    accessorKey: "id", // Accessor key for the "name" field from data object
-    header: "Id", // Column header
-    size: 100,
-  },
-  {
-    accessorKey: "created",
-    header: "Created",
-  },
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: "number",
-    header: "Number",
-  },
-  {
-    accessorKey: "amount",
-    header: "Price",
-  },
-  {
-    accessorKey: null,
-    header: "Action",
-  },
-];
-
 export const columnsProfit = [
   {
     accessorKey: "id",

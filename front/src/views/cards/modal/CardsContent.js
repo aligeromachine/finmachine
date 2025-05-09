@@ -12,7 +12,7 @@ import {
 import { RedCAlert } from "../../../components/redflag/RedCAlert";
 import { RedLable } from "../../../components/redflag/RedLable";
 
-export const ShopContent = ({
+export const CardsContent = ({
   visible,
   onClose,
   formData,
@@ -24,7 +24,7 @@ export const ShopContent = ({
   return (
     <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
-        <CModalTitle id="header_shop_modal">Shop Data</CModalTitle>
+        <CModalTitle id="header_cards_modal">Cards Data</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
