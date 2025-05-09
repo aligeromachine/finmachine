@@ -22,7 +22,7 @@ import { create_params } from "../../utils/func";
 import { getProfitThunk } from "../../services/stateProfit";
 import { getSourceThunk } from "../../services/stateSource";
 
-const DataProfit = () => {
+export const DataProfit = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const dataP = create_params("update_profit_data", 0, 100);
@@ -62,5 +62,3 @@ const DataProfit = () => {
     </CRow>
   );
 };
-
-export default DataProfit;

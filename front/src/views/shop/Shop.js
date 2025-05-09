@@ -6,7 +6,7 @@ import { Button } from "./Button";
 import { ShopModal } from "./modal/ShopModal";
 import { Table } from "./Table";
 
-const DataShop = () => {
+export const DataShop = () => {
   return (
     <ModalProvider>
       <CRow>
@@ -24,5 +24,3 @@ const DataShop = () => {
     </ModalProvider>
   );
 };
-
-export default DataShop;

@@ -8,7 +8,7 @@ import { getBuysThunk } from "../../services/stateBuys";
 import { create_params } from "../../utils/func";
 import { ModalProvider } from "../../components/hook/ModalContext";
 
-const DataTransactions = () => {
+export const DataTransactions = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const data = create_params("update_money_data", 0, 100);
@@ -34,5 +34,3 @@ const DataTransactions = () => {
     </ModalProvider>
   );
 };
-
-export default DataTransactions;

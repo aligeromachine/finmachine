@@ -22,7 +22,7 @@ import { create_params } from "../../utils/func";
 import { getProductsThunk } from "../../services/stateProducts";
 import { getCatalogThunk } from "../../services/stateCatalog";
 
-const DataProducts = () => {
+export const DataProducts = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const dataP = create_params("update_products_data", 0, 100);
@@ -62,5 +62,3 @@ const DataProducts = () => {
     </CRow>
   );
 };
-
-export default DataProducts;

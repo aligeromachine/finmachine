@@ -6,8 +6,9 @@ import { columnsCards } from "../../components/table/column/headers";
 import { useSelector, useDispatch } from "react-redux";
 import { getCardsThunk } from "../../services/stateCards";
 import { create_params } from "../../utils/func";
+import { ModalProvider } from "../../components/hook/ModalContext";
 
-const DataCards = () => {
+export const DataCards = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const data = create_params("update_cards_data", 0, 100);
@@ -31,5 +32,3 @@ const DataCards = () => {
     </CRow>
   );
 };
-
-export default DataCards;

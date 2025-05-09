@@ -1,35 +1,42 @@
 import React from "react";
 
+function lazyNamedImport(exportName = "default") {
+  return React.lazy(async () => {
+    const module = await (() => import("../../views/"))();
+    return { default: module[exportName] };
+  });
+}
+
 export const routes = [
   { path: "/", exact: true, name: "Home" },
   {
     path: "/dashboard",
     name: "Dashboard",
-    element: React.lazy(() => import("../../views/dashboard/Dashboard")),
+    element: lazyNamedImport("Dashboard"),
   },
   {
     path: "/buy",
     name: "Buy",
-    element: React.lazy(() => import("../../views/buy/Buy")),
+    element: lazyNamedImport("Buy"),
   },
   {
     path: "/cards",
     name: "Cards",
-    element: React.lazy(() => import("../../views/cards/Cards")),
+    element: lazyNamedImport("Cards"),
   },
   {
     path: "/shop",
     name: "Shop",
-    element: React.lazy(() => import("../../views/shop/Shop")),
+    element: lazyNamedImport("Shop"),
   },
   {
     path: "/products",
     name: "Products",
-    element: React.lazy(() => import("../../views/products/Products")),
+    element: lazyNamedImport("Prod"),
   },
   {
     path: "/profit",
     name: "Profit",
-    element: React.lazy(() => import("../../views/profit/Profit")),
+    element: lazyNamedImport("Profit"),
   },
 ];
