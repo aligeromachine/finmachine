@@ -1,10 +1,11 @@
 import React from "react";
-import { handleDelete, handleEdit } from "./Action";
+import { handleDelete } from "../../../components/action/Action";
+import { deleteShopRow, getShopRow } from "../../../services/stateShop";
 import st from "./row.module.css";
 
-export const columnsShop = (openModal) => {
+export const columnsTbl = (openModal) => {
   const openWithEdit = async (id) => {
-    await handleEdit(id);
+    await getShopRow(id);
     openModal();
   };
 
@@ -31,7 +32,7 @@ export const columnsShop = (openModal) => {
       header: "Action",
       cell: ({ row }) => (
         <span>
-          <i onClick={() => handleDelete(row.original.id)}>
+          <i onClick={() => handleDelete(row.original.id, deleteShopRow)}>
             <img
               className={st.iconMl}
               src={"/static/img/delete.png"}

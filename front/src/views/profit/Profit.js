@@ -1,46 +1,27 @@
 import React from "react";
 import {
+  CRow,
+  CCol,
   CCard,
   CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
   CTab,
+  CTabs,
   CTabContent,
   CTabList,
   CTabPanel,
-  CTabs,
 } from "@coreui/react";
-import { useEffect } from "react";
-import { BasicTable } from "../../components/table/BasicTable";
-import {
-  columnsProfit,
-  columnsSource,
-} from "../../components/table/column/headers";
-import { useSelector, useDispatch } from "react-redux";
-import { create_params } from "../../utils/func";
-import { getProfitThunk } from "../../services/stateProfit";
-import { getSourceThunk } from "../../services/stateSource";
+import { ModalProvider } from "../../components/hook/ModalContext";
+import { Header } from "../../components/view/Header";
+import { Button } from "../../components/view/Button";
+import { TableProfit } from "./TableProfit";
+import { TableSource } from "./TableSource";
 
 export const DataProfit = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const dataP = create_params("update_profit_data", 0, 100);
-    dispatch(getProfitThunk(dataP));
-    const dataS = create_params("update_source_data", 0, 100);
-    dispatch(getSourceThunk(dataS));
-  }, [dispatch]);
-
-  const drawProfit = useSelector((store) => store.profitReducer.draw);
-  const drawSource = useSelector((store) => store.sourceReducer.draw);
-
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>DataProfit</strong>
-          </CCardHeader>
+          <Header title={"DataProfit"} />
           <CCardBody>
             <CTabs activeItemKey="profit">
               <CTabList variant="tabs">
@@ -49,10 +30,16 @@ export const DataProfit = () => {
               </CTabList>
               <CTabContent>
                 <CTabPanel className="p-3" itemKey="profit">
-                  <BasicTable data={drawProfit} columns={columnsProfit} />
+                  <ModalProvider>
+                    <Button title={"Add Profit"} />
+                    <TableProfit />
+                  </ModalProvider>
                 </CTabPanel>
                 <CTabPanel className="p-3" itemKey="source">
-                  <BasicTable data={drawSource} columns={columnsSource} />
+                  <ModalProvider>
+                    <Button title={"Add Source"} />
+                    <TableSource />
+                  </ModalProvider>
                 </CTabPanel>
               </CTabContent>
             </CTabs>

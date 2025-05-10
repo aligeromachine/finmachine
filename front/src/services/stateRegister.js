@@ -7,10 +7,12 @@ const initialState = {
   loading: "empty",
 };
 
+const PREFIX_URL = "/auth/register/";
+
 export const registerThunk = createAsyncThunk(
   "stateRegister/registerThunk",
   async (data, { rejectWithValue }) => {
-    const response = await apiClient.post("/auth/register/", data);
+    const response = await apiClient.post(PREFIX_URL, data);
     if (!response.token) return rejectWithValue(response.message);
 
     return true;

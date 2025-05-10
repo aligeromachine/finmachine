@@ -1,7 +1,6 @@
-import { deleteShopRow, getShopRow } from "../../../services/stateShop";
 import Swal from "sweetalert2";
 
-export const handleDelete = (id) => {
+export const handleDelete = (id, deleteRow) => {
   Swal.fire({
     title: `Удалить id: ${id}?`,
     text: "Вы не сможете отменить это действие!",
@@ -11,11 +10,7 @@ export const handleDelete = (id) => {
     cancelButtonText: "Отмена",
   }).then((result) => {
     if (result.isConfirmed) {
-      deleteShopRow(id);
+      deleteRow(id);
     }
   });
-};
-
-export const handleEdit = async (id) => {
-  await getShopRow(id);
 };

@@ -30,50 +30,6 @@ export const columnsBuy = [
   },
 ];
 
-export const columnsProfit = [
-  {
-    accessorKey: "id",
-    header: "Id",
-    size: 100,
-  },
-  {
-    accessorKey: "created",
-    header: "Created",
-  },
-  {
-    accessorKey: "sources",
-    header: "Sources",
-  },
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: null,
-    header: "Action",
-  },
-];
-
-export const columnsSource = [
-  {
-    accessorKey: "id",
-    header: "Id",
-    size: 100,
-  },
-  {
-    accessorKey: "created",
-    header: "Created",
-  },
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: null,
-    header: "Action",
-  },
-];
-
 export const columnsProducts = [
   {
     accessorKey: "id",

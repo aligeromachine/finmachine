@@ -12,12 +12,14 @@ const initialState = {
   loading: "loading" | "idle" | "failed",
 };
 
+const PREFIX_URL = "/cards/data/";
+
 export const getCardsTable = createAsyncThunk(
   "stateCards/getCardsTable",
   async () => {
     const { offset, recordsDisplay } = store.getState().cardsReducer;
     const params = create_params("table_cards_data", offset, recordsDisplay);
-    const response = await apiClient.post("/cards/table/", params);
+    const response = await apiClient.post(PREFIX_URL, params);
     return response;
   },
 );
@@ -29,7 +31,7 @@ export const addCardsRow = async () => {
     pk,
     ...formData,
   };
-  const response = await apiClient.post("/cards/table/", params);
+  const response = await apiClient.post(PREFIX_URL, params);
   if (!response) return Promise.reject("Error response");
   await store.dispatch(getCardsTable());
   return response;
@@ -40,7 +42,7 @@ export const deleteCardsRow = async (pk) => {
     command: "delete_cards_row",
     pk,
   };
-  await apiClient.post("/cards/table/", params);
+  await apiClient.post(PREFIX_URL, params);
   await store.dispatch(getCardsTable());
 };
 
@@ -49,7 +51,7 @@ export const getCardsRow = async (pk) => {
     command: "get_cards_row",
     pk,
   };
-  const response = await apiClient.post("/cards/table/", params);
+  const response = await apiClient.post(PREFIX_URL, params);
   store.dispatch(setRowPk(pk));
   store.dispatch(setRowState(response));
 };

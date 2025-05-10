@@ -9,10 +9,12 @@ const initialState = {
   loading: "loading" | "idle" | "failed",
 };
 
+const PREFIX_URL = "/products/data/";
+
 export const getProductsThunk = createAsyncThunk(
   "stateProducts/getProductsThunk",
   async (data) => {
-    const response = await apiClient.post("/products/table/", data);
+    const response = await apiClient.post(PREFIX_URL, data);
     return response;
   },
 );

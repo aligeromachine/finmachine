@@ -1,11 +1,11 @@
 import React from "react";
 import { handleDelete } from "../../../components/action/Action";
-import { deleteCardsRow, getCardsRow } from "../../../services/stateCards";
+import { deleteProfitRow, getProfitRow } from "../../../services/stateProfit";
 import st from "./row.module.css";
 
 export const columnsTbl = (openModal) => {
   const openWithEdit = async (id) => {
-    await getCardsRow(id);
+    await getProfitRow(id);
     openModal();
   };
 
@@ -24,19 +24,15 @@ export const columnsTbl = (openModal) => {
       header: "Title",
     },
     {
-      accessorKey: "amount",
-      header: "Amount",
-    },
-    {
-      accessorKey: "number",
-      header: "Number",
+      accessorKey: "sources",
+      header: "Sources",
     },
     {
       accessorKey: null,
       header: "Action",
       cell: ({ row }) => (
         <span>
-          <i onClick={() => handleDelete(row.original.id, deleteCardsRow)}>
+          <i onClick={() => handleDelete(row.original.id, deleteProfitRow)}>
             <img
               className={st.iconMl}
               src={"/static/img/delete.png"}

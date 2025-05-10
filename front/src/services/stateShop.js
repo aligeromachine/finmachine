@@ -12,12 +12,14 @@ const initialState = {
   loading: "loading" | "idle" | "failed",
 };
 
+const PREFIX_URL = "/shop/data/";
+
 export const getShopTable = createAsyncThunk(
   "stateShop/getShopTable",
   async () => {
     const { offset, recordsDisplay } = store.getState().shopReducer;
     const params = create_params("table_shop_data", offset, recordsDisplay);
-    const response = await apiClient.post("/shop/table/", params);
+    const response = await apiClient.post(PREFIX_URL, params);
     return response;
   },
 );
@@ -29,7 +31,7 @@ export const addShopRow = async () => {
     pk,
     ...formData,
   };
-  const response = await apiClient.post("/shop/table/", params);
+  const response = await apiClient.post(PREFIX_URL, params);
   if (!response) return Promise.reject("Error response");
   await store.dispatch(getShopTable());
   return response;
@@ -40,7 +42,7 @@ export const deleteShopRow = async (pk) => {
     command: "delete_shop_row",
     pk,
   };
-  await apiClient.post("/shop/table/", params);
+  await apiClient.post(PREFIX_URL, params);
   await store.dispatch(getShopTable());
 };
 
@@ -49,7 +51,7 @@ export const getShopRow = async (pk) => {
     command: "get_shop_row",
     pk,
   };
-  const response = await apiClient.post("/shop/table/", params);
+  const response = await apiClient.post(PREFIX_URL, params);
   store.dispatch(setRowPk(pk));
   store.dispatch(setRowState(response));
 };

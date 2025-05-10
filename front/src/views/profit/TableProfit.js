@@ -1,19 +1,19 @@
 import React from "react";
 import { BasicTable } from "../../components/table/BasicTable";
 import { useModal } from "../../components/hook/ModalContext";
-import { columnsTbl } from "./column/Header";
+import { columnsTbl } from "./column/HeaderProfit";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getShopTable } from "../../services/stateShop";
+import { getProfitTable } from "../../services/stateProfit";
 
-export const Table = () => {
+export const TableProfit = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getShopTable());
+    dispatch(getProfitTable());
   }, [dispatch]);
 
   const { openModal } = useModal();
-  const { draw } = useSelector((store) => store.shopReducer);
+  const { draw } = useSelector((store) => store.profitReducer);
 
   const columns = columnsTbl(openModal);
   return <BasicTable data={draw} columns={columns} />;
