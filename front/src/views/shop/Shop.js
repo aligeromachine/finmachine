@@ -3,7 +3,7 @@ import { CRow, CCol, CCard, CCardBody } from "@coreui/react";
 import { ModalProvider } from "../../components/hook/ModalContext";
 import { Header } from "../../components/view/Header";
 import { Button } from "../../components/view/Button";
-import { ShopModal } from "./modal/ShopModal";
+import { ShopModal } from "./modal/Base";
 import { Table } from "./Table";
 
 export const DataShop = () => {

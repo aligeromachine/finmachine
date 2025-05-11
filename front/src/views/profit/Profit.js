@@ -15,6 +15,8 @@ import { Header } from "../../components/view/Header";
 import { Button } from "../../components/view/Button";
 import { TableProfit } from "./TableProfit";
 import { TableSource } from "./TableSource";
+import { SourceModal } from "./modal/source/Base";
+import { ProfitModal } from "./modal/profit/Base";
 
 export const DataProfit = () => {
   return (
@@ -31,12 +33,14 @@ export const DataProfit = () => {
               <CTabContent>
                 <CTabPanel className="p-3" itemKey="profit">
                   <ModalProvider>
+                    <ProfitModal />
                     <Button title={"Add Profit"} />
                     <TableProfit />
                   </ModalProvider>
                 </CTabPanel>
                 <CTabPanel className="p-3" itemKey="source">
                   <ModalProvider>
+                    <SourceModal />
                     <Button title={"Add Source"} />
                     <TableSource />
                   </ModalProvider>

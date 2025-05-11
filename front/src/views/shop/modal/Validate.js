@@ -3,6 +3,7 @@ import { isEmpty } from "../../../utils/func";
 
 export const UseValid = () => {
   const [validate, setValidate] = useState({});
+  const [repErr, setRepErr] = useState("");
 
   const validateForm = useCallback((formData) => {
     const newErrors = {};
@@ -22,5 +23,7 @@ export const UseValid = () => {
   return {
     validate,
     validateForm,
+    repErr,
+    setRepErr,
   };
 };

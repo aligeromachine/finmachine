@@ -12,27 +12,26 @@ import {
 import { RedCAlert } from "../../../components/redflag/RedCAlert";
 import { RedLable } from "../../../components/redflag/RedLable";
 
-export const CardsContent = ({
+export const ShopContent = ({
   visible,
   onClose,
   formData,
   onChange,
   validate,
-  respoErr,
+  repErr,
   onAdd,
 }) => {
   return (
     <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
-        <CModalTitle id="header_cards_modal">Cards Data</CModalTitle>
+        <CModalTitle>Shop Data</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
           <CCol xs={12}>
             <CFormInput
-              id="cards_title"
               label="Title"
-              placeholder="Vtb"
+              placeholder="Magazine"
               onChange={onChange}
               value={formData.title || ""}
               name={"title"}
@@ -41,28 +40,16 @@ export const CardsContent = ({
           </CCol>
           <CCol xs={12}>
             <CFormInput
-              id="cards_amount"
-              label="Amount"
-              placeholder="100.00"
+              label="Address"
+              placeholder="Moscow City, Pavlova st.19"
               onChange={onChange}
-              value={formData.amount || ""}
-              name={"amount"}
+              value={formData.address || ""}
+              name={"address"}
             />
-            <RedLable title={validate.amount} />
-          </CCol>
-          <CCol xs={12}>
-            <CFormInput
-              id="cards_number"
-              label="Number"
-              placeholder="2200 1000 4000 5000"
-              onChange={onChange}
-              value={formData.number || ""}
-              name={"number"}
-            />
-            <RedLable title={validate.number} />
+            <RedLable title={validate.address} />
           </CCol>
         </CForm>
-        <RedCAlert title={respoErr} />
+        <RedCAlert title={repErr} />
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" onClick={onClose}>

@@ -9,49 +9,37 @@ import {
   CCol,
   CForm,
 } from "@coreui/react";
-import { RedCAlert } from "../../../components/redflag/RedCAlert";
-import { RedLable } from "../../../components/redflag/RedLable";
+import { RedCAlert } from "../../../../components/redflag/RedCAlert";
+import { RedLable } from "../../../../components/redflag/RedLable";
 
-export const ShopContent = ({
+export const SourceContent = ({
   visible,
   onClose,
   formData,
   onChange,
   validate,
-  respoErr,
+  repErr,
   onAdd,
 }) => {
   return (
     <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
-        <CModalTitle id="header_shop_modal">Shop Data</CModalTitle>
+        <CModalTitle>Source Data</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
           <CCol xs={12}>
             <CFormInput
-              id="input_title"
               label="Title"
-              placeholder="Magazine"
+              placeholder="Zarplata"
               onChange={onChange}
               value={formData.title || ""}
               name={"title"}
             />
             <RedLable title={validate.title} />
           </CCol>
-          <CCol xs={12}>
-            <CFormInput
-              id="input_address"
-              label="Address"
-              placeholder="Moscow City, Pavlova st.19"
-              onChange={onChange}
-              value={formData.address || ""}
-              name={"address"}
-            />
-            <RedLable title={validate.address} />
-          </CCol>
         </CForm>
-        <RedCAlert title={respoErr} />
+        <RedCAlert title={repErr} />
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" onClick={onClose}>

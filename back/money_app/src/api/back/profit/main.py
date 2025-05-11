@@ -19,6 +19,7 @@ def table_profit_data(item: ProfitMessage):
             'id': it.id,
             'created': timeDRFF(it.created),
             'title': it.title,
+            'amount': it.amount,
             'sources': it.sources,
         }
         ls.append(raw)

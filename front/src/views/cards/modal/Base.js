@@ -1,15 +1,13 @@
 import React from "react";
-import { CardsContent } from "./CardsContent";
+import { CardsContent } from "./Content";
 import { UseValid } from "./Validate";
 import { addCardsRow } from "../../../services/stateCards";
-import { useState } from "react";
 import { useModal } from "../../../components/hook/ModalContext";
 import { setRowState } from "../../../services/stateRow";
 
 export const CardsModal = () => {
   const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();
-  const { validate, validateForm } = UseValid();
-  const [respoErr, setRespoErr] = useState("");
+  const { validate, validateForm, repErr, setRepErr } = UseValid();
 
   async function onAdd() {
     if (!validateForm(formData)) {
@@ -19,7 +17,7 @@ export const CardsModal = () => {
     onSet(setRowState);
     const response = await addCardsRow();
     if (response.data === "err") {
-      setRespoErr(response.message);
+      setRepErr(response.message);
       return;
     }
     closeModal();
@@ -32,7 +30,7 @@ export const CardsModal = () => {
       formData={formData}
       onChange={onChange}
       validate={validate}
-      respoErr={respoErr}
+      repErr={repErr}
       onAdd={onAdd}
     />
   );

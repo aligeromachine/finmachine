@@ -6,33 +6,33 @@ import {
   CModalHeader,
   CModalTitle,
   CFormInput,
+  CFormSelect,
   CCol,
   CForm,
 } from "@coreui/react";
-import { RedCAlert } from "../../../components/redflag/RedCAlert";
-import { RedLable } from "../../../components/redflag/RedLable";
+import { RedCAlert } from "../../../../components/redflag/RedCAlert";
+import { RedLable } from "../../../../components/redflag/RedLable";
 
-export const ShopContent = ({
+export const ProfitContent = ({
   visible,
   onClose,
   formData,
   onChange,
   validate,
-  respoErr,
+  repErr,
   onAdd,
 }) => {
   return (
     <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
-        <CModalTitle id="header_shop_modal">Shop Data</CModalTitle>
+        <CModalTitle>Source Data</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
           <CCol xs={12}>
             <CFormInput
-              id="input_title"
               label="Title"
-              placeholder="Magazine"
+              placeholder="Zarplata"
               onChange={onChange}
               value={formData.title || ""}
               name={"title"}
@@ -41,17 +41,29 @@ export const ShopContent = ({
           </CCol>
           <CCol xs={12}>
             <CFormInput
-              id="input_address"
-              label="Address"
-              placeholder="Moscow City, Pavlova st.19"
+              label="Amount"
+              placeholder="235456.2"
               onChange={onChange}
-              value={formData.address || ""}
-              name={"address"}
+              value={formData.amount || ""}
+              name={"amount"}
             />
-            <RedLable title={validate.address} />
+            <RedLable title={validate.amount} />
+          </CCol>
+          <CCol xs={12}>
+            <CFormSelect
+              label="Source"
+              aria-label="Default select example"
+              options={[
+                { label: "Open this select menu" },
+                { label: "One", value: "1" },
+                { label: "Two", value: "2" },
+                { label: "Three", value: "3", disabled: true },
+              ]}
+            />
+            <RedLable title={validate.title} />
           </CCol>
         </CForm>
-        <RedCAlert title={respoErr} />
+        <RedCAlert title={repErr} />
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" onClick={onClose}>

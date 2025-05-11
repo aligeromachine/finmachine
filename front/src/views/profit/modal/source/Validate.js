@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { isEmpty } from "../../../utils/func";
+import { isEmpty } from "../../../../utils/func";
 
 export const UseValid = () => {
   const [validate, setValidate] = useState({});
@@ -10,16 +10,6 @@ export const UseValid = () => {
 
     if (!formData.title) {
       newErrors.title = "Title обязательно";
-    }
-
-    if (!formData.amount) {
-      newErrors.amount = "Amount обязателен";
-    } else if (!/^\d*\.?\d*$/.test(formData.amount)) {
-      newErrors.amount = "Некорректный amount";
-    }
-
-    if (!formData.number) {
-      newErrors.number = "Number обязательно";
     }
 
     setValidate(newErrors);

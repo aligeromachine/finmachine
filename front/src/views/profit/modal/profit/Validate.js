@@ -1,18 +1,15 @@
 import { useState, useCallback } from "react";
-import { isEmpty } from "../../../utils/func";
+import { isEmpty } from "../../../../utils/func";
 
 export const UseValid = () => {
   const [validate, setValidate] = useState({});
+  const [repErr, setRepErr] = useState("");
 
   const validateForm = useCallback((formData) => {
     const newErrors = {};
 
     if (!formData.title) {
       newErrors.title = "Title обязательно";
-    }
-
-    if (!formData.address) {
-      newErrors.address = "Address обязательно";
     }
 
     setValidate(newErrors);
@@ -22,5 +19,7 @@ export const UseValid = () => {
   return {
     validate,
     validateForm,
+    repErr,
+    setRepErr,
   };
 };

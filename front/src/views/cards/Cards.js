@@ -4,7 +4,7 @@ import { ModalProvider } from "../../components/hook/ModalContext";
 import { Header } from "../../components/view/Header";
 import { Button } from "../../components/view/Button";
 import { Table } from "./Table";
-import { CardsModal } from "./modal/CardsModal";
+import { CardsModal } from "./modal/Base";
 
 export const DataCards = () => {
   return (
