@@ -4,7 +4,7 @@ import { useModal } from "../../components/hook/ModalContext";
 import { columnsTbl } from "./column/Header";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getShopTable } from "../../services/stateShop";
+import { getShopTable } from "../../services/shop/state";
 
 export const Table = () => {
   const dispatch = useDispatch();

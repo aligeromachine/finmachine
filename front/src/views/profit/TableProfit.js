@@ -4,7 +4,7 @@ import { useModal } from "../../components/hook/ModalContext";
 import { columnsTbl } from "./column/HeaderProfit";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProfitTable } from "../../services/stateProfit";
+import { getProfitTable } from "../../services/profit/state";
 
 export const TableProfit = () => {
   const dispatch = useDispatch();

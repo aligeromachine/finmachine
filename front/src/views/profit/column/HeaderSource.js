@@ -1,6 +1,9 @@
 import React from "react";
 import { handleDelete } from "../../../components/action/Action";
-import { deleteSourceRow, getSourceRow } from "../../../services/stateSource";
+import {
+  deleteSourceRow,
+  getSourceRow,
+} from "../../../services/source/state";
 import st from "./row.module.css";
 
 export const columnsTbl = (openModal) => {

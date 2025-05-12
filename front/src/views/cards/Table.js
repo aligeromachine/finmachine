@@ -4,7 +4,7 @@ import { useModal } from "../../components/hook/ModalContext";
 import { columnsTbl } from "./column/Header";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCardsTable } from "../../services/stateCards";
+import { getCardsTable } from "../../services/cards/state";
 
 export const Table = () => {
   const dispatch = useDispatch();

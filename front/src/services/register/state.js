@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiClient } from "../utils/requests";
+import { apiClient } from "../../utils/requests";
 
 const initialState = {
   register: false,

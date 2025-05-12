@@ -4,7 +4,7 @@ import {
   loadToken,
   setCredentials,
   refreshThunk,
-} from "../../services/stateToken";
+} from "../../services/token/state";
 
 export const Token = () => {
   const dispatch = useDispatch();

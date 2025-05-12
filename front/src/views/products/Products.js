@@ -19,8 +19,8 @@ import {
 } from "../../components/table/column/headers";
 import { useSelector, useDispatch } from "react-redux";
 import { create_params } from "../../utils/func";
-import { getProductsThunk } from "../../services/stateProducts";
-import { getCatalogThunk } from "../../services/stateCatalog";
+import { getProductsThunk } from "../../services/products/state";
+import { getCatalogThunk } from "../../services/catalog/state";
 
 export const DataProducts = () => {
   const dispatch = useDispatch();

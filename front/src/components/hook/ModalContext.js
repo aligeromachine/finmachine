@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { store } from "../../services/store";
-import { nullRowData } from "../../services/stateRow";
+import { nullRowData } from "../../services/row/state";
 
 // Создаем контекст с начальными значениями
 const ModalContext = createContext({

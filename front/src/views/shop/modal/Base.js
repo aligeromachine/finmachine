@@ -1,9 +1,9 @@
 import React from "react";
 import { ShopContent } from "./Content";
 import { UseValid } from "./Validate";
-import { addShopRow } from "../../../services/stateShop";
+import { addShopRow } from "../../../services/shop/state";
 import { useModal } from "../../../components/hook/ModalContext";
-import { setRowState } from "../../../services/stateRow";
+import { setRowState } from "../../../services/row/state";
 
 export const ShopModal = () => {
   const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();

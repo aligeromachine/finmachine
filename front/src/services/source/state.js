@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { apiClient } from "../utils/requests";
-import { create_params } from "../utils/func";
-import { store } from "./store"; // Импортируем Redux store
-import { setRowState, setRowPk } from "./stateRow";
+import { apiClient } from "../../utils/requests";
+import { create_params } from "../../utils/func";
+import { setRowState, setRowPk } from "../row/state";
+import { store } from "../store"; // Импортируем Redux store
+
 
 const initialState = {
   recordsTotal: 0,

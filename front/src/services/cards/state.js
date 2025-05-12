@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { apiClient } from "../utils/requests";
-import { create_params } from "../utils/func";
-import { store } from "./store"; // Импортируем Redux store
-import { setRowState, setRowPk } from "./stateRow";
+import { apiClient } from "../../utils/requests";
+import { create_params } from "../../utils/func";
+import { setRowState, setRowPk } from "../row/state";
+import { store } from "../store";
 
 const initialState = {
   recordsTotal: 0,
@@ -12,43 +12,43 @@ const initialState = {
   loading: "loading" | "idle" | "failed",
 };
 
-const PREFIX_URL = "/shop/data/";
+const PREFIX_URL = "/cards/data/";
 
-export const getShopTable = createAsyncThunk(
-  "stateShop/getShopTable",
+export const getCardsTable = createAsyncThunk(
+  "stateCards/getCardsTable",
   async () => {
-    const { offset, recordsDisplay } = store.getState().shopReducer;
-    const params = create_params("table_shop_data", offset, recordsDisplay);
+    const { offset, recordsDisplay } = store.getState().cardsReducer;
+    const params = create_params("table_cards_data", offset, recordsDisplay);
     const response = await apiClient.post(PREFIX_URL, params);
     return response;
   },
 );
 
-export const addShopRow = async () => {
+export const addCardsRow = async () => {
   const { pk, formData } = store.getState().rowReducer;
   const params = {
-    command: pk === 0 ? "add_shop_data" : "edit_shop_data",
+    command: pk === 0 ? "add_cards_data" : "edit_cards_data",
     pk,
     ...formData,
   };
   const response = await apiClient.post(PREFIX_URL, params);
   if (!response) return Promise.reject("Error response");
-  await store.dispatch(getShopTable());
+  await store.dispatch(getCardsTable());
   return response;
 };
 
-export const deleteShopRow = async (pk) => {
+export const deleteCardsRow = async (pk) => {
   const params = {
-    command: "delete_shop_row",
+    command: "delete_cards_row",
     pk,
   };
   await apiClient.post(PREFIX_URL, params);
-  await store.dispatch(getShopTable());
+  await store.dispatch(getCardsTable());
 };
 
-export const getShopRow = async (pk) => {
+export const getCardsRow = async (pk) => {
   const params = {
-    command: "get_shop_row",
+    command: "get_cards_row",
     pk,
   };
   const response = await apiClient.post(PREFIX_URL, params);
@@ -56,26 +56,26 @@ export const getShopRow = async (pk) => {
   store.dispatch(setRowState(response));
 };
 
-export const stateShop = createSlice({
-  name: "stateShop",
+export const stateCards = createSlice({
+  name: "stateCards",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getShopTable.pending, (state) => {
+      .addCase(getCardsTable.pending, (state) => {
         state.loading = "loading";
       })
-      .addCase(getShopTable.fulfilled, (state, action) => {
+      .addCase(getCardsTable.fulfilled, (state, action) => {
         state.recordsTotal = action.payload.recordsTotal;
         state.offset = action.payload.offset;
         state.recordsDisplay = action.payload.recordsDisplay;
         state.draw = action.payload.draw;
         state.loading = "idle";
       })
-      .addCase(getShopTable.rejected, (state) => {
+      .addCase(getCardsTable.rejected, (state) => {
         state.loading = "failed";
       });
   },
 });
 
-export const shopReducer = stateShop.reducer;
+export const cardsReducer = stateCards.reducer;

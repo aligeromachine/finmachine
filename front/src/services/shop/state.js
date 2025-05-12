@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { apiClient } from "../utils/requests";
-import { create_params } from "../utils/func";
-import { store } from "./store"; // Импортируем Redux store
-import { setRowState, setRowPk } from "./stateRow";
+import { apiClient } from "../../utils/requests";
+import { create_params } from "../../utils/func";
+import { store } from "../store"; // Импортируем Redux store
+import { setRowState, setRowPk } from "../row/state";
 
 const initialState = {
   recordsTotal: 0,
@@ -12,43 +12,43 @@ const initialState = {
   loading: "loading" | "idle" | "failed",
 };
 
-const PREFIX_URL = "/profit/data/";
+const PREFIX_URL = "/shop/data/";
 
-export const getProfitTable = createAsyncThunk(
-  "stateProfit/getProfitTable",
+export const getShopTable = createAsyncThunk(
+  "stateShop/getShopTable",
   async () => {
-    const { offset, recordsDisplay } = store.getState().profitReducer;
-    const params = create_params("table_profit_data", offset, recordsDisplay);
+    const { offset, recordsDisplay } = store.getState().shopReducer;
+    const params = create_params("table_shop_data", offset, recordsDisplay);
     const response = await apiClient.post(PREFIX_URL, params);
     return response;
   },
 );
 
-export const addProfitRow = async () => {
+export const addShopRow = async () => {
   const { pk, formData } = store.getState().rowReducer;
   const params = {
-    command: pk === 0 ? "add_profit_data" : "edit_profit_data",
+    command: pk === 0 ? "add_shop_data" : "edit_shop_data",
     pk,
     ...formData,
   };
   const response = await apiClient.post(PREFIX_URL, params);
   if (!response) return Promise.reject("Error response");
-  await store.dispatch(getProfitTable());
+  await store.dispatch(getShopTable());
   return response;
 };
 
-export const deleteProfitRow = async (pk) => {
+export const deleteShopRow = async (pk) => {
   const params = {
-    command: "delete_profit_row",
+    command: "delete_shop_row",
     pk,
   };
   await apiClient.post(PREFIX_URL, params);
-  await store.dispatch(getProfitTable());
+  await store.dispatch(getShopTable());
 };
 
-export const getProfitRow = async (pk) => {
+export const getShopRow = async (pk) => {
   const params = {
-    command: "get_profit_row",
+    command: "get_shop_row",
     pk,
   };
   const response = await apiClient.post(PREFIX_URL, params);
@@ -56,26 +56,26 @@ export const getProfitRow = async (pk) => {
   store.dispatch(setRowState(response));
 };
 
-export const stateProfit = createSlice({
-  name: "stateProfit",
+export const stateShop = createSlice({
+  name: "stateShop",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getProfitTable.pending, (state) => {
+      .addCase(getShopTable.pending, (state) => {
         state.loading = "loading";
       })
-      .addCase(getProfitTable.fulfilled, (state, action) => {
+      .addCase(getShopTable.fulfilled, (state, action) => {
         state.recordsTotal = action.payload.recordsTotal;
         state.offset = action.payload.offset;
         state.recordsDisplay = action.payload.recordsDisplay;
         state.draw = action.payload.draw;
         state.loading = "idle";
       })
-      .addCase(getProfitTable.rejected, (state) => {
+      .addCase(getShopTable.rejected, (state) => {
         state.loading = "failed";
       });
   },
 });
 
-export const profitReducer = stateProfit.reducer;
+export const shopReducer = stateShop.reducer;

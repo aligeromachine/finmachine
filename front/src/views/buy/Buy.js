@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { BasicTable } from "../../components/table/BasicTable";
 import { columnsBuy } from "../../components/table/column/headers";
 import { useSelector, useDispatch } from "react-redux";
-import { getBuysThunk } from "../../services/stateBuys";
+import { getBuysThunk } from "../../services/buys/state";
 import { create_params } from "../../utils/func";
 import { ModalProvider } from "../../components/hook/ModalContext";
 

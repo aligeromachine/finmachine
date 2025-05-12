@@ -17,7 +17,7 @@ import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
 import { UseForm } from "../../components/hook/UseForm";
 import { useDispatch } from "react-redux";
-import { loginThunk } from "../../services/stateToken";
+import { loginThunk } from "../../services/token/state";
 
 export const Login = () => {
   const dispatch = useDispatch();

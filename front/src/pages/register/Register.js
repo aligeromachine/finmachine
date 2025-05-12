@@ -16,7 +16,10 @@ import {
 import CIcon from "@coreui/icons-react";
 import { cilLockLocked, cilUser } from "@coreui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { registerThunk, setRegister } from "../../services/stateRegister";
+import {
+  registerThunk,
+  setRegister,
+} from "../../services/register/state";
 import { UseForm } from "../../components/hook/UseForm";
 import { UseValidRegister } from "./Validate";
 import { RedLable } from "../../components/redflag/RedLable";

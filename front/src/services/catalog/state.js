@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { apiClient } from "../utils/requests";
+import { apiClient } from "../../utils/requests";
 
 const initialState = {
   recordsTotal: 0,
@@ -9,36 +9,36 @@ const initialState = {
   loading: "loading" | "idle" | "failed",
 };
 
-const PREFIX_URL = "/buy/data/";
+const PREFIX_URL = "/catalog/data/";
 
-export const getBuysThunk = createAsyncThunk(
-  "stateBuys/getBuysThunk",
+export const getCatalogThunk = createAsyncThunk(
+  "stateCatalog/getCatalogThunk",
   async (data) => {
     const response = await apiClient.post(PREFIX_URL, data);
     return response;
   },
 );
 
-export const stateBuys = createSlice({
-  name: "stateBuys",
+export const stateCatalog = createSlice({
+  name: "stateCatalog",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getBuysThunk.pending, (state) => {
+      .addCase(getCatalogThunk.pending, (state) => {
         state.loading = "loading";
       })
-      .addCase(getBuysThunk.fulfilled, (state, action) => {
+      .addCase(getCatalogThunk.fulfilled, (state, action) => {
         state.recordsTotal = action.payload.recordsTotal;
         state.offset = action.payload.offset;
         state.recordsDisplay = action.payload.recordsDisplay;
         state.draw = action.payload.draw;
         state.loading = "idle";
       })
-      .addCase(getBuysThunk.rejected, (state) => {
+      .addCase(getCatalogThunk.rejected, (state) => {
         state.loading = "failed";
       });
   },
 });
 
-export const buysReducer = stateBuys.reducer;
+export const catalogReducer = stateCatalog.reducer;

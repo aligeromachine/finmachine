@@ -11,7 +11,7 @@ import {
 } from "@coreui/react";
 
 import { AppSidebarNav } from "./AppSidebarNav";
-import { changeSideShow, changeSideUnfo } from "../../services/stateBar";
+import { changeSideShow, changeSideUnfo } from "../../services/bar/state";
 
 import navigation from "./_nav";
 

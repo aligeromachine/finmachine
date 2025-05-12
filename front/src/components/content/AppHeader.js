@@ -25,7 +25,7 @@ import {
 } from "@coreui/icons";
 
 import { AppHeaderDropdown } from "../content/AppHeaderDropdown";
-import { changeSideShow, changeTheme } from "../../services/stateBar";
+import { changeSideShow, changeTheme } from "../../services/bar/state";
 
 export const AppHeader = () => {
   const headerRef = useRef();

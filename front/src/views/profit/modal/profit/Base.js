@@ -1,9 +1,9 @@
 import React from "react";
 import { ProfitContent } from "./Content";
 import { UseValid } from "./Validate";
-import { addProfitRow } from "../../../../services/stateProfit";
+import { addProfitRow } from "../../../../services/profit/state";
 import { useModal } from "../../../../components/hook/ModalContext";
-import { setRowState } from "../../../../services/stateRow";
+import { setRowState } from "../../../../services/row/state";
 
 export const ProfitModal = () => {
   const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();
