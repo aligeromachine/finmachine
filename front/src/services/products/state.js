@@ -1,15 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiClient } from "../../utils/requests";
-
-const initialState = {
-  recordsTotal: 0,
-  offset: 0,
-  recordsDisplay: 0,
-  draw: [],
-  loading: "loading" | "idle" | "failed",
-};
-
-const PREFIX_URL = "/products/data/";
+import { initialState } from "./model";
+import { PREFIX_URL } from "./const";
 
 export const getProductsThunk = createAsyncThunk(
   "stateProducts/getProductsThunk",

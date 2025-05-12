@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  loadToken,
-  setCredentials,
-  refreshThunk,
-} from "../../services/token/state";
+import { setCredentials, refreshThunk } from "../../services/token/state";
+import { loadToken } from "../../services/token/utils";
 
 export const Token = () => {
   const dispatch = useDispatch();

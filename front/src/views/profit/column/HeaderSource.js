@@ -1,10 +1,10 @@
 import React from "react";
 import { handleDelete } from "../../../components/action/Action";
+import st from "./row.module.css";
 import {
   deleteSourceRow,
   getSourceRow,
-} from "../../../services/source/state";
-import st from "./row.module.css";
+} from "../../../services/source/request";
 
 export const columnsTbl = (openModal) => {
   const openWithEdit = async (id) => {

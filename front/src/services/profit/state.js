@@ -2,17 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiClient } from "../../utils/requests";
 import { create_params } from "../../utils/func";
 import { store } from "../store"; // Импортируем Redux store
-import { setRowState, setRowPk } from "../row/state";
-
-const initialState = {
-  recordsTotal: 0,
-  offset: 0,
-  recordsDisplay: 100,
-  draw: [],
-  loading: "loading" | "idle" | "failed",
-};
-
-const PREFIX_URL = "/profit/data/";
+import { initialState } from "./model";
 
 export const getProfitTable = createAsyncThunk(
   "stateProfit/getProfitTable",
@@ -23,38 +13,6 @@ export const getProfitTable = createAsyncThunk(
     return response;
   },
 );
-
-export const addProfitRow = async () => {
-  const { pk, formData } = store.getState().rowReducer;
-  const params = {
-    command: pk === 0 ? "add_profit_data" : "edit_profit_data",
-    pk,
-    ...formData,
-  };
-  const response = await apiClient.post(PREFIX_URL, params);
-  if (!response) return Promise.reject("Error response");
-  await store.dispatch(getProfitTable());
-  return response;
-};
-
-export const deleteProfitRow = async (pk) => {
-  const params = {
-    command: "delete_profit_row",
-    pk,
-  };
-  await apiClient.post(PREFIX_URL, params);
-  await store.dispatch(getProfitTable());
-};
-
-export const getProfitRow = async (pk) => {
-  const params = {
-    command: "get_profit_row",
-    pk,
-  };
-  const response = await apiClient.post(PREFIX_URL, params);
-  store.dispatch(setRowPk(pk));
-  store.dispatch(setRowState(response));
-};
 
 export const stateProfit = createSlice({
   name: "stateProfit",

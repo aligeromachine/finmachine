@@ -1,7 +1,7 @@
 import React from "react";
 import { ProfitContent } from "./Content";
 import { UseValid } from "./Validate";
-import { addProfitRow } from "../../../../services/profit/state";
+import { addProfitRow } from "../../../../services/profit/request";
 import { useModal } from "../../../../components/hook/ModalContext";
 import { setRowState } from "../../../../services/row/state";
 

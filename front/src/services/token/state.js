@@ -2,16 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ONE_HOUR, SEVEN_DAYS } from "../../utils/const";
 import { apiClient } from "../../utils/requests";
 import { setWithExpiry, getWithExpiry, removeItem } from "../../utils/storage";
-
-const initialState = {
-  token: null,
-  loading: "empty",
-};
-
-export const loadToken = () => {
-  const token = getWithExpiry("accessToken");
-  return token;
-};
+import { initialState } from "./model";
 
 export const loginThunk = createAsyncThunk(
   "stateToken/loginThunk",

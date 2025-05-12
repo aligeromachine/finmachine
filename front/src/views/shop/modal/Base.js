@@ -1,7 +1,7 @@
 import React from "react";
 import { ShopContent } from "./Content";
 import { UseValid } from "./Validate";
-import { addShopRow } from "../../../services/shop/state";
+import { addShopRow } from "../../../services/shop/request";
 import { useModal } from "../../../components/hook/ModalContext";
 import { setRowState } from "../../../services/row/state";
 

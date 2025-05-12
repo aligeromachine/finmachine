@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  pk: 0,
-  formData: {},
-};
+import { initialState } from "./model";
 
 const stateRow = createSlice({
   name: "stateRow",

@@ -1,13 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiClient } from "../../utils/requests";
-
-const initialState = {
-  register: false,
-  error: "",
-  loading: "empty",
-};
-
-const PREFIX_URL = "/auth/register/";
+import { initialState } from "./model";
+import { PREFIX_URL } from "./const";
 
 export const registerThunk = createAsyncThunk(
   "stateRegister/registerThunk",

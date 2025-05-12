@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  sidebarShow: true,
-  sidebarUnfoldable: false,
-  theme: "light",
-};
+import { initialState } from "./model";
 
 const stateBar = createSlice({
   name: "stateBar",

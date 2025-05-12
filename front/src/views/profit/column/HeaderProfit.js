@@ -3,7 +3,7 @@ import { handleDelete } from "../../../components/action/Action";
 import {
   deleteProfitRow,
   getProfitRow,
-} from "../../../services/profit/state";
+} from "../../../services/profit/request";
 import st from "./row.module.css";
 
 export const columnsTbl = (openModal) => {
