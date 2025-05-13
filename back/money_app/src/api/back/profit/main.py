@@ -20,7 +20,7 @@ def table_profit_data(item: ProfitMessage):
             'created': timeDRFF(it.created),
             'title': it.title,
             'amount': it.amount,
-            'sources': it.sources,
+            'source': it.sources,
         }
         ls.append(raw)
 
@@ -46,6 +46,8 @@ def get_profit_row(item: ProfitMessage):
 
     for it in Profit.objects.filter(pk=item.pk):
         data["title"] = it.title
+        data["amount"] = it.amount
+        data["source"] = it.source_id
 
     return data
 
@@ -54,6 +56,8 @@ def edit_profit_data(item: ProfitMessage):
         instance = Profit.objects.get(pk=item.pk)
 
         instance.title = item.title
+        instance.amount = item.amount
+        instance.source_id = item.source
         instance.save()
     except: # noqa
         return {'data': 'err', 'message': 'pk does not exist'}
@@ -69,13 +73,13 @@ def invoke_response(request: HttpRequest, item: ProfitMessage):
 
     if item.command == "add_profit_data":
         respo = add_profit_data(item=item)
-    
+
     if item.command == "delete_profit_row":
         respo = delete_profit_row(item=item)
-    
+
     if item.command == "get_profit_row":
         respo = get_profit_row(item=item)
-    
+
     if item.command == "edit_profit_data":
         respo = edit_profit_data(item=item)
 

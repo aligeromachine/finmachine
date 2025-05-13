@@ -33,7 +33,7 @@ def table_cards_data(item: CardsMessage):
 
 def add_cards_data(item: CardsMessage):
     Cards(
-        title=item.title, 
+        title=item.title,
         amount=item.amount,
         number=item.number,
         user_id=item.user_id
@@ -76,16 +76,16 @@ def invoke_response(request: HttpRequest, item: CardsMessage):
 
     if item.command == "table_cards_data":
         respo = table_cards_data(item=item)
-    
+
     if item.command == "add_cards_data":
         respo = add_cards_data(item=item)
-    
+
     if item.command == "delete_cards_row":
         respo = delete_cards_row(item=item)
-    
+
     if item.command == "get_cards_row":
         respo = get_cards_row(item=item)
-    
+
     if item.command == "edit_cards_data":
         respo = edit_cards_data(item=item)
 

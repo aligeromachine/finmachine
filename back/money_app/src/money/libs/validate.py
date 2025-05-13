@@ -4,7 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def validate_dict(response: dict, Model: type[BaseModel], prn: bool = False):
+def validate_dict(response: dict, Model: type[BaseModel], prn: bool = False) -> type[BaseModel] | None:
     try:
         data = Model(**response)
         return data

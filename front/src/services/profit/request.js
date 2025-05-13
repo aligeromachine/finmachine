@@ -17,6 +17,7 @@ export const addProfitRow = async () => {
     pk,
     ...formData,
   };
+  console.log(params);
   const response = await apiClient.post(PROFIT_URL, params);
   if (!response) return Promise.reject("Error response");
   await store.dispatch(getProfitTable());

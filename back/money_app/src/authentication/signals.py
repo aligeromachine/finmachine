@@ -3,7 +3,7 @@ from authentication.config import ACCESS_LIFETIME, REFRESH_LIFETIME, ALGORITHM, 
 import jwt
 from datetime import datetime, timezone
 
-def create_jwt_tokens(sender, instance, created, **kwargs):
+def create_jwt_tokens(sender, instance, created, **kwargs) -> None: # type: ignore
     if created and instance.is_superuser:
         # Генерация токенов
         access_payload = {
@@ -35,6 +35,6 @@ def create_jwt_tokens(sender, instance, created, **kwargs):
         print(f'Access Token: {access_token}')
         print(f'Refresh Token: {refresh_token}')
 
-def register_handlers():
+def register_handlers() -> None:
     from django.db.models.signals import post_save
     post_save.connect(create_jwt_tokens, sender=get_user_model())

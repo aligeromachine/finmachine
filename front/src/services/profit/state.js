@@ -1,15 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiClient } from "../../utils/requests";
 import { create_params } from "../../utils/func";
-import { store } from "../store"; // Импортируем Redux store
+import { store } from "../store";
 import { initialState } from "./model";
+import { PROFIT_URL, PROFIT_TBL } from "./const";
 
 export const getProfitTable = createAsyncThunk(
   "stateProfit/getProfitTable",
   async () => {
     const { offset, recordsDisplay } = store.getState().profitReducer;
-    const params = create_params("table_profit_data", offset, recordsDisplay);
-    const response = await apiClient.post(PREFIX_URL, params);
+    const params = create_params(PROFIT_TBL, offset, recordsDisplay);
+    const response = await apiClient.post(PROFIT_URL, params);
     return response;
   },
 );

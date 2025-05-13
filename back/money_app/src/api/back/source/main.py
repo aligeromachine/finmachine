@@ -58,23 +58,38 @@ def edit_source_data(item: SourceMessage):
 
     return {'data': 'ok', 'message': f'update {item.pk=}'}
 
+def list_source_data(item: SourceMessage):
+    ls: list = []
+
+    for it in Source.objects.all():
+        ls.append({
+            "pk": it.pk,
+            "title": it.title
+
+        })
+
+    return ls
+
 @validate_model(SourceMessage)
 def invoke_response(request: HttpRequest, item: SourceMessage):
     respo = {"data": "err", "message": "undefinded"}
 
     if item.command == "table_source_data":
         respo = table_source_data(item=item)
-    
+
     if item.command == "add_source_data":
         respo = add_source_data(item=item)
-    
+
     if item.command == "delete_source_row":
         respo = delete_source_row(item=item)
-    
+
     if item.command == "get_source_row":
         respo = get_source_row(item=item)
-    
+
     if item.command == "edit_source_data":
         respo = edit_source_data(item=item)
+
+    if item.command == "list_source_data":
+        respo = list_source_data(item=item)
 
     return respo

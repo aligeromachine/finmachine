@@ -1,11 +1,12 @@
 import subprocess
+from typing import Callable
 from multiprocessing import Process
 
-def SimpleProccess(func, arg: tuple):
+def SimpleProccess(func: Callable, arg: tuple) -> None:
     p = Process(target=func, args=arg)
     p.start()
 
-def RunSubProc(command: str):
+def RunSubProc(command: str) -> int:
     returned_value = 1
 
     try:
@@ -15,7 +16,7 @@ def RunSubProc(command: str):
 
     return returned_value
 
-def RunCMD(command: str):
+def RunCMD(command: str) -> str:
 
     result = ''
 

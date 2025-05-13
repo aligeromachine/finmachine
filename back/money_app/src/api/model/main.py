@@ -16,10 +16,10 @@ class FData(BaseModel):
     name: str
     type: str
 
-def validate_model(Model: type[MainModel]):
-    def decorator(func: Callable):
+def validate_model(Model: type[MainModel]): # type: ignore
+    def decorator(func: Callable): # type: ignore
         @wraps(func)
-        def wrapper(request: HttpRequest, *args, **kwargs):
+        def wrapper(request: HttpRequest, *args: list, **kwargs: dict): # type: ignore
 
             data: MainModel = validate_dict_conv(request.body, Model=Model)
             if not data:

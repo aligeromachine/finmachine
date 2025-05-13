@@ -67,16 +67,16 @@ def invoke_response(request: HttpRequest, item: ShopMessage):
 
     if item.command == "table_shop_data":
         respo = table_shop_data(item=item)
-    
+
     if item.command == "add_shop_data":
         respo = add_shop_data(item=item)
-    
+
     if item.command == "delete_shop_row":
         respo = delete_shop_row(item=item)
-    
+
     if item.command == "get_shop_row":
         respo = get_shop_row(item=item)
-    
+
     if item.command == "edit_shop_data":
         respo = edit_shop_data(item=item)
 

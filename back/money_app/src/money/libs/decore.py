@@ -1,6 +1,6 @@
 from functools import wraps
 import time
-from typing import Callable
+from typing import Callable, Any
 from django.http import HttpRequest, JsonResponse
 from pydantic import BaseModel
 
@@ -10,21 +10,20 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def token_response(token: dict = None, msg: str = None, code: int = 200):
+def token_response(token: dict | None = None, msg: str | None = None, code: int = 200) -> JsonResponse:
     return JsonResponse({'token': token, 'message': msg}, status=code)
 
-def check_post(view_func):
-    def wrapper_view(request: HttpRequest):
-
+def check_post(view_func: Callable) -> Any:
+    def wrapper_view(request: HttpRequest) -> Any:
         if request.method != 'POST':
             return token_response(msg='Method not allowed', code=405)
         return view_func(request)
     return wrapper_view
 
-def validate_auth(Model: type[BaseModel]):
-    def decorator(func: Callable):
+def validate_auth(Model: type[BaseModel]) -> Any:
+    def decorator(func: Callable) -> Any:
         @wraps(func)
-        def wrapper(request: HttpRequest, *args, **kwargs):
+        def wrapper(request: HttpRequest, *args: list, **kwargs: dict) -> Any:
 
             data: BaseModel = validate_dict_conv(response=request.body, Model=Model)
             if not data:
@@ -33,9 +32,9 @@ def validate_auth(Model: type[BaseModel]):
         return wrapper
     return decorator
 
-def calculate_running_time(func):
+def calculate_running_time(func: Callable) -> Any:
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: list, **kwargs: dict) -> Any:
         begin = time.time()
         random_name = RandomName(5).lower()
 

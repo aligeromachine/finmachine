@@ -31,8 +31,8 @@ export const columnsTbl = (openModal) => {
       header: "Amount",
     },
     {
-      accessorKey: "sources",
-      header: "Sources",
+      accessorKey: "source",
+      header: "Source",
     },
     {
       accessorKey: null,

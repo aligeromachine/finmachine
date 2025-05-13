@@ -1,3 +1,5 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import {
   CButton,
   CModal,
@@ -6,12 +8,13 @@ import {
   CModalHeader,
   CModalTitle,
   CFormInput,
-  CFormSelect,
   CCol,
   CForm,
 } from "@coreui/react";
 import { RedCAlert } from "../../../../components/redflag/RedCAlert";
 import { RedLable } from "../../../../components/redflag/RedLable";
+import { getSourceOptions } from "../../../../services/source/query";
+import { AsyncFormSelect } from "../../../../components/form/Select";
 
 export const ProfitContent = ({
   visible,
@@ -32,7 +35,7 @@ export const ProfitContent = ({
           <CCol xs={12}>
             <CFormInput
               label="Title"
-              placeholder="Zarplata"
+              placeholder="April"
               onChange={onChange}
               value={formData.title || ""}
               name={"title"}
@@ -50,15 +53,11 @@ export const ProfitContent = ({
             <RedLable title={validate.amount} />
           </CCol>
           <CCol xs={12}>
-            <CFormSelect
-              label="Source"
-              aria-label="Default select example"
-              options={[
-                { label: "Open this select menu" },
-                { label: "One", value: "1" },
-                { label: "Two", value: "2" },
-                { label: "Three", value: "3", disabled: true },
-              ]}
+            <AsyncFormSelect
+              onChange={onChange}
+              value={formData.source || ""}
+              name={"source"}
+              request={getSourceOptions}
             />
             <RedLable title={validate.title} />
           </CCol>

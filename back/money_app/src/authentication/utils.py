@@ -2,7 +2,7 @@ import jwt
 from datetime import datetime, timezone
 from authentication.config import ACCESS_LIFETIME, REFRESH_LIFETIME, ALGORITHM, SECRET_KEY
 
-def create_jwt_tokens(user_id: int):
+def create_jwt_tokens(user_id: int) -> dict:
     access_payload = {
         'user_id': user_id,
         'type': 'access',
@@ -34,9 +34,9 @@ def create_jwt_tokens(user_id: int):
         'refresh': refresh_token
     }
 
-def verify_jwt_token(token: str):
-    payload: dict = None
-    err: str = None
+def verify_jwt_token(token: str) -> tuple:
+    payload: dict | None = None
+    err: str | None = None
     try:
         payload = jwt.decode(
             token,
