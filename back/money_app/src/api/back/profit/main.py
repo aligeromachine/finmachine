@@ -32,7 +32,12 @@ def table_profit_data(item: ProfitMessage):
     return ls, count, item.offset, item.limit
 
 def add_profit_data(item: ProfitMessage):
-    Profit(title=item.title, user_id=item.user_id).save()
+    Profit(
+        title=item.title,
+        amount=item.amount,
+        source_id=item.source,
+        user_id=item.user_id
+    ).save()
     max_id = model_max_id(model=Profit)
 
     return {'data': 'ok', 'message': f'adding Profit key: {max_id}'}

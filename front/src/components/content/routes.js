@@ -20,16 +20,6 @@ export const routes = [
     element: lazyImport("Buy"),
   },
   {
-    path: "/cards",
-    name: "Cards",
-    element: lazyImport("Cards"),
-  },
-  {
-    path: "/shop",
-    name: "Shop",
-    element: lazyImport("Shop"),
-  },
-  {
     path: "/products",
     name: "Products",
     element: lazyImport("Prod"),
@@ -38,5 +28,15 @@ export const routes = [
     path: "/profit",
     name: "Profit",
     element: lazyImport("Profit"),
+  },
+  {
+    path: "/cards",
+    name: "Cards",
+    element: lazyImport("Cards"),
+  },
+  {
+    path: "/shop",
+    name: "Shop",
+    element: lazyImport("Shop"),
   },
 ];

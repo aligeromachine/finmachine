@@ -11,6 +11,7 @@ import uuid
 import hashlib
 import shutil
 import itertools
+from typing import Iterator
 
 
 # flake8: noqa
@@ -441,7 +442,7 @@ def RangesTols(ls_raw: list):
     return ls
 
 
-def ReadFileSeekls(file_path: str, delta: int, start_pos: int):
+def ReadFileSeekls(file_path: str, delta: int, start_pos: int) -> tuple:
 
     rng = []
     theend = False
@@ -474,7 +475,7 @@ def ReadFileSeekls(file_path: str, delta: int, start_pos: int):
     return rng, theend, last_pos
 
 
-def ReadFileSeekRaw(file_path: str, start_pos: int):
+def ReadFileSeekRaw(file_path: str, start_pos: int) -> tuple:
 
     rng = CONST.empty
     theend = False
@@ -501,24 +502,24 @@ def ReadFileSeekRaw(file_path: str, start_pos: int):
 
 def NamelsFilesFolder(nf: str) -> list[Path]:
 
-    ls = []
+    ls: list = []
     for path in Path(nf).iterdir():
         if path.is_file():
             ls.append(path)
         if path.is_dir():
-            ls.extend(NamelsFilesFolder(path))
+            ls.extend(NamelsFilesFolder(str(path.resolve())))
 
     return ls
 
-def file_xize(file_path: str):
+def file_xize(file_path: str) -> int:
     if os.path.isfile(file_path):
         return os.path.getsize(file_path)
     return 0
 
-def ClearFile(pth: str):
+def ClearFile(pth: str) -> None:
     with open(pth, "w") as f: # noqa
         pass
 
-def split_list_yield(ls: list, chunk_size: int):
+def split_list_yield(ls: list, chunk_size: int)-> Iterator[list]:
     for it in range(0, len(ls), chunk_size):
         yield ls[it:it + chunk_size]

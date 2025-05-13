@@ -4,16 +4,16 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def validate_dict(response: dict, Model: type[BaseModel], prn: bool = False) -> type[BaseModel] | None:
+def validate_dict(response: dict, Model: type[BaseModel], prn: bool = False) -> BaseModel | None:
     try:
-        data = Model(**response)
+        data: BaseModel = Model(**response)
         return data
     except ValidationError as e:
         if prn:
             logger.error(f'{e.json()}, {response=}, {Model=}')
         return None
 
-def validate_list(response: list, Model: type[BaseModel], prn: bool = False):
+def validate_list(response: list, Model: type[BaseModel], prn: bool = False) -> list | None:
     try:
         return [Model(**it) for it in response]
     except ValidationError as e:
@@ -21,7 +21,7 @@ def validate_list(response: list, Model: type[BaseModel], prn: bool = False):
             logger.error(f'{e.json()}, {response=}, {Model=}')
         return None
 
-def validate_dict_conv(response: str, Model: type[BaseModel], prn: bool = False):
+def validate_dict_conv(response: str, Model: type[BaseModel], prn: bool = False) -> BaseModel | None:
     try:
         return validate_dict(response=orjson.loads(response), Model=Model)
     except Exception as e:
@@ -29,7 +29,7 @@ def validate_dict_conv(response: str, Model: type[BaseModel], prn: bool = False)
             logger.error(f'{str(e)}, {response=}, {Model=}')
         return None
 
-def validate_list_conv(response: str, Model: type[BaseModel], prn: bool = False):
+def validate_list_conv(response: str, Model: type[BaseModel], prn: bool = False) -> list | None:
     try:
         return validate_list(response=orjson.loads(response), Model=Model, prn=False)
     except Exception as e:
@@ -37,7 +37,7 @@ def validate_list_conv(response: str, Model: type[BaseModel], prn: bool = False)
             logger.error(f'{str(e)}, {response=}, {Model=}')
         return None
 
-def validate_dict_list(response: dict, Model: type[BaseModel], key: str, prn: bool = False):
+def validate_dict_list(response: dict, Model: type[BaseModel], key: str, prn: bool = False) -> list | None:
 
     if key not in response:
         return None
@@ -50,7 +50,7 @@ def validate_dict_list(response: dict, Model: type[BaseModel], key: str, prn: bo
             logger.error(f'{str(e)}, {response=}, {Model=}')
         return None
 
-def validate_str(response: bytes, prn: bool = False):
+def validate_str(response: bytes, prn: bool = False) -> str | None:
 
     if not response:
         return None
