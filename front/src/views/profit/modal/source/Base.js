@@ -1,9 +1,9 @@
 import React from "react";
-import { SourceContent } from "./Content";
-import { UseValid } from "./Validate";
-import { addSourceRow } from "../../../../services/source/request";
 import { useModal } from "../../../../components/hook/ModalContext";
 import { setRowState } from "../../../../services/row/state";
+import { addSourceRow } from "../../../../services/source/request";
+import { SourceContent } from "./Content";
+import { UseValid } from "./Validate";
 
 export const SourceModal = () => {
   const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();

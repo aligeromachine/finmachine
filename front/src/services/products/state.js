@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { store } from "../store";
 import { apiClient } from "../../utils/requests";
+import { create_params } from "../../utils/func";
 import { initialState } from "./model";
-import { PREFIX_URL } from "./const";
+import { PROD_URL, PROD_TBL } from "./const";
 
-export const getProductsThunk = createAsyncThunk(
-  "stateProducts/getProductsThunk",
-  async (data) => {
-    const response = await apiClient.post(PREFIX_URL, data);
+export const getProdTable = createAsyncThunk(
+  "stateProducts/getProdTable",
+  async () => {
+    const { offset, recordsDisplay } = store.getState().productsReducer;
+    const params = create_params(PROD_TBL, offset, recordsDisplay);
+    const response = await apiClient.post(PROD_URL, params);
     return response;
   },
 );
@@ -17,17 +21,17 @@ export const stateProducts = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getProductsThunk.pending, (state) => {
+      .addCase(getProdTable.pending, (state) => {
         state.loading = "loading";
       })
-      .addCase(getProductsThunk.fulfilled, (state, action) => {
+      .addCase(getProdTable.fulfilled, (state, action) => {
         state.recordsTotal = action.payload.recordsTotal;
         state.offset = action.payload.offset;
         state.recordsDisplay = action.payload.recordsDisplay;
         state.draw = action.payload.draw;
         state.loading = "idle";
       })
-      .addCase(getProductsThunk.rejected, (state) => {
+      .addCase(getProdTable.rejected, (state) => {
         state.loading = "failed";
       });
   },

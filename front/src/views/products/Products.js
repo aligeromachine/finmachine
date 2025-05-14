@@ -11,36 +11,20 @@ import {
   CTabPanel,
   CTabs,
 } from "@coreui/react";
-import { useEffect } from "react";
-import { BasicTable } from "../../components/table/BasicTable";
-import {
-  columnsProducts,
-  columnsCatalog,
-} from "../../components/table/column/headers";
-import { useSelector, useDispatch } from "react-redux";
-import { create_params } from "../../utils/func";
-import { getProductsThunk } from "../../services/products/state";
-import { getCatalogThunk } from "../../services/catalog/state";
+import { ModalProvider } from "../../components/hook/ModalContext";
+import { Header } from "../../components/view/Header";
+import { Button } from "../../components/view/Button";
+import { TableProd } from "./TableProd";
+import { TableCat } from "./TableCat";
+import { CatModal } from "./modal/cat/Base";
+import { ProdModal } from "./modal/prod/Base";
 
 export const DataProducts = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const dataP = create_params("update_products_data", 0, 100);
-    dispatch(getProductsThunk(dataP));
-    const dataS = create_params("update_catalog_data", 0, 100);
-    dispatch(getCatalogThunk(dataS));
-  }, [dispatch]);
-
-  const drawProd = useSelector((store) => store.productsReducer.draw);
-  const drawCat = useSelector((store) => store.catalogReducer.draw);
-
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
-          <CCardHeader>
-            <strong>DataProducts</strong>
-          </CCardHeader>
+          <Header title={"DataProducts"} />
           <CCardBody>
             <CTabs activeItemKey="product">
               <CTabList variant="tabs">
@@ -49,10 +33,18 @@ export const DataProducts = () => {
               </CTabList>
               <CTabContent>
                 <CTabPanel className="p-3" itemKey="product">
-                  <BasicTable data={drawProd} columns={columnsProducts} />
+                  <ModalProvider>
+                    <ProdModal />
+                    <Button title={"Add Products"} />
+                    <TableProd />
+                  </ModalProvider>
                 </CTabPanel>
                 <CTabPanel className="p-3" itemKey="catalog">
-                  <BasicTable data={drawCat} columns={columnsCatalog} />
+                  <ModalProvider>
+                    <CatModal />
+                    <Button title={"Add Catalog"} />
+                    <TableCat />
+                  </ModalProvider>
                 </CTabPanel>
               </CTabContent>
             </CTabs>

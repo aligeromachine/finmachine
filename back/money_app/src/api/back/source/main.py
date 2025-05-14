@@ -62,11 +62,7 @@ def list_source_data(item: SourceMessage):
     ls: list = []
 
     for it in Source.objects.all():
-        ls.append({
-            "pk": it.pk,
-            "title": it.title
-
-        })
+        ls.append({"pk": it.pk, "title": it.title})
 
     return ls
 

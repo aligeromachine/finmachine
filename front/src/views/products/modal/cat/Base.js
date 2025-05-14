@@ -1,11 +1,11 @@
 import React from "react";
-import { useModal } from "../../../components/hook/ModalContext";
-import { setRowState } from "../../../services/row/state";
-import { addShopRow } from "../../../services/shop/request";
-import { ShopContent } from "./Content";
+import { useModal } from "../../../../components/hook/ModalContext";
+import { addCatRow } from "../../../../services/catalog/request";
+import { setRowState } from "../../../../services/row/state";
+import { SourceContent } from "./Content";
 import { UseValid } from "./Validate";
 
-export const ShopModal = () => {
+export const CatModal = () => {
   const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();
   const { validate, validateForm, repErr, setRepErr } = UseValid();
 
@@ -15,7 +15,7 @@ export const ShopModal = () => {
     }
 
     onSet(setRowState);
-    const response = await addShopRow();
+    const response = await addCatRow();
     if (response.data === "err") {
       setRepErr(response.message);
       return;
@@ -24,7 +24,7 @@ export const ShopModal = () => {
   }
 
   return (
-    <ShopContent
+    <SourceContent
       visible={isModalOpen}
       onClose={closeModal}
       formData={formData}

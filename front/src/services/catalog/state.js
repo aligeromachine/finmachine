@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { store } from "../store";
 import { apiClient } from "../../utils/requests";
-import { PREFIX_URL } from "./const";
+import { create_params } from "../../utils/func";
 import { initialState } from "./model";
+import { CAT_URL, CAT_TBL } from "./const";
 
-export const getCatalogThunk = createAsyncThunk(
-  "stateCatalog/getCatalogThunk",
-  async (data) => {
-    const response = await apiClient.post(PREFIX_URL, data);
+export const getCatTable = createAsyncThunk(
+  "stateCatalog/getCatTable",
+  async () => {
+    const { offset, recordsDisplay } = store.getState().catalogReducer;
+    const params = create_params(CAT_TBL, offset, recordsDisplay);
+    const response = await apiClient.post(CAT_URL, params);
     return response;
   },
 );
@@ -17,17 +21,17 @@ export const stateCatalog = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCatalogThunk.pending, (state) => {
+      .addCase(getCatTable.pending, (state) => {
         state.loading = "loading";
       })
-      .addCase(getCatalogThunk.fulfilled, (state, action) => {
+      .addCase(getCatTable.fulfilled, (state, action) => {
         state.recordsTotal = action.payload.recordsTotal;
         state.offset = action.payload.offset;
         state.recordsDisplay = action.payload.recordsDisplay;
         state.draw = action.payload.draw;
         state.loading = "idle";
       })
-      .addCase(getCatalogThunk.rejected, (state) => {
+      .addCase(getCatTable.rejected, (state) => {
         state.loading = "failed";
       });
   },

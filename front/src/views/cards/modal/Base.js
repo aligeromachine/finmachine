@@ -1,9 +1,9 @@
 import React from "react";
-import { CardsContent } from "./Content";
-import { UseValid } from "./Validate";
+import { useModal } from "../../../components/hook/ModalContext";
 import { addCardsRow } from "../../../services/cards/request";
 import { setRowState } from "../../../services/row/state";
-import { useModal } from "../../../components/hook/ModalContext";
+import { CardsContent } from "./Content";
+import { UseValid } from "./Validate";
 
 export const CardsModal = () => {
   const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();

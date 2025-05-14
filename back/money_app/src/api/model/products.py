@@ -1,5 +1,8 @@
 from api.model.main import MainModel
 
 class ProductsMessage(MainModel):
-    offset: int
-    limit: int
+    pk: int = 0
+    offset: int = 0
+    limit: int = 0
+    title: str = ''
+    catalog: int = 0
