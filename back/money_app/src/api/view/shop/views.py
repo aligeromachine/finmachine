@@ -9,4 +9,4 @@ def content_respo(request: HttpRequest, *args, **kwargs):
 
     data = invoke_response(request=request)
 
-    return JsonResponse(data)
+    return JsonResponse(data, safe=False)

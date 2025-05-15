@@ -3,7 +3,7 @@ import logging
 from api.model.main import validate_model
 from api.back.decore import draw_response
 from money.utils.func import model_max_id
-from money.libs.ext_utils import timeDRFF
+from money.libs.ext_utils import dateDRF
 from money.models import Catalog
 from api.model.catalog import CatalogMessage
 from api.back.catalog.query import SQL_CATALOG, CATALOG_TOTAL
@@ -17,7 +17,7 @@ def table_cat_data(item: CatalogMessage):
     for it in Catalog.objects.raw(raw_query=SQL_CATALOG, params=params):
         raw = {
             'id': it.id,
-            'created': timeDRFF(it.created),
+            'created': dateDRF(it.created),
             'title': it.title
         }
         ls.append(raw)

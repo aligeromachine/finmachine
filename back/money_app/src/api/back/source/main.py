@@ -3,7 +3,7 @@ import logging
 from api.model.main import validate_model
 from api.back.decore import draw_response
 from money.utils.func import model_max_id
-from money.libs.ext_utils import timeDRFF
+from money.libs.ext_utils import dateDRF
 from money.models import Source
 from api.model.source import SourceMessage
 from api.back.source.query import SQL_SOURCE, SOURCE_TOTAL
@@ -17,7 +17,7 @@ def table_source_data(item: SourceMessage):
     for it in Source.objects.raw(raw_query=SQL_SOURCE, params=params):
         raw = {
             'id': it.id,
-            'created': timeDRFF(it.created),
+            'created': dateDRF(it.created),
             'title': it.title,
         }
         ls.append(raw)

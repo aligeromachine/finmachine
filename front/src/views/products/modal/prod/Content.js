@@ -32,21 +32,22 @@ export const ProfitContent = ({
       <CModalBody>
         <CForm className="row g-3">
           <CCol xs={12}>
+            <AsyncFormSelect
+              label={"Catalog"}
+              onChange={onChange}
+              value={formData.catalog || ""}
+              name={"catalog"}
+              request={getCatalogOptions}
+            />
+            <RedLable title={validate.title} />
+          </CCol>
+          <CCol xs={12}>
             <CFormInput
               label="Title"
               placeholder="Doctorskaya"
               onChange={onChange}
               value={formData.title || ""}
               name={"title"}
-            />
-            <RedLable title={validate.title} />
-          </CCol>
-          <CCol xs={12}>
-            <AsyncFormSelect
-              onChange={onChange}
-              value={formData.catalog || ""}
-              name={"catalog"}
-              request={getCatalogOptions}
             />
             <RedLable title={validate.title} />
           </CCol>

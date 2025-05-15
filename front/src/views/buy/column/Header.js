@@ -1,14 +1,11 @@
 import React from "react";
 import { handleDelete } from "../../../components/action/Action";
-import {
-  deleteProfitRow,
-  getProfitRow,
-} from "../../../services/profit/request";
+import { deleteBuyRow, getBuyRow } from "../../../services/buys/request";
 import st from "./row.module.css";
 
 export const columnsTbl = (openModal) => {
   const openWithEdit = async (id) => {
-    await getProfitRow(id);
+    await getBuyRow(id);
     openModal();
   };
 
@@ -23,23 +20,31 @@ export const columnsTbl = (openModal) => {
       header: "Created",
     },
     {
-      accessorKey: "source",
-      header: "Source",
+      accessorKey: "shop",
+      header: "Shop",
     },
     {
-      accessorKey: "title",
-      header: "Title",
+      accessorKey: "cat",
+      header: "Catalog",
+    },
+    {
+      accessorKey: "prod",
+      header: "Prod",
     },
     {
       accessorKey: "amount",
       header: "Amount",
     },
     {
+      accessorKey: "title",
+      header: "Title",
+    },
+    {
       accessorKey: null,
       header: "Action",
       cell: ({ row }) => (
         <span>
-          <i onClick={() => handleDelete(row.original.id, deleteProfitRow)}>
+          <i onClick={() => handleDelete(row.original.id, deleteBuyRow)}>
             <img
               className={st.iconMl}
               src={"/static/img/delete.png"}

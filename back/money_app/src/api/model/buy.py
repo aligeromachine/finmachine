@@ -1,5 +1,7 @@
-from api.model.main import MainModel
+from api.model.main import ExtModel
+from decimal import Decimal
 
-class BuyMessage(MainModel):
-    offset: int
-    limit: int
+class BuyMessage(ExtModel):
+    amount: Decimal = 0
+    shop: int = 0
+    prod: int = 0

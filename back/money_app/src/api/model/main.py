@@ -29,3 +29,9 @@ def validate_model(Model: type[MainModel]): # type: ignore
             return func(request, data, *args, **kwargs)
         return wrapper
     return decorator
+
+class ExtModel(MainModel):
+    offset: int = 0
+    limit: int = 0
+    pk: int = 0
+    title: str = ''

@@ -9,7 +9,7 @@ export const Button = ({ title }) => {
     <CButton
       color="secondary"
       className="mb-3"
-      onClick={openModal}
+      onClick={() => openModal(false)}
       style={{ width: "150px" }}
     >
       {title}

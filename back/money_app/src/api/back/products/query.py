@@ -1,17 +1,17 @@
 SQL_PRODUCTS = """
 SELECT
-    products.id,
-    products.created,
-    products.title,
-    catalog.title cats
+    prodproducts.id,
+    prod.created,
+    prod.title,
+    cat.title cat
 FROM
-    content.products products
+    content.products prod
 JOIN
-    content.catalog catalog on catalog.id = products.catalog_id
+    content.catalog cat on cat.id = prod.catalog_id
 WHERE
-    products.user_id = %s
+    prod.user_id = %s
 ORDER BY
-    products.id desc
+    prod.id desc
 OFFSET %s ROWS FETCH NEXT %s ROWS ONLY
 """
 PRODUCTS_TOTAL = """
@@ -19,7 +19,7 @@ SELECT
     1 id,
     count(1) c
 FROM
-    content.products products
+    content.products prod
 WHERE
-    products.user_id = %s
+    prod.user_id = %s
 """

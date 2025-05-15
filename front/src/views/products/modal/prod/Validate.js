@@ -12,6 +12,10 @@ export const UseValid = () => {
       newErrors.title = "Title обязательно";
     }
 
+    if (!formData.catalog) {
+      newErrors.catalog = "Catalog обязательно";
+    }
+
     setValidate(newErrors);
     return isEmpty(newErrors);
   }, []);

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { CFormSelect } from "@coreui/react";
 
-export const AsyncFormSelect = ({ onChange, value, name, request }) => {
+export const AsyncFormSelect = ({ label, onChange, value, name, request }) => {
   const [options, setOptions] = useState([]);
   useEffect(() => {
     const fetchOptions = async () => {
@@ -23,7 +23,7 @@ export const AsyncFormSelect = ({ onChange, value, name, request }) => {
 
   return (
     <CFormSelect
-      label="Source"
+      label={label}
       aria-label="Default select example"
       placeholder="Выберите вариант..."
       value={value}

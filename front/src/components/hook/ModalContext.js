@@ -12,6 +12,7 @@ const ModalContext = createContext({
   setForm: () => {},
   onChange: () => {},
   onSet: () => {},
+  isEdit: false,
 });
 
 // Провайдер для управления состоянием модалки
@@ -20,11 +21,13 @@ export const ModalProvider = ({ children }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setForm] = useState({});
+  const [isEdit, setEdit] = useState({});
 
-  const openModal = useCallback(() => {
+  const openModal = useCallback((isEdit = true) => {
     const data = store.getState().rowReducer.formData;
     setForm({ ...formData, ...data });
     setIsModalOpen(!isModalOpen);
+    setEdit(isEdit);
   }, []);
 
   const closeModal = useCallback(() => {
@@ -53,6 +56,7 @@ export const ModalProvider = ({ children }) => {
         setForm,
         onChange,
         onSet,
+        isEdit,
       }}
     >
       {children}

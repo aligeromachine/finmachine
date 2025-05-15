@@ -3,7 +3,7 @@ import logging
 from api.model.main import validate_model
 from api.back.decore import draw_response
 from money.utils.func import model_max_id
-from money.libs.ext_utils import timeDRFF
+from money.libs.ext_utils import dateDRF
 from money.models import Cards
 from api.model.cards import CardsMessage
 from api.back.cards.query import SQL_CARDS, CARDS_TOTAL
@@ -17,7 +17,7 @@ def table_cards_data(item: CardsMessage):
     for it in Cards.objects.raw(raw_query=SQL_CARDS, params=params):
         raw = {
             'id': it.id,
-            'created': timeDRFF(it.created),
+            'created': dateDRF(it.created),
             'title': it.title,
             'amount': it.amount,
             'number': it.number,

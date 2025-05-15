@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { isEmpty } from "../../../../utils/func";
+import { isEmpty } from "../../../utils/func";
 
 export const UseValid = () => {
   const [validate, setValidate] = useState({});

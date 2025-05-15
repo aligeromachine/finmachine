@@ -3,7 +3,7 @@ import logging
 from api.model.main import validate_model
 from api.back.decore import draw_response
 from money.utils.func import model_max_id
-from money.libs.ext_utils import timeDRFF
+from money.libs.ext_utils import dateDRF
 from money.models import Shop
 from api.model.shop import ShopMessage
 from api.back.shop.query import SQL_SHOP, SHOP_TOTAL
@@ -17,7 +17,7 @@ def table_shop_data(item: ShopMessage):
     for it in Shop.objects.raw(raw_query=SQL_SHOP, params=params):
         raw = {
             'id': it.id,
-            'created': timeDRFF(it.created),
+            'created': dateDRF(it.created),
             'title': it.title,
             'address': it.address,
         }
@@ -61,6 +61,14 @@ def edit_shop_data(item: ShopMessage):
 
     return {'data': 'ok', 'message': f'update {item.pk=}'}
 
+def list_shop_data(item: ShopMessage):
+    ls: list = []
+
+    for it in Shop.objects.all():
+        ls.append({"pk": it.pk, "title": f"{it.title} - {it.address}"})
+
+    return ls
+
 @validate_model(ShopMessage)
 def invoke_response(request: HttpRequest, item: ShopMessage):
     respo = {"data": "err", "message": "undefinded"}
@@ -79,5 +87,8 @@ def invoke_response(request: HttpRequest, item: ShopMessage):
 
     if item.command == "edit_shop_data":
         respo = edit_shop_data(item=item)
+
+    if item.command == "list_shop_data":
+        respo = list_shop_data(item=item)
 
     return respo

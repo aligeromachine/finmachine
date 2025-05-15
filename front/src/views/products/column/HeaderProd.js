@@ -20,12 +20,12 @@ export const columnsTbl = (openModal) => {
       header: "Created",
     },
     {
-      accessorKey: "title",
-      header: "Title",
-    },
-    {
       accessorKey: "catalog",
       header: "Catalog",
+    },
+    {
+      accessorKey: "title",
+      header: "Title",
     },
     {
       accessorKey: null,

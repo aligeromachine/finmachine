@@ -3,7 +3,7 @@ import logging
 from api.model.main import validate_model
 from api.back.decore import draw_response
 from money.utils.func import model_max_id
-from money.libs.ext_utils import timeDRFF
+from money.libs.ext_utils import dateDRF
 from money.models import Products
 from api.model.products import ProductsMessage
 from api.back.products.query import SQL_PRODUCTS, PRODUCTS_TOTAL
@@ -17,9 +17,9 @@ def table_prod_data(item: ProductsMessage):
     for it in Products.objects.raw(raw_query=SQL_PRODUCTS, params=params):
         raw = {
             'id': it.id,
-            'created': timeDRFF(it.created),
+            'created': dateDRF(it.created),
             'title': it.title,
-            'catalog': it.cats,
+            'catalog': it.cat,
         }
         ls.append(raw)
 
@@ -65,6 +65,14 @@ def edit_prod_data(item: ProductsMessage):
 
     return {'data': 'ok', 'message': f'update {item.pk=}'}
 
+def list_prod_data(item: ProductsMessage):
+    ls: list = []
+
+    for it in Products.objects.filter(catalog_id=item.pk):
+        ls.append({"pk": it.pk, "title": it.title})
+
+    return ls
+
 @validate_model(ProductsMessage)
 def invoke_response(request: HttpRequest, item: ProductsMessage):
     respo = {"data": "err", "message": "undefinded"}
@@ -83,5 +91,8 @@ def invoke_response(request: HttpRequest, item: ProductsMessage):
 
     if item.command == "edit_prod_data":
         respo = edit_prod_data(item=item)
+
+    if item.command == "list_prod_data":
+        respo = list_prod_data(item=item)
 
     return respo

@@ -28,6 +28,7 @@ timeF = lambda: (datetime.datetime.now() + datetime.timedelta(hours=3)).strftime
 timeSQL = lambda a: (a).strftime('%Y-%m-%d %H:%M:%S')
 timeDRF = lambda dt: (dt).strftime('%Y-%m-%d %H:%M:%S') if dt else CONST.empty
 timeDRFF = lambda dt: (dt).strftime('%d-%m-%Y %H:%M:%S') if dt else CONST.empty
+dateDRF = lambda dt: (dt).strftime('%d-%m-%Y') if dt else CONST.empty
 timeDRFstr = lambda dt: ' '.join((dt.split('Z'))[0].split('T')) if dt else CONST.empty
 xSQL = lambda ls: ','.join([f"'{it}'" for it in ls])
 XELM = lambda ls: ls[0] if len(ls) > 0 else None
