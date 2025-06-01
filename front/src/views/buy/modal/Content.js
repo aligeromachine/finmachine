@@ -55,8 +55,6 @@ export const ProfitContent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData.cat]);
 
-  console.log(formData);
-
   return (
     <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>

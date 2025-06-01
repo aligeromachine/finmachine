@@ -12,6 +12,8 @@ export const BuysModal = () => {
 
   async function onAdd() {
     if (!validateForm(formData)) {
+      console.log("validateForm");
+      console.log(formData);
       return;
     }
 

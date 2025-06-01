@@ -1,6 +1,6 @@
 SQL_PRODUCTS = """
 SELECT
-    prodproducts.id,
+    prod.id,
     prod.created,
     prod.title,
     cat.title cat

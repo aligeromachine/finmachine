@@ -12,8 +12,16 @@ export const UseValid = () => {
       newErrors.title = "Title обязательно";
     }
 
-    if (!formData.source) {
-      newErrors.source = "Source обязательно";
+    if (!formData.shop) {
+      newErrors.shop = "Shop обязательно";
+    }
+
+    if (!formData.cat) {
+      newErrors.cat = "Catalog обязательно";
+    }
+
+    if (!formData.prod) {
+      newErrors.prod = "Products обязательно";
     }
 
     if (!formData.amount) {
