@@ -1,17 +1,19 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router";
+import { getAccessToken } from "../../utils/storage";
 
 const Protected = ({ inner, guard = false }) => {
   const location = useLocation();
-  const { isAuthChecked, loading } = useSelector((store) => store.tokenReducer);
+  const { loading } = useSelector((store) => store.tokenReducer);
+  const isAuth = Boolean(getAccessToken());
 
   if (loading === "loading") return null;
 
-  if (isAuthChecked && !guard) {
+  if (isAuth && !guard) {
     return <Navigate to={"/"} replace />;
   }
 
-  if (!isAuthChecked && guard) {
+  if (!isAuth && guard) {
     return <Navigate to={"/login"} state={location.from} />;
   }
 

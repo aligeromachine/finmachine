@@ -1,5 +1,5 @@
 # Игнорируемые правила
-ignore = ["E302"]
+ignore = ["E302" ]
 
 # Максимальная длина строки
 line-length = 150
@@ -11,6 +11,4 @@ exclude = [
     "migrations",
     "venv",
     "config",
-    "celery.py",
-    "settings.py"
 ]

@@ -4,28 +4,18 @@ import {
   setTokenResponse,
   getAccessToken,
   getRefreshToken,
-  delAccessToken,
-  delRefreshToken,
+  delToken,
 } from "../../utils/storage";
 import { initialState } from "./model";
+import { tokenRefresh, tokenReturn } from "./base";
 
 export const loginThunk = createAsyncThunk(
   "stateToken/loginThunk",
   async (data) => {
     const response = await apiClient.post("/auth/login/", data);
-
-    if (!response.token) return Promise.reject(response.message);
-
-    setTokenResponse(response);
-
-    return response.token;
+    return tokenReturn(response);
   },
 );
-
-const tokenReturn = (response) => {
-  if (response.token) return response.token;
-  return Promise.reject(response.message);
-};
 
 export const refreshThunk = createAsyncThunk(
   "stateToken/refreshThunk",
@@ -35,16 +25,10 @@ export const refreshThunk = createAsyncThunk(
       var response = await apiClient.post("/auth/protected/", { access });
       if (response.token) return response.token;
       if (response.message !== "Token expired") {
-        const params = { refresh: getRefreshToken() };
-        const response = await apiClient.post("/auth/refresh/", params);
-        setTokenResponse(response);
-        return tokenReturn(response);
+        return await tokenRefresh();
       }
     } else {
-      const params = { refresh: getRefreshToken() };
-      const response = await apiClient.post("/auth/refresh/", params);
-      setTokenResponse(response);
-      return tokenReturn(response);
+      return await tokenRefresh();
     }
   },
 );
@@ -52,13 +36,8 @@ export const refreshThunk = createAsyncThunk(
 export const logoutThunk = createAsyncThunk(
   "stateToken/logoutThunk",
   async () => {
-    const response = await apiClient.post("/auth/logout/", {
-      refresh: getRefreshToken(),
-    });
-
-    delAccessToken();
-    delRefreshToken();
-
+    const refresh = getRefreshToken();
+    const response = await apiClient.post("/auth/logout/", { refresh });
     return response;
   },
 );
@@ -74,22 +53,16 @@ export const changeThunk = createAsyncThunk(
 export const stateToken = createSlice({
   name: "stateToken",
   initialState,
-  reducers: {
-    setAuthCheck: (state) => {
-      state.isAuthChecked = true;
-      state.loading = "idle";
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
 
       .addCase(loginThunk.pending, (state) => {
         state.loading = "loading";
-        state.isAuthChecked = false;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.loading = "idle";
-        state.isAuthChecked = Boolean(action.payload.access);
+        setTokenResponse(action);
       })
       .addCase(loginThunk.rejected, (state) => {
         state.loading = "failed";
@@ -97,11 +70,10 @@ export const stateToken = createSlice({
 
       .addCase(refreshThunk.pending, (state) => {
         state.loading = "loading";
-        state.isAuthChecked = false;
       })
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.loading = "idle";
-        state.isAuthChecked = Boolean(action.payload.access);
+        setTokenResponse(action);
       })
       .addCase(refreshThunk.rejected, (state) => {
         state.loading = "failed";
@@ -109,11 +81,10 @@ export const stateToken = createSlice({
 
       .addCase(logoutThunk.pending, (state) => {
         state.loading = "loading";
-        state.isAuthChecked = false;
       })
       .addCase(logoutThunk.fulfilled, (state) => {
         state.loading = "idle";
-        state.isAuthChecked = false;
+        delToken();
       })
       .addCase(logoutThunk.rejected, (state) => {
         state.loading = "failed";
@@ -130,7 +101,5 @@ export const stateToken = createSlice({
       });
   },
 });
-
-export const { setAuthCheck } = stateToken.actions;
 
 export const tokenReducer = stateToken.reducer;

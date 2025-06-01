@@ -2,7 +2,6 @@ import React, { Suspense } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { CSpinner } from "@coreui/react";
 import { GuestGuard, AuthGuard } from "./components/auth/Protect";
-import { Token } from "./components/auth/TokenWrapper";
 
 import "./scss/style.scss";
 import "./scss/examples.scss";
@@ -30,7 +29,6 @@ const App = () => {
           </div>
         }
       >
-        <Token />
         <Routes>
           <Route
             exact

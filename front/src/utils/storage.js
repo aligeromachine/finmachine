@@ -46,9 +46,9 @@ const setRefreshToken = (token) => {
   setWithExpiry("refreshToken", token, SEVEN_DAYS);
 };
 
-export const setTokenResponse = (response) => {
-  setAccessToken(response.token.access);
-  setRefreshToken(response.token.refresh);
+export const setTokenResponse = (action) => {
+  setAccessToken(action.payload.access);
+  setRefreshToken(action.payload.refresh);
 };
 
 export const getAccessToken = () => {
@@ -59,10 +59,15 @@ export const getRefreshToken = () => {
   return getWithExpiry("refreshToken");
 };
 
-export const delAccessToken = () => {
+const delAccessToken = () => {
   removeItem("accessToken");
 };
 
-export const delRefreshToken = () => {
+const delRefreshToken = () => {
   removeItem("refreshToken");
+};
+
+export const delToken = () => {
+  delAccessToken();
+  delRefreshToken();
 };
