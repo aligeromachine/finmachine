@@ -5,22 +5,25 @@ import { Header } from "../../components/view/Header";
 import { Button } from "../../components/view/Button";
 import { Table } from "./Table";
 import { CardsModal } from "./modal/Base";
+import { Auth } from "../../components/auth/Auth";
 
 export const DataCards = () => {
   return (
-    <ModalProvider>
-      <CRow>
-        <CCol xs={12}>
-          <CCard className="mb-4">
-            <Header title={"DataCards"} />
-            <CCardBody>
-              <CardsModal />
-              <Button title={"Add Card"} />
-              <Table />
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
-    </ModalProvider>
+    <Auth>
+      <ModalProvider>
+        <CRow>
+          <CCol xs={12}>
+            <CCard className="mb-4">
+              <Header title={"DataCards"} />
+              <CCardBody>
+                <CardsModal />
+                <Button title={"Add Card"} />
+                <Table />
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
+      </ModalProvider>
+    </Auth>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { Auth } from "../../components/auth/Auth";
 
 import {
   CAvatar,
@@ -192,7 +193,7 @@ export const Dashboard = () => {
     const data = { command: "update_money_csv" };
   }
   return (
-    <>
+    <Auth>
       <WidgetsDropdown className="mb-4" />
       <CCard className="mb-4">
         <CCardBody>
@@ -441,6 +442,6 @@ export const Dashboard = () => {
           </CCard>
         </CCol>
       </CRow>
-    </>
+    </Auth>
   );
 };

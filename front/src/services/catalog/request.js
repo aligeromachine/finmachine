@@ -1,4 +1,4 @@
-import { apiClient } from "../../utils/requests";
+import { postCheck } from "../../utils/utilsCheck";
 import { store } from "../store";
 import { setRowState, setRowPk } from "../row/state";
 import { getCatTable } from "./state";
@@ -11,7 +11,7 @@ export const addCatRow = async () => {
     pk,
     ...formData,
   };
-  const response = await apiClient.post(CAT_URL, params);
+  const response = await postCheck(CAT_URL, params);
   if (!response) return Promise.reject("Error response");
   await store.dispatch(getCatTable());
   return response;
@@ -22,7 +22,7 @@ export const deleteCatRow = async (pk) => {
     command: CAT_DEL,
     pk,
   };
-  await apiClient.post(CAT_URL, params);
+  await postCheck(CAT_URL, params);
   await store.dispatch(getCatTable());
 };
 
@@ -31,7 +31,7 @@ export const getCatRow = async (pk) => {
     command: CAT_ROW,
     pk,
   };
-  const response = await apiClient.post(CAT_URL, params);
+  const response = await postCheck(CAT_URL, params);
   store.dispatch(setRowPk(pk));
   store.dispatch(setRowState(response));
 };

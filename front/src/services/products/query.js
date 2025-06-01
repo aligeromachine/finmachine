@@ -1,4 +1,4 @@
-import { apiClient } from "../../utils/requests";
+import { postCheck } from "../../utils/utilsCheck";
 import { PROD_URL, PROD_LST } from "./const";
 
 export const getProdOptions = async (pk) => {
@@ -6,7 +6,7 @@ export const getProdOptions = async (pk) => {
     command: PROD_LST,
     pk,
   };
-  const response = await apiClient.post(PROD_URL, params);
+  const response = await postCheck(PROD_URL, params);
   if (!response) return Promise.reject("Error response");
   return response;
 };

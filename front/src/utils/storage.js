@@ -1,6 +1,7 @@
 import { safeJsonParse } from "./func";
+import { ONE_MIN, SEVEN_DAYS } from "./const";
 
-export const setWithExpiry = (key, value, ttl) => {
+const setWithExpiry = (key, value, ttl) => {
   const now = new Date();
   const item = {
     value: value,
@@ -9,7 +10,7 @@ export const setWithExpiry = (key, value, ttl) => {
   localStorage.setItem(key, JSON.stringify(item));
 };
 
-export const getWithExpiry = (key) => {
+const getWithExpiry = (key) => {
   const itemStr = localStorage.getItem(key);
 
   if (!itemStr) {
@@ -35,4 +36,33 @@ export const getWithExpiry = (key) => {
 
 export const removeItem = (key) => {
   localStorage.removeItem(key);
+};
+
+const setAccessToken = (token) => {
+  setWithExpiry("accessToken", token, ONE_MIN);
+};
+
+const setRefreshToken = (token) => {
+  setWithExpiry("refreshToken", token, SEVEN_DAYS);
+};
+
+export const setTokenResponse = (response) => {
+  setAccessToken(response.token.access);
+  setRefreshToken(response.token.refresh);
+};
+
+export const getAccessToken = () => {
+  return getWithExpiry("accessToken");
+};
+
+export const getRefreshToken = () => {
+  return getWithExpiry("refreshToken");
+};
+
+export const delAccessToken = () => {
+  removeItem("accessToken");
+};
+
+export const delRefreshToken = () => {
+  removeItem("refreshToken");
 };

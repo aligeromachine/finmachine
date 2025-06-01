@@ -1,4 +1,4 @@
-import { apiClient } from "../../utils/requests";
+import { postCheck } from "../../utils/utilsCheck";
 import { store } from "../store";
 import { setRowState, setRowPk } from "../row/state";
 import { getProdTable } from "./state";
@@ -11,7 +11,7 @@ export const addProdRow = async () => {
     pk,
     ...formData,
   };
-  const response = await apiClient.post(PROD_URL, params);
+  const response = await postCheck(PROD_URL, params);
   if (!response) return Promise.reject("Error response");
   await store.dispatch(getProdTable());
   return response;
@@ -22,7 +22,7 @@ export const deleteProdRow = async (pk) => {
     command: PROD_DEL,
     pk,
   };
-  await apiClient.post(PROD_URL, params);
+  await postCheck(PROD_URL, params);
   await store.dispatch(getProdTable());
 };
 
@@ -31,7 +31,7 @@ export const getProdRow = async (pk) => {
     command: PROD_ROW,
     pk,
   };
-  const response = await apiClient.post(PROD_URL, params);
+  const response = await postCheck(PROD_URL, params);
   store.dispatch(setRowPk(pk));
   store.dispatch(setRowState(response));
 };

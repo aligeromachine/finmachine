@@ -1,4 +1,4 @@
 export const initialState = {
-  token: null,
+  isAuthChecked: false,
   loading: "empty",
 };

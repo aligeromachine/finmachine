@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from authentication.model import AuthLogin, AuthRefresh, AuthAccess, AuthRegister
 from django.utils import timezone
 from money.libs.decore import check_post, validate_auth, token_response
+import logging
+
+logger = logging.getLogger(__name__)
 
 @check_post
 def custom_logout(request: HttpRequest):

@@ -2,6 +2,9 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 from authentication.utils import verify_jwt_token
+import logging
+
+logger = logging.getLogger(__name__)
 
 User = get_user_model()
 
@@ -9,7 +12,8 @@ class JWTAuthenticationBackend:
     def authenticate(self, request: HttpRequest, token: str = None):
         if token is None:
             return None
-
+        
+        logger.info(token)
         payload, _ = verify_jwt_token(token)
         if not payload:
             return None

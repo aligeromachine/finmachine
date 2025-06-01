@@ -58,7 +58,7 @@ def create_loggers():
     return {
         "django":   create_file(fname="file_django"),
         "money":    create_file(fname="file_money"),
-        "auth":     create_file(fname="file_auth"),
+        "authentication": create_file(fname="file_auth"),
         "api":      create_file(fname="file_api"),
     }   
 

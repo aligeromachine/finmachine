@@ -1,8 +1,8 @@
 import { API_URL } from "./const";
-import { getWithExpiry } from "./storage";
+import { getAccessToken } from "./storage";
 
 const createHeaders = (method) => {
-  const token = getWithExpiry("accessToken");
+  const token = getAccessToken();
   return {
     method: method,
     headers: {

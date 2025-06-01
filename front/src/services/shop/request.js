@@ -1,4 +1,4 @@
-import { apiClient } from "../../utils/requests";
+import { postCheck } from "../../utils/utilsCheck";
 import { store } from "../store";
 import { setRowState, setRowPk } from "../row/state";
 import { getShopTable } from "./state";
@@ -11,7 +11,7 @@ export const addShopRow = async () => {
     pk,
     ...formData,
   };
-  const response = await apiClient.post(SHOP_URL, params);
+  const response = await postCheck(SHOP_URL, params);
   if (!response) return Promise.reject("Error response");
   await store.dispatch(getShopTable());
   return response;
@@ -22,7 +22,7 @@ export const deleteShopRow = async (pk) => {
     command: SHOP_DEL,
     pk,
   };
-  await apiClient.post(SHOP_URL, params);
+  await postCheck(SHOP_URL, params);
   await store.dispatch(getShopTable());
 };
 
@@ -31,7 +31,7 @@ export const getShopRow = async (pk) => {
     command: SHOP_ROW,
     pk,
   };
-  const response = await apiClient.post(SHOP_URL, params);
+  const response = await postCheck(SHOP_URL, params);
   store.dispatch(setRowPk(pk));
   store.dispatch(setRowState(response));
 };

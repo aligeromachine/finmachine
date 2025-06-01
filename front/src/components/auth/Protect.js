@@ -1,16 +1,17 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router";
 
 const Protected = ({ inner, guard = false }) => {
-  const { loading, token } = useSelector((store) => store.tokenReducer);
   const location = useLocation();
+  const { isAuthChecked, loading } = useSelector((store) => store.tokenReducer);
 
   if (loading === "loading") return null;
 
-  if (token && !guard) return <Navigate to={"/"} replace />;
+  if (isAuthChecked && !guard) {
+    return <Navigate to={"/"} replace />;
+  }
 
-  if (!token && guard) {
+  if (!isAuthChecked && guard) {
     return <Navigate to={"/login"} state={location.from} />;
   }
 
@@ -18,6 +19,6 @@ const Protected = ({ inner, guard = false }) => {
 };
 
 export const GuestGuard = Protected;
-export const AuthGuard = ({ inner }) => (
-  <Protected inner={inner} guard={true} />
-);
+export const AuthGuard = ({ inner }) => {
+  return <Protected inner={inner} guard={true} />;
+};

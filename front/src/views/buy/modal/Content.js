@@ -42,7 +42,6 @@ export const ProfitContent = ({
         const newItems = [{ value: "", label: "-- Choise --", disabled: true }];
 
         setSecondaryOptions([...newItems, ...listOptions]);
-        console.log(isEdit);
         if (!isEdit) {
           formData.prod = "";
         }
