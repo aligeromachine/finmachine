@@ -3,7 +3,14 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { CContainer, CSpinner } from "@coreui/react";
 import { routes } from "./routes";
 
-const Page404 = React.lazy(() => import("../../pages/page404/Page404"));
+function lazyImport(exportName) {
+  return React.lazy(async () => {
+    const module = await (() => import("../../pages/"))();
+    return { default: module[exportName] };
+  });
+}
+
+const Page404 = lazyImport("Page404");
 
 const AppContent = () => {
   return (
