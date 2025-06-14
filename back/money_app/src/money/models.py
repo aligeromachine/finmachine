@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings as st
+from django.core.exceptions import ValidationError
 
 class TimeStampedMixin(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -81,24 +82,22 @@ class Buy(AmountMixin):
         verbose_name = "Buy"
         verbose_name_plural = "Buy"
 
+def validate_payload(value):
+    if not isinstance(value, dict):
+        raise ValidationError("payload must be a dictionary")
+    if "year" not in value:
+        raise ValidationError("year is required in metadata")
+    if "buy" not in value:
+        raise ValidationError("buy is required in metadata")
+    if "profit" not in value:
+        raise ValidationError("profit is required in metadata")
+
 class MoneyAggregation(models.Model):
-    period = models.SmallIntegerField(default=0)
-    total_profit = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        default=0.00,
-        verbose_name="Sum Profit",
-    )
-    total_transaction = models.DecimalField(
-        max_digits=15,
-        decimal_places=2,
-        default=0.00,
-        verbose_name="Sum Buy",
-    )
     user = models.ForeignKey(
         st.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    payload = models.JSONField(default=dict, validators=[validate_payload])
 
     class Meta:
         db_table = "content\".\"aggregations"

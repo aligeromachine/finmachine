@@ -1,5 +1,5 @@
 from service.config.env import ENV_APP
 
-CONFIG          = ENV_APP['SERVICE']
+CONFIG: dict = ENV_APP['SERVICE']
 
-SECRET_KEY      = CONFIG['KEY']
+SECRET_KEY: str = CONFIG['KEY']

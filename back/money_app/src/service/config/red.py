@@ -1,8 +1,9 @@
 from service.config.env import ENV_APP
-CONFIG          = ENV_APP['CELERY']
 
-CELERY_BROKER   = CONFIG['BROKER']
-CELERY_BACKEND  = CONFIG['BACKEND']
+CONFIG: dict = ENV_APP['CELERY']
+
+CELERY_BROKER: str = CONFIG['BROKER']
+CELERY_BACKEND: str = CONFIG['BACKEND']
 
 # CACHES = {
 #     'default': {

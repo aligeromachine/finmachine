@@ -93,5 +93,5 @@ def invoke_response(request: HttpRequest, item: BuyMessage):
 
     if item.command == "edit_buy_data":
         respo = edit_buy_data(item=item)
-        
+
     return respo

@@ -12,7 +12,7 @@ class JWTAuthenticationBackend:
     def authenticate(self, request: HttpRequest, token: str = None):
         if token is None:
             return None
-        
+
         logger.info(token)
         payload, _ = verify_jwt_token(token)
         if not payload:

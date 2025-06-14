@@ -1,5 +1,5 @@
 from service.config.env import ENV_APP
 
-CONFIG          = ENV_APP['SERVICE']
+CONFIG: dict = ENV_APP['SERVICE']
 
-DEBUG           = CONFIG['DEBUG']
+DEBUG: str = CONFIG['DEBUG']

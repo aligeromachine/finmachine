@@ -2,8 +2,9 @@ from django.contrib.auth import get_user_model
 from authentication.config import ACCESS_LIFETIME, REFRESH_LIFETIME, ALGORITHM, SECRET_KEY
 import jwt
 from datetime import datetime, timezone
+from typing import Any
 
-def create_jwt_tokens(sender, instance, created, **kwargs) -> None: # type: ignore
+def create_jwt_tokens(sender: Any, instance: Any, created: bool, **kwargs: Any) -> None:
     if created and instance.is_superuser:
         # Генерация токенов
         access_payload = {

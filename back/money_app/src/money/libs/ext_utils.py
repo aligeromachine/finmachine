@@ -15,24 +15,24 @@ from typing import Iterator, Callable
 
 
 # flake8: noqa
-X:Callable = lambda a: CONST.empty if not isinstance(a, list) else str(a[0]) if len(a) > 0 else CONST.empty
-XX:Callable = lambda a: a[0] if len(a) > 0 else CONST.empty
-Y:Callable = lambda a, b: a[b] if (a and b in a) else CONST.empty
-YX:Callable = lambda a, b: a[b] if (b in a) else CONST.empty
-JS:Callable = lambda a: orjson.dumps(a, indent=4).replace("\\", "")
-JSline:Callable = lambda a: orjson.dumps(a).replace("\\", "")
-DaysBeforeNow:Callable = lambda a: (datetime.datetime.now() - datetime.timedelta(days=a)).timestamp()
-DaysDeltaNow:Callable = lambda a: (datetime.datetime.now() - datetime.timedelta(days=a))
-timeX:Callable = lambda: (datetime.datetime.now() - datetime.timedelta(hours=4)).strftime("%H-%M-%S")
-timeF:Callable = lambda: (datetime.datetime.now() + datetime.timedelta(hours=3)).strftime('%d-%m-%Y_%H-%M-%S')
-timeSQL:Callable = lambda a: (a).strftime('%Y-%m-%d %H:%M:%S')
-timeDRF:Callable = lambda dt: (dt).strftime('%Y-%m-%d %H:%M:%S') if dt else CONST.empty
-timeDRFF:Callable = lambda dt: (dt).strftime('%d-%m-%Y %H:%M:%S') if dt else CONST.empty
-dateDRF:Callable = lambda dt: (dt).strftime('%d-%m-%Y') if dt else CONST.empty
-timeDRFstr:Callable = lambda dt: ' '.join((dt.split('Z'))[0].split('T')) if dt else CONST.empty
-xSQL:Callable = lambda ls: ','.join([f"'{it}'" for it in ls])
-XELM:Callable = lambda ls: ls[0] if len(ls) > 0 else None
-XKEY:Callable = lambda key, d: d[key] if key in d else CONST.empty
+X: Callable = lambda a: CONST.empty if not isinstance(a, list) else str(a[0]) if len(a) > 0 else CONST.empty
+XX: Callable = lambda a: a[0] if len(a) > 0 else CONST.empty
+Y: Callable = lambda a, b: a[b] if (a and b in a) else CONST.empty
+YX: Callable = lambda a, b: a[b] if (b in a) else CONST.empty
+JS: Callable = lambda a: orjson.dumps(a, indent=4).replace("\\", "")
+JSline: Callable = lambda a: orjson.dumps(a).replace("\\", "")
+DaysBeforeNow: Callable = lambda a: (datetime.datetime.now() - datetime.timedelta(days=a)).timestamp()
+DaysDeltaNow: Callable = lambda a: (datetime.datetime.now() - datetime.timedelta(days=a))
+timeX: Callable = lambda: (datetime.datetime.now() - datetime.timedelta(hours=4)).strftime("%H-%M-%S")
+timeF: Callable = lambda: (datetime.datetime.now() + datetime.timedelta(hours=3)).strftime('%d-%m-%Y_%H-%M-%S')
+timeSQL: Callable = lambda a: (a).strftime('%Y-%m-%d %H:%M:%S')
+timeDRF: Callable = lambda dt: (dt).strftime('%Y-%m-%d %H:%M:%S') if dt else CONST.empty
+timeDRFF: Callable = lambda dt: (dt).strftime('%d-%m-%Y %H:%M:%S') if dt else CONST.empty
+dateDRF: Callable = lambda dt: (dt).strftime('%d-%m-%Y') if dt else CONST.empty
+timeDRFstr: Callable = lambda dt: ' '.join((dt.split('Z'))[0].split('T')) if dt else CONST.empty
+xSQL: Callable = lambda ls: ','.join([f"'{it}'" for it in ls])
+XELM: Callable = lambda ls: ls[0] if len(ls) > 0 else None
+XKEY: Callable = lambda key, d: d[key] if key in d else CONST.empty
 # flake8: noqa
 
 # guid
@@ -425,8 +425,8 @@ def lsToRanges(ls_raw: list):
     return ls
 
 
-def RangesTols(ls_raw: list):
-    ls = []
+def RangesTols(ls_raw: list) -> list:
+    ls: list = []
 
     if not ls_raw:
         return ls
@@ -524,3 +524,10 @@ def ClearFile(pth: str) -> None:
 def split_list_yield(ls: list, chunk_size: int)-> Iterator[list]:
     for it in range(0, len(ls), chunk_size):
         yield ls[it:it + chunk_size]
+
+def getDigit(s: str) -> int:
+    digits = ''.join(filter(str.isdigit, s))
+    return int(digits) 
+
+def isDigit(s: str) -> bool:
+    return s == str(getDigit(s=s)) 

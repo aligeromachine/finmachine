@@ -1,27 +1,27 @@
 from service.config.env import ENV_APP
 
-CONFIG          = ENV_APP['LOG']
+CONFIG: dict = ENV_APP['LOG']
 
-BASE_LOG        = '/home/data/media/log'
+BASE_LOG: str = '/home/data/media/log'
 
 
-LOG_DJANGO      = 'django.log'
-LOG_MONEY       = 'money.log'
-LOG_AUTH        = 'auth.log'
-LOG_API         = 'api.log'
+LOG_DJANGO: str = 'django.log'
+LOG_MONEY: str = 'money.log'
+LOG_AUTH: str = 'auth.log'
+LOG_API: str = 'api.log'
 
-ONE_MB = 1024 * 1024
-BACKUP_COUNT = 2
-LOG_LEVEL = CONFIG['LEVEL']
+ONE_MB: int = 1024 * 1024
+BACKUP_COUNT: int = 2
+LOG_LEVEL: str = CONFIG['LEVEL']
 
-def create_fmt(fmt: str):
+def create_fmt(fmt: str) -> dict:
     return {
         "format": fmt,
         "datefmt": "%Y-%m-%d %H:%M:%S",
         "class": "logging.Formatter",
     }
 
-def create_handler(fname: str, fmt: str):
+def create_handler(fname: str, fmt: str) -> dict:
     return {
         "level": LOG_LEVEL,
         "class": "logging.handlers.RotatingFileHandler",
@@ -32,37 +32,38 @@ def create_handler(fname: str, fmt: str):
         "encoding": "utf-8",
     }
 
-def create_file(fname: str):
+def create_file(fname: str) -> dict:
     return {
         "handlers": [fname],
         "level": LOG_LEVEL,
         "propagate": True,
     }
 
-def create_formatters():
+def create_formatters() -> dict:
     return {
         "generic": create_fmt(fmt="[%(asctime)s | %(levelname)-5s | %(name)-16s:%(lineno)-5d] %(message)-250s"),
         "simple": create_fmt(fmt="[%(asctime)s - %(name)s - %(levelname)s] - %(message)s"),
         "detailed": create_fmt(fmt="[%(asctime)s : %(levelname)s - %(name)s:%(lineno)d] - %(message)s"),
     }    
 
-def create_handlers():
+def create_handlers() -> dict:
     return {
-        "file_django":  create_handler(fname=LOG_DJANGO, fmt="generic"),
-        "file_money":   create_handler(fname=LOG_MONEY, fmt="generic"),
-        "file_auth":    create_handler(fname=LOG_AUTH, fmt="generic"),
-        "file_api":     create_handler(fname=LOG_API, fmt="generic"),
+        "file_django": create_handler(fname=LOG_DJANGO, fmt="generic"),
+        "file_money": create_handler(fname=LOG_MONEY, fmt="generic"),
+        "file_auth": create_handler(fname=LOG_AUTH, fmt="generic"),
+        "file_api": create_handler(fname=LOG_API, fmt="generic"),
     }    
 
-def create_loggers():
+def create_loggers() -> dict:
     return {
-        "django":   create_file(fname="file_django"),
-        "money":    create_file(fname="file_money"),
+        "django": create_file(fname="file_django"),
+        "money": create_file(fname="file_money"),
         "authentication": create_file(fname="file_auth"),
-        "api":      create_file(fname="file_api"),
+        "api": create_file(fname="file_api"),
     }   
 
-LOGGING = {
+
+LOGGING: dict = {
     "version": 1,
     "disable_existing_loggers": True,
     "formatters": create_formatters(),

@@ -1,8 +1,8 @@
 from service.config.env import ENV_APP
 
-CONFIG          = ENV_APP['CONNECT']
+CONFIG: dict = ENV_APP['CONNECT']
 
-DATABASES       = {
+DATABASES: dict = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': CONFIG['NAME'],
@@ -11,7 +11,7 @@ DATABASES       = {
         'HOST': CONFIG['HOST'],
         'PORT': CONFIG['PORT'],
         'OPTIONS': {
-           'options': '-c search_path=public,content'
+            'options': '-c search_path=public,content'
         }
     }
 }
