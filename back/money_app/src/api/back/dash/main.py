@@ -9,7 +9,7 @@ from api.back.dash.upt import update_products, update_profit, update_buy
 
 logger = logging.getLogger(__name__)
 
-def update_money_csv(item: DashboardMessage):
+def update_money_csv(item: DashboardMessage) -> dict:
     respo = {"data": "ok", "message": "update_money_csv"}
 
     def GetAddressWatchService():
@@ -37,7 +37,7 @@ def update_money_csv(item: DashboardMessage):
     return respo
 
 @validate_model(DashboardMessage)
-def invoke_response(request: HttpRequest, item: DashboardMessage):
+def invoke_response(request: HttpRequest, item: DashboardMessage) -> dict:
     respo = {"data": "err", "message": "undefinded"}
 
     if item.command == "update_money_csv":

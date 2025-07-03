@@ -35,7 +35,7 @@ export const ProfitContent = ({
         const data = await getProdOptions(formData.cat);
 
         const listOptions = data.map((item) => ({
-          value: item.pk,
+          value: item.id,
           label: item.title,
         }));
 

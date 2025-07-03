@@ -1,26 +1,26 @@
 from datetime import datetime
 from typing import Self
-from money.libs.ext_utils import dateDRF
 from pydantic import model_validator
 from api.model.main import ExtModel
-from decimal import Decimal
 from money.libs.model import BaseModelWithRawArray
+from money.libs.ext_utils import dateDRF
 
-class CardsMessage(ExtModel):
-    number: str = ''
-    amount: Decimal = 0
+class ProductsMessage(ExtModel):
+    catalog: int = 0
 
-class CardSignal(BaseModelWithRawArray):
+class ProdSignal(BaseModelWithRawArray):
     title: str
-    amount: Decimal
-    number: str
+    catalog: int
 
-class CardSelector(BaseModelWithRawArray):
+class ProdSignalKV(BaseModelWithRawArray):
+    id: int
+    title: str
+
+class ProdSelector(BaseModelWithRawArray):
     id: int
     created: datetime | str
     title: str
-    amount: Decimal
-    number: str
+    catalog: str
 
     @model_validator(mode='after')
     def complete(self) -> Self:

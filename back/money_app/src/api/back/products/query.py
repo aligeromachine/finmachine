@@ -3,7 +3,7 @@ SELECT
     prod.id,
     prod.created,
     prod.title,
-    cat.title cat
+    cat.title catalog
 FROM
     content.products prod
 JOIN
@@ -22,4 +22,15 @@ FROM
     content.products prod
 WHERE
     prod.user_id = %s
+"""
+
+PRODUCTS_ROW = """
+SELECT
+    prod.id,
+    prod.title,
+    prod.catalog_id catalog
+FROM
+    content.products prod
+WHERE
+    prod.id = %s
 """

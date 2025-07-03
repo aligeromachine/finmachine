@@ -9,7 +9,7 @@ export const AsyncFormSelect = ({ label, onChange, value, name, request }) => {
       const data = await request();
 
       const listOptions = data.map((item) => ({
-        value: item.pk,
+        value: item.id,
         label: item.title,
       }));
 
