@@ -18,7 +18,7 @@ def add_buy_data(item: BuyMessage) -> dict:
 
     return {'data': 'ok', 'message': f'adding Buy key: {max_id}'}
 
-def delete_buy_row(item: BuyMessage):
+def delete_buy_row(item: BuyMessage) -> dict:
     Buy.objects.filter(pk=item.pk).delete()
     return {'data': 'ok', 'message': f'delete Buy key: {item.pk}'}
 
@@ -28,7 +28,7 @@ def get_buy_row(item: BuyMessage):
         data = BuySignal.from_orm(it).model_dump()
     return data
 
-def edit_buy_data(item: BuyMessage):
+def edit_buy_data(item: BuyMessage) -> dict:
     try:
         instance = Buy.objects.get(pk=item.pk)
 
