@@ -525,9 +525,12 @@ def split_list_yield(ls: list, chunk_size: int)-> Iterator[list]:
     for it in range(0, len(ls), chunk_size):
         yield ls[it:it + chunk_size]
 
-def getDigit(s: str) -> int:
+def getDigit(s: str) -> str:
     digits = ''.join(filter(str.isdigit, s))
-    return int(digits) 
+    return digits
 
 def isDigit(s: str) -> bool:
-    return s == str(getDigit(s=s)) 
+    if not s:
+        return False
+
+    return s == getDigit(s=s)

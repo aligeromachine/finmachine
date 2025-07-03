@@ -1,6 +1,6 @@
 from functools import wraps
 
-def draw_response(func):
+def draw_paginate(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         ls, count, offset, limit = func(*args, **kwargs)

@@ -1,6 +1,6 @@
 from typing import Any, Self
 from pydantic import BaseModel, model_validator
-from money.libs.model import BaseModelWithRawQuery
+from money.libs.model import BaseModelWithRawArray
 from decimal import Decimal
 
 # SELECTOR DB
@@ -37,6 +37,6 @@ class Payload(BaseModel):
     buy: Decimal
     profit: Decimal
 
-class BuyGroup(BaseModelWithRawQuery):
+class BuyGroup(BaseModelWithRawArray):
     payload: list[Payload]
     user_id: int

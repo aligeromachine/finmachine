@@ -82,7 +82,7 @@ class Buy(AmountMixin):
         verbose_name = "Buy"
         verbose_name_plural = "Buy"
 
-def validate_payload(value):
+def validate_payload(value) -> None:
     if not isinstance(value, dict):
         raise ValidationError("payload must be a dictionary")
     if "year" not in value:

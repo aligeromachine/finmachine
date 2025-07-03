@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 import logging
 from api.model.main import validate_model
-from api.back.decore import draw_response
+from api.back.decore import draw_paginate
 from money.utils.func import model_max_id
 from money.libs.ext_utils import dateDRF
 from money.models import Shop
@@ -10,7 +10,7 @@ from api.back.shop.query import SQL_SHOP, SHOP_TOTAL
 
 logger = logging.getLogger(__name__)
 
-@draw_response
+@draw_paginate
 def table_shop_data(item: ShopMessage):
     params = [item.user_id, item.offset * item.limit, item.limit]
     ls = []
