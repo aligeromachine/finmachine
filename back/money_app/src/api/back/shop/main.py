@@ -1,76 +1,14 @@
 from django.http import HttpRequest
 import logging
 from api.model.main import validate_model
-from api.back.decore import draw_paginate
-from money.utils.func import model_max_id
-from money.libs.ext_utils import dateDRF
-from money.models import Shop
-from api.model.shop import ShopMessage
-from api.back.shop.query import SQL_SHOP, SHOP_TOTAL
+from api.back.shop.model import ShopMessage
+from api.back.shop.base import add_shop_data, delete_shop_row, edit_shop_data, get_shop_row, list_shop_data
+from api.back.shop.table import table_shop_data
 
 logger = logging.getLogger(__name__)
 
-@draw_paginate
-def table_shop_data(item: ShopMessage):
-    params = [item.user_id, item.offset * item.limit, item.limit]
-    ls = []
-    for it in Shop.objects.raw(raw_query=SQL_SHOP, params=params):
-        raw = {
-            'id': it.id,
-            'created': dateDRF(it.created),
-            'title': it.title,
-            'address': it.address,
-        }
-        ls.append(raw)
-
-    params = [item.user_id]
-    count: int = 0
-    for it in Shop.objects.raw(raw_query=SHOP_TOTAL, params=params):
-        count = it.c
-
-    return ls, count, item.offset, item.limit
-
-def add_shop_data(item: ShopMessage):
-    Shop(title=item.title, address=item.address, user_id=item.user_id).save()
-    max_id = model_max_id(model=Shop)
-
-    return {'data': 'ok', 'message': f'adding shop key: {max_id}'}
-
-def delete_shop_row(item: ShopMessage):
-    Shop.objects.filter(pk=item.pk).delete()
-    return {'data': 'ok', 'message': f'delete shop key: {item.pk}'}
-
-def get_shop_row(item: ShopMessage):
-    data = {}
-
-    for it in Shop.objects.filter(pk=item.pk):
-        data["title"] = it.title
-        data["address"] = it.address
-
-    return data
-
-def edit_shop_data(item: ShopMessage):
-    try:
-        instance = Shop.objects.get(pk=item.pk)
-
-        instance.title = item.title
-        instance.address = item.address
-        instance.save()
-    except: # noqa
-        return {'data': 'err', 'message': 'pk does not exist'}
-
-    return {'data': 'ok', 'message': f'update {item.pk=}'}
-
-def list_shop_data(item: ShopMessage):
-    ls: list = []
-
-    for it in Shop.objects.all():
-        ls.append({"pk": it.pk, "title": f"{it.title} - {it.address}"})
-
-    return ls
-
 @validate_model(ShopMessage)
-def invoke_response(request: HttpRequest, item: ShopMessage):
+def invoke_response(request: HttpRequest, item: ShopMessage) -> dict:
     respo = {"data": "err", "message": "undefinded"}
 
     if item.command == "table_shop_data":

@@ -1,76 +1,14 @@
 from django.http import HttpRequest
 import logging
 from api.model.main import validate_model
-from api.back.decore import draw_paginate
-from money.utils.func import model_max_id
-from money.libs.ext_utils import dateDRF
-from money.models import Profit
-from api.model.profit import ProfitMessage
-from api.back.profit.query import SQL_PROFIT, PROFIT_TOTAL
+from api.back.profit.base import add_profit_data, delete_profit_row, edit_profit_data, get_profit_row
+from api.back.profit.table import table_profit_data
+from api.back.profit.model import ProfitMessage
 
 logger = logging.getLogger(__name__)
 
-@draw_paginate
-def table_profit_data(item: ProfitMessage):
-    params = [item.user_id, item.offset * item.limit, item.limit]
-    ls = []
-    for it in Profit.objects.raw(raw_query=SQL_PROFIT, params=params):
-        raw = {
-            'id': it.id,
-            'created': dateDRF(it.created),
-            'title': it.title,
-            'amount': it.amount,
-            'source': it.src,
-        }
-        ls.append(raw)
-
-    params = [item.user_id]
-    count: int = 0
-    for it in Profit.objects.raw(raw_query=PROFIT_TOTAL, params=params):
-        count = it.c
-
-    return ls, count, item.offset, item.limit
-
-def add_profit_data(item: ProfitMessage):
-    Profit(
-        title=item.title,
-        amount=item.amount,
-        source_id=item.source,
-        user_id=item.user_id
-    ).save()
-    max_id = model_max_id(model=Profit)
-
-    return {'data': 'ok', 'message': f'adding Profit key: {max_id}'}
-
-def delete_profit_row(item: ProfitMessage):
-    Profit.objects.filter(pk=item.pk).delete()
-    return {'data': 'ok', 'message': f'delete Profit key: {item.pk}'}
-
-def get_profit_row(item: ProfitMessage):
-    data = {}
-
-    for it in Profit.objects.filter(pk=item.pk):
-        data["title"] = it.title
-        data["amount"] = it.amount
-        data["source"] = it.source_id
-
-    return data
-
-def edit_profit_data(item: ProfitMessage):
-    try:
-        instance = Profit.objects.get(pk=item.pk)
-
-        instance.title = item.title
-        instance.amount = item.amount
-        instance.source_id = item.source
-        instance.save()
-    except: # noqa
-        return {'data': 'err', 'message': 'pk does not exist'}
-
-    return {'data': 'ok', 'message': f'update {item.pk=}'}
-
 @validate_model(ProfitMessage)
-def invoke_response(request: HttpRequest, item: ProfitMessage):
+def invoke_response(request: HttpRequest, item: ProfitMessage) -> dict:
     respo = {"data": "err", "message": "undefinded"}
 
     if item.command == "table_profit_data":

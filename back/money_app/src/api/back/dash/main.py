@@ -1,4 +1,4 @@
-from api.model.dash import DashboardMessage
+from api.back.dash.model import DashboardMessage
 from django.http import HttpRequest
 import logging
 from django.contrib.auth.models import User

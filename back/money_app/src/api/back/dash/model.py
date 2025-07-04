@@ -1,4 +1,8 @@
+from api.model.main import MainModel
 from dataclasses import dataclass
+
+class DashboardMessage(MainModel):
+    pass
 
 @dataclass
 class Organiz:

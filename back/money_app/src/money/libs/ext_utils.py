@@ -1,8 +1,8 @@
 from money.libs.ext_c import CONST
 from pathlib import Path
+from typing import Iterator, Callable
+from datetime import datetime, timedelta
 import csv
-import datetime
-import orjson
 import os
 import random
 import re
@@ -10,21 +10,15 @@ import string
 import uuid
 import hashlib
 import shutil
-import itertools
-from typing import Iterator, Callable
 
-
-# flake8: noqa
 X: Callable = lambda a: CONST.empty if not isinstance(a, list) else str(a[0]) if len(a) > 0 else CONST.empty
 XX: Callable = lambda a: a[0] if len(a) > 0 else CONST.empty
 Y: Callable = lambda a, b: a[b] if (a and b in a) else CONST.empty
 YX: Callable = lambda a, b: a[b] if (b in a) else CONST.empty
-JS: Callable = lambda a: orjson.dumps(a, indent=4).replace("\\", "")
-JSline: Callable = lambda a: orjson.dumps(a).replace("\\", "")
-DaysBeforeNow: Callable = lambda a: (datetime.datetime.now() - datetime.timedelta(days=a)).timestamp()
-DaysDeltaNow: Callable = lambda a: (datetime.datetime.now() - datetime.timedelta(days=a))
-timeX: Callable = lambda: (datetime.datetime.now() - datetime.timedelta(hours=4)).strftime("%H-%M-%S")
-timeF: Callable = lambda: (datetime.datetime.now() + datetime.timedelta(hours=3)).strftime('%d-%m-%Y_%H-%M-%S')
+DaysBeforeNow: Callable = lambda a: (datetime.now() - timedelta(days=a)).timestamp()
+DaysDeltaNow: Callable = lambda a: (datetime.now() - timedelta(days=a))
+timeX: Callable = lambda: (datetime.now() - timedelta(hours=4)).strftime("%H-%M-%S")
+timeF: Callable = lambda: (datetime.now() + timedelta(hours=3)).strftime('%d-%m-%Y_%H-%M-%S')
 timeSQL: Callable = lambda a: (a).strftime('%Y-%m-%d %H:%M:%S')
 timeDRF: Callable = lambda dt: (dt).strftime('%Y-%m-%d %H:%M:%S') if dt else CONST.empty
 timeDRFF: Callable = lambda dt: (dt).strftime('%d-%m-%Y %H:%M:%S') if dt else CONST.empty
@@ -33,21 +27,17 @@ timeDRFstr: Callable = lambda dt: ' '.join((dt.split('Z'))[0].split('T')) if dt 
 xSQL: Callable = lambda ls: ','.join([f"'{it}'" for it in ls])
 XELM: Callable = lambda ls: ls[0] if len(ls) > 0 else None
 XKEY: Callable = lambda key, d: d[key] if key in d else CONST.empty
-# flake8: noqa
+DEFAULT: Callable = lambda a: a if a else CONST.empty
 
-# guid
-def CreateGuid():
+def CreateGuid() -> str:
     return str(uuid.uuid4())
 
+def DeltaDateTime(h: int = 3) -> datetime:
+    return datetime.now() + timedelta(hours=h)
 
-# time
-def DeltaDateTime(h: int = 3) -> datetime.datetime:
-    return datetime.datetime.now() + datetime.timedelta(hours=h)
-
-
-def CliverDateTime(h: int = 3):
-    data = datetime.datetime.now() + datetime.timedelta(hours=h)
-    delta = datetime.datetime(
+def CliverDateTime(h: int = 3) -> datetime:
+    data = datetime.now() + timedelta(hours=h)
+    delta = datetime(
         year=data.year,
         month=data.month,
         day=data.day,
@@ -57,126 +47,16 @@ def CliverDateTime(h: int = 3):
     )
     return delta
 
-
-def StrDT(dt: str, d: int = 0):
-    return datetime.datetime.strptime(dt, CONST.FormatFull) + datetime.timedelta(hours=d)
-
-
-def AddDT(dt: datetime.datetime, d: int):
-    return dt + datetime.timedelta(hours=d)
-
-
-def ConvertDateTime(val):
-    ret = CONST.empty
-
-    if isinstance(val, datetime.datetime):
-        ret = val.strftime(CONST.FormatT)
-
-    return ret
-
-
-def NowToInt():
-
-    return int(datetime.datetime.utcnow().timestamp())
-
-
-def LogTime(h: int = 0):
+def LogTime(h: int = 0) -> str:
     return DeltaDateTime(h).strftime(CONST.FormatT)
 
-
-# orjson
-def ParseJson(_file: str):
-    data = {}
-
-    if os.path.isfile(_file):
-        with open(_file) as _f:
-            try:
-                _data = _f.read()
-                data = orjson.loads(_data)
-            except: # noqa
-                pass
-
-    return data
-
-
-def SaveJson(_file: str, it: dict):
-    with open(_file, 'w') as json_file:
-        orjson.dump(it, json_file, indent=4)
-
-
-def SaveLsJson(fn: str, it: list):
-    with open(fn, 'w') as json_file:
-        orjson.dump(obj=it, fp=json_file, ensure_ascii=False, indent=4)
-
-
-def JsonFileTols(pth: str):
-    if os.path.isfile(path=pth):
-        with open(pth) as read_file:
-            return [it for it in list(orjson.load(read_file))]
-    else:
-        return []
-
-
-def ParseJsonToLs(pth: str):
-    ls = []
-
-    def addls(fl: str):
-        lp = []
-        if os.path.isfile(fl):
-            with open(fl) as _f:
-                try:
-                    lp = orjson.loads(_f.read())
-                except: # noqa
-                    pass
-
-        for it in lp:
-            ls.append(it)
-
-    if os.path.isfile(pth):
-        addls(fl=pth)
-
-    if os.path.isdir(pth):
-        [addls(fl=AbsPath(pth, it)) for it in os.listdir(pth)]
-
-    return ls
-
-
-def JsonToStr(val: dict | list):
-
-    return orjson.dumps(val)
-
-
-def StrToJson(val: str):
-    try:
-        ret = orjson.loads(val)
-        if isinstance(ret, list) or isinstance(ret, dict):
-            return ret
-    except: # noqa
-        pass
-
-    return {}
-
-
-def JsValByKey(kwargs: dict, key: str):
-    val = CONST.empty
-
-    for k, v in kwargs.items():
-        if k == key:
-            val = v
-            break
-
-    return val
-
-
-# files
-def RemoveFile(path: str):
+def RemoveFile(path: str) -> None:
     try:
         os.remove(path)
     except: # noqa
         pass
 
-
-def RemoveFolders(path, remove_root=True):
+def RemoveFolders(path: str, remove_root: bool = True) -> None:
     if not os.path.isdir(path):
         return
 
@@ -193,7 +73,7 @@ def RemoveFolders(path, remove_root=True):
         if os.path.isdir(path):
             os.rmdir(path)
 
-def ClearFolders(pth):
+def ClearFolders(pth: str) -> None:
 
     if os.path.exists(pth):
 
@@ -202,47 +82,41 @@ def ClearFolders(pth):
             if not len(os.listdir(pth)):
                 os.rmdir(pth)
             else:
-
                 for f in os.listdir(pth):
                     full_path = os.path.join(pth, f)
+
                     if os.path.isdir(full_path):
                         ClearFolders(full_path)
 
+def CountFilesFolder(nf: str) -> int:
 
-def CountFilesFolder(nf: str):
-    initial_count = 0
+    initial_count: int = 0
     for path in Path(nf).iterdir():
         if path.is_file():
             initial_count += 1
         if path.is_dir():
-            initial_count += CountFilesFolder(path)
+            initial_count += CountFilesFolder(str(path.resolve()))
 
     return initial_count
 
-
-def WriteToFile(pth: str, content: str | bytes, flag: str):
+def WriteToFile(pth: str, content: str | bytes, flag: str) -> None:
     with open(pth, flag) as f:
         f.write(content)
 
-
-def ReadFileContent(pth: str):
+def ReadFileContent(pth: str) -> str:
     with open(pth, encoding=CONST.UTF8, errors='ignore') as f:
         return f.read()
 
-
-def CopyFile(src: str, dst: str):
+def CopyFile(src: str, dst: str) -> bool:
     if os.path.isfile(src):
         shutil.copyfile(src=src, dst=dst)
 
     return os.path.isfile(dst)
 
-# random name
-def RandomName(size: int = 15):
+def RandomName(size: int = 15) -> str:
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(size)).lower()
 
-
-# folder
-def CreateDirectory(a: str, b: str):
+def CreateDirectory(a: str, b: str) -> str:
     dir_report = AbsPath(a, b)
     if not os.path.exists(dir_report):
         try:
@@ -252,26 +126,28 @@ def CreateDirectory(a: str, b: str):
 
     return dir_report
 
+def AbsPath(*argv: str) -> str:
+    return str(os.path.abspath(os.path.join(*argv)))
 
-def AbsPath(*argv):
-    return os.path.abspath(os.path.join(*argv))
+def WriteLsToCSV(nfile: str, ls: list) -> None:
 
+    if not ls:
+        return
 
-# csv
-def WriteLsToCSV(nfile: str, ls: list):
-    ret = False
+    with open(nfile, 'w') as fcsv:
+        csv_writer = csv.writer(fcsv)
 
-    if len(ls) > 0:
-        with open(nfile, 'w') as fcsv:
-            csv_writer = csv.writer(fcsv)
+        for it in ls:
+            csv_writer.writerow(it)
 
-            for it in ls:
-                csv_writer.writerow(it)
+def ReadStdCsv(pth: str) -> list:
+    ls: list = []
 
-            ret = True
+    if os.path.isfile(pth):
+        with open(pth) as csv_file:
+            ls = [it for it in csv.reader(csv_file, dialect=csv.excel)]
 
-    return ret
-
+    return ls
 
 def reder_csv(pth: str):
     import csv
@@ -286,20 +162,10 @@ def reder_csv(pth: str):
 
     return ls
 
-def ReadStdCsv(pth: str):
-    ls = []
+def ReadUniqCsv(pth: str) -> list:
+    ls: list = []
 
-    if os.path.isfile(pth):
-        with open(pth) as csv_file:
-            ls = [it for it in csv.reader(csv_file, dialect=csv.excel)]
-
-    return ls
-
-
-def ReadUniqCsv(pth: str):
-    ls = []
-
-    def addls(fl: str):
+    def addls(fl: str) -> None:
         for it in ReadFileToList(fl):
             actions = re.split(r'[\t,]', it.strip())
             if len(actions) > 0:
@@ -309,13 +175,13 @@ def ReadUniqCsv(pth: str):
         addls(fl=pth)
 
     if os.path.isdir(pth):
-        [addls(fl=AbsPath(pth, it)) for it in os.listdir(pth)]
+        for it in os.listdir(pth):
+            addls(fl=AbsPath(pth, it))
 
     return ls
 
-
-def ReadFileToList(pth: str):
-    ls = []
+def ReadFileToList(pth: str) -> list:
+    ls: list = []
 
     with open(pth) as f:
 
@@ -341,14 +207,10 @@ def ReadFileToList(pth: str):
 
     return ls
 
-
-# Dublicate
-def RemoveDuplicateLs(items: list):
+def RemoveDuplicateLs(items: list) -> list:
     return list(set(items))
 
-
-# hashsum
-def Sum256(content: str | bytes):
+def Sum256(content: str | bytes) -> str:
     data = CONST.emptyb
     if isinstance(content, str):
         data = content.encode()
@@ -357,8 +219,7 @@ def Sum256(content: str | bytes):
 
     return hashlib.sha256(data).hexdigest()
 
-
-def SumMD5(content: str | bytes):
+def SumMD5(content: str | bytes) -> str:
     data = CONST.emptyb
     if isinstance(content, str):
         data = content.encode()
@@ -367,63 +228,22 @@ def SumMD5(content: str | bytes):
 
     return hashlib.md5(data).hexdigest()
 
-
-# decode
-def ResponseToStr(response: bytes, codec: str = CONST.empty):
-    ret = CONST.empty
-
-    cd = [None, CONST.ASCII, CONST.UTF8] if codec == CONST.empty else [codec]
-
-    for it in cd:
-        try:
-            ret = response.decode(it)
-        except: # noqa
-            pass
-
-        if ret != CONST.empty:
-            break
-
-    return ret
-
-
-def ExtractDigits(s: str):
+def ExtractDigits(s: str) -> str:
     return ''.join([i for i in str(s) if i.isdigit()])
 
-
-def last_digits(s: str):
+def last_digits(s: str) -> int:
     ret = re.findall(r'\d+', s)
     return ret[-1] if ret else 0
 
 
-def escape_chars(s: str):
+def escape_chars(s: str) -> str:
     # '_', '-', '.' or space with an '_'.
-    return re.sub(r'[^\w\-_. ]', '_', s)
+    return re.sub(r"[^\w\-_. ]", "_", s)
 
-
-def escape_sql(s: str):
+def escape_sql(s: str) -> str:
     s = re.sub(r"'", r"''", s)
     s = re.sub(r'\\', r'\\\\', s)
     return s
-
-
-def lsToRanges(ls_raw: list):
-    ls = []
-
-    if not ls_raw:
-        return ls
-
-    ls_raw = sorted(list(set(ls_raw)))
-    for a, b in itertools.groupby(enumerate(ls_raw), lambda pair: pair[1] - pair[0]):
-        b = list(b)
-        begin = b[0][1]
-        end = b[-1][1]
-        if begin == end:
-            ls.append(begin)
-        else:
-            ls.append([begin, end])
-
-    return ls
-
 
 def RangesTols(ls_raw: list) -> list:
     ls: list = []
@@ -441,7 +261,6 @@ def RangesTols(ls_raw: list) -> list:
 
     ls = sorted(list(set(ls)))
     return ls
-
 
 def ReadFileSeekls(file_path: str, delta: int, start_pos: int) -> tuple:
 
@@ -483,7 +302,6 @@ def ReadFileSeekRaw(file_path: str, start_pos: int) -> tuple:
     last_pos = 0
 
     with open(file_path) as f:
-
         f.seek(start_pos)
 
         line = CONST.empty
@@ -493,17 +311,15 @@ def ReadFileSeekRaw(file_path: str, start_pos: int) -> tuple:
         except: # noqa
             pass
 
-        if line:
+        if line and line != CONST.empty:
             rng = line.strip()
 
         last_pos = f.tell()
 
     return rng, theend, last_pos
 
-
 def NamelsFilesFolder(nf: str) -> list[Path]:
-
-    ls: list = []
+    ls = []
     for path in Path(nf).iterdir():
         if path.is_file():
             ls.append(path)
@@ -521,7 +337,7 @@ def ClearFile(pth: str) -> None:
     with open(pth, "w") as f: # noqa
         pass
 
-def split_list_yield(ls: list, chunk_size: int)-> Iterator[list]:
+def split_list_yield(ls: list, chunk_size: int) -> Iterator[list]:
     for it in range(0, len(ls), chunk_size):
         yield ls[it:it + chunk_size]
 

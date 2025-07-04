@@ -4,7 +4,7 @@ SELECT
     prof.created,
     prof.title,
     prof.amount,
-    src.title src
+    src.title source
 FROM
     content.profit prof
 JOIN
@@ -23,4 +23,14 @@ FROM
     content.profit prof
 WHERE
     prof.user_id = %s
+"""
+PROFIT_ROW = """
+SELECT
+    prof.id,
+    prof.title,
+    prof.source_id source
+FROM
+    content.profit prof
+WHERE
+    prof.id = %s
 """

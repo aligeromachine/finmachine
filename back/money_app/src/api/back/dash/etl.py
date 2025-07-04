@@ -5,7 +5,7 @@ from typing import Any
 from money.libs.ext_c import CONST
 from django.contrib.auth.models import User
 from money.libs.ext_utils import reder_csv
-from api.model.etl_acccess import Prod, Trati, Organiz, Prihvid, Prih, Prodvid, Visa
+from api.back.dash.model import Prod, Trati, Organiz, Prihvid, Prih, Prodvid, Visa
 from money.models import Buy, Cards, Products, Shop, Source, Profit, Catalog
 from money.utils.func import get_raw_path, model_max_id
 from django.db import models

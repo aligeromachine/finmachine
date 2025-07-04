@@ -1,6 +1,7 @@
+from collections.abc import Callable
 from functools import wraps
 import time
-from typing import Callable, Any
+from typing import Any
 from django.http import HttpRequest, JsonResponse
 from pydantic import BaseModel
 
@@ -23,7 +24,7 @@ def check_post(view_func: Callable) -> Any:
 def validate_auth(Model: type[BaseModel]) -> Any:
     def decorator(func: Callable) -> Any:
         @wraps(func)
-        def wrapper(request: HttpRequest, *args: list, **kwargs: dict) -> Any:
+        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> Any:
 
             data: BaseModel = validate_dict_conv(response=request.body, Model=Model)
             if not data:

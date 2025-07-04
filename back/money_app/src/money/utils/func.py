@@ -61,23 +61,23 @@ def get_raw_path():
 
 remove_spec = lambda x: re.sub(r"['\" ]", r"", x) # noqa
 
-def RULES_ROUTE(user: str):
+def RULES_ROUTE(user: str) -> list:
     for it in User.objects.filter(username=user):
         return str(it.last_name).split(',')
     return []
 
-def is_super_user(user: str):
+def is_super_user(user: str) -> bool:
 
     for it in User.objects.filter(username=user):
         return it.is_superuser
     return False
 
-def UpdateSQl(query: str, values: list):
+def UpdateSQl(query: str, values: list) -> None:
     from django.db import connection
     with connection.cursor() as cursor:
         cursor.execute(query, values)
 
-def date_to_tuple_tasks(dt: str):
+def date_to_tuple_tasks(dt: str) -> tuple:
 
     if dt == CONST.empty:
         return None, None, False
@@ -92,7 +92,7 @@ def date_to_tuple_tasks(dt: str):
 
     return begin, end, True
 
-def date_to_tuple_dashboard(dt: str, context: dict):
+def date_to_tuple_dashboard(dt: str, context: dict) -> tuple:
     begin = context["begin"]
     end = context["end"]
 
@@ -109,12 +109,12 @@ def date_to_tuple_dashboard(dt: str, context: dict):
 
     return begin, end
 
-def daterange(begin: str, end: str):
+def daterange(begin: str, end: str) -> list:
     date1 = datetime.strptime(begin, '%Y-%m-%d')
     date2 = datetime.strptime(end, '%Y-%m-%d')
     return [(date1 + timedelta(days=x)).strftime(CONST.FDate) for x in range((date2 - date1).days + 1)]
 
-def context_date_range(begin: int = 7, end: int = 0):
+def context_date_range(begin: int = 7, end: int = 0) -> dict:
     context = {
         'begin': DaysDeltaNow(begin).strftime(CONST.FDate),
         'end': DaysDeltaNow(end).strftime(CONST.FDate),
@@ -122,13 +122,13 @@ def context_date_range(begin: int = 7, end: int = 0):
 
     return context
 
-def parse_date(dt: str, context: dict = context_date_range()):
+def parse_date(dt: str, context: dict = context_date_range()) -> str:
 
     begin, end = date_to_tuple_dashboard(dt=dt, context=context)
 
     return f" BETWEEN '{begin} {CONST.DAY_BEGIN}' AND '{end} {CONST.DAY_END}' "
 
-def CreateWorkDir(dt: datetime, name: str):
+def CreateWorkDir(dt: datetime, name: str) -> str:
     folder = CreateDirectory(a=MEDIA_ROOT, b=name)
     folder = CreateDirectory(a=folder, b=dt.strftime('%Y'))
     folder = CreateDirectory(a=folder, b=dt.strftime('%m'))
@@ -136,10 +136,10 @@ def CreateWorkDir(dt: datetime, name: str):
 
     return folder
 
-def GetResultFolder():
-    return AbsPath(MEDIA_ROOT, PathNames.exchange)
+def GetResultFolder() -> str:
+    return str(AbsPath(MEDIA_ROOT, PathNames.exchange))
 
-def serializing_dt_str(name: str):
+def serializing_dt_str(name: str) -> datetime:
     match = re.search(r"(\d+)-(\d+)-(\d+)_(\d+)-(\d+)-(\d+)", name)
 
     if not match:
@@ -155,7 +155,7 @@ def serializing_dt_str(name: str):
 
     return dt
 
-def PutDTResult(name: str):
+def PutDTResult(name: str) -> str:
     dt = serializing_dt_str(name)
     if not dt:
         return None
@@ -163,13 +163,13 @@ def PutDTResult(name: str):
 
     return str(AbsPath(folder, name))
 
-def GetDTResult(name: str):
+def GetDTResult(name: str) -> str:
     dt = serializing_dt_str(name)
     if not dt:
         return None
 
     return str(AbsPath(MEDIA_ROOT, PathNames.exchange, dt.strftime('%Y'), dt.strftime('%m'), dt.strftime('%d'), name))
 
-def model_max_id(model: models.Model):
+def model_max_id(model: models.Model) -> int:
     max_id = model.objects.last()
-    return max_id.pk
+    return int(max_id.pk)
