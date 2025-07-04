@@ -1,10 +1,10 @@
 from django.http import HttpRequest
-from api.model.main import validate_model
+from api.back.decore import validate_model
 from api.back.cards.model import CardsMessage
 from api.back.cards.table import table_cards_data
 from api.back.cards.base import add_cards_data, delete_cards_row, edit_cards_data, get_cards_row
 
-@validate_model(CardsMessage)
+@validate_model(CardsMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: CardsMessage) -> dict:
     respo = {"data": "err", "message": "undefinded"}
 

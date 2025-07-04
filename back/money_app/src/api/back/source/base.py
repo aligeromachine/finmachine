@@ -32,6 +32,6 @@ def edit_source_data(item: SourceMessage) -> dict:
 
     return {'data': 'ok', 'message': f'update {item.pk=}'}
 
-def list_source_data(item: SourceMessage) -> dict:
+def list_source_data(item: SourceMessage) -> list:
     ls: list = [SourceSignalKV.from_orm(it).model_dump() for it in Source.objects.filter(user=item.user_id)]
     return ls

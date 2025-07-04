@@ -6,8 +6,8 @@ from api.back.source.query import SQL_SOURCE, SOURCE_TOTAL
 
 logger = logging.getLogger(__name__)
 
-@draw_paginate
-def table_source_data(item: SourceMessage) -> dict:
+@draw_paginate  # type: ignore
+def table_source_data(item: SourceMessage) -> tuple:
     params = [item.user_id, item.offset * item.limit, item.limit]
     ls = [SourceSelector.from_orm(it).model_dump() for it in Source.objects.raw(raw_query=SQL_SOURCE, params=params)]
 

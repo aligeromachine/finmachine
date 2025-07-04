@@ -1,13 +1,13 @@
 from django.http import HttpRequest
 import logging
-from api.model.main import validate_model
+from api.back.decore import validate_model
 from api.back.profit.base import add_profit_data, delete_profit_row, edit_profit_data, get_profit_row
 from api.back.profit.table import table_profit_data
 from api.back.profit.model import ProfitMessage
 
 logger = logging.getLogger(__name__)
 
-@validate_model(ProfitMessage)
+@validate_model(ProfitMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: ProfitMessage) -> dict:
     respo = {"data": "err", "message": "undefinded"}
 

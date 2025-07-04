@@ -18,7 +18,7 @@ def delete_cat_row(item: CatalogMessage) -> dict:
     Catalog.objects.filter(pk=item.pk).delete()
     return {'data': 'ok', 'message': f'delete Catalog key: {item.pk}'}
 
-def get_cat_row(item: CatalogMessage):
+def get_cat_row(item: CatalogMessage) -> dict:
     data: dict = {}
     for it in Catalog.objects.filter(pk=item.pk):
         data = CatSignal.from_orm(it).model_dump()

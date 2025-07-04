@@ -22,8 +22,8 @@ def delete_buy_row(item: BuyMessage) -> dict:
     Buy.objects.filter(pk=item.pk).delete()
     return {'data': 'ok', 'message': f'delete Buy key: {item.pk}'}
 
-def get_buy_row(item: BuyMessage):
-    data = {}
+def get_buy_row(item: BuyMessage) -> dict:
+    data: dict = {}
     for it in Buy.objects.raw(raw_query=BUY_ROW, params=[item.pk]):
         data = BuySignal.from_orm(it).model_dump()
     return data

@@ -38,6 +38,6 @@ def edit_prod_data(item: ProductsMessage) -> dict:
 
     return {'data': 'ok', 'message': f'update {item.pk=}'}
 
-def list_prod_data(item: ProductsMessage) -> dict:
+def list_prod_data(item: ProductsMessage) -> list:
     ls: list = [ProdSignalKV.from_orm(it).model_dump() for it in Products.objects.filter(catalog_id=item.pk)]
     return ls

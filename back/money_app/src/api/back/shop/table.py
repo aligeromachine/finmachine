@@ -6,8 +6,8 @@ from api.back.shop.query import SQL_SHOP, SHOP_TOTAL
 
 logger = logging.getLogger(__name__)
 
-@draw_paginate
-def table_shop_data(item: ShopMessage) -> dict:
+@draw_paginate  # type: ignore
+def table_shop_data(item: ShopMessage) -> tuple:
     params = [item.user_id, item.offset * item.limit, item.limit]
     ls = [ShopSelector.from_orm(it).model_dump() for it in Shop.objects.raw(raw_query=SQL_SHOP, params=params)]
 

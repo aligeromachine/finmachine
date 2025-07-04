@@ -1,13 +1,13 @@
 from django.http import HttpRequest
 import logging
-from api.model.main import validate_model
+from api.back.decore import validate_model
 from api.back.shop.model import ShopMessage
 from api.back.shop.base import add_shop_data, delete_shop_row, edit_shop_data, get_shop_row, list_shop_data
 from api.back.shop.table import table_shop_data
 
 logger = logging.getLogger(__name__)
 
-@validate_model(ShopMessage)
+@validate_model(ShopMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: ShopMessage) -> dict:
     respo = {"data": "err", "message": "undefinded"}
 

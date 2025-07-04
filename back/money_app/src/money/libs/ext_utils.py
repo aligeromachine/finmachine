@@ -149,7 +149,7 @@ def ReadStdCsv(pth: str) -> list:
 
     return ls
 
-def reder_csv(pth: str):
+def reder_csv(pth: str) -> list:
     import csv
     ls = []
     with open(pth, 'r') as csvfile:

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Self
 from pydantic import model_validator
-from api.model.main import ExtModel
+from api.back.decore import ExtModel
 from money.libs.model import BaseModelWithRawArray
 from money.libs.ext_utils import dateDRF
 

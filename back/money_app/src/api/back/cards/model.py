@@ -2,13 +2,13 @@ from datetime import datetime
 from typing import Self
 from money.libs.ext_utils import dateDRF
 from pydantic import model_validator
-from api.model.main import ExtModel
+from api.back.decore import ExtModel
 from decimal import Decimal
 from money.libs.model import BaseModelWithRawArray
 
 class CardsMessage(ExtModel):
     number: str = ''
-    amount: Decimal = 0
+    amount: Decimal = Decimal(0)
 
 class CardSignal(BaseModelWithRawArray):
     title: str

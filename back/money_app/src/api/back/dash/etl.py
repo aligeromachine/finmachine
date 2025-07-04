@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def conv_dt(cdt: str) -> datetime:
     return datetime.strptime(cdt, CONST.FormatAccess)
 
-def update_created(cdt: str, model: models.Model):
+def update_created(cdt: str, model: models.Model) -> None:
     pk: int = model_max_id(model=model)
     dt: datetime = conv_dt(cdt=cdt)
 

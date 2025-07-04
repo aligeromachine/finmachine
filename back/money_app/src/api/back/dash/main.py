@@ -4,7 +4,7 @@ import logging
 from django.contrib.auth.models import User
 from api.back.dash.etl import (
     elt_trati, etl_prih, etl_prih_vid, etl_prod, etl_prod_vid, etl_shop, etl_visa)
-from api.model.main import validate_model
+from api.back.decore import validate_model
 from api.back.dash.upt import update_products, update_profit, update_buy
 
 logger = logging.getLogger(__name__)
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 def update_money_csv(item: DashboardMessage) -> dict:
     respo = {"data": "ok", "message": "update_money_csv"}
 
-    def GetAddressWatchService():
+    def GetAddressWatchService() -> None:
         user = User.objects.get(pk=1)
         logger.info('ETL')
         etl_shop(user=user)
@@ -36,7 +36,7 @@ def update_money_csv(item: DashboardMessage) -> dict:
 
     return respo
 
-@validate_model(DashboardMessage)
+@validate_model(DashboardMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: DashboardMessage) -> dict:
     respo = {"data": "err", "message": "undefinded"}
 

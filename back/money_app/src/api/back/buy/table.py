@@ -6,8 +6,8 @@ from api.back.buy.query import SQL_BUY, BUY_TOTAL
 
 logger = logging.getLogger(__name__)
 
-@draw_paginate
-def table_buy_data(item: BuyMessage) -> dict:
+@draw_paginate  # type: ignore
+def table_buy_data(item: BuyMessage) -> tuple:
     params = [item.user_id, item.offset * item.limit, item.limit]
     ls = [BuySelector.from_orm(it).model_dump() for it in Buy.objects.raw(raw_query=SQL_BUY, params=params)]
 

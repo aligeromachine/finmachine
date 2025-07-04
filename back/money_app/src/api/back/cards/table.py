@@ -6,8 +6,8 @@ from api.back.cards.query import SQL_CARDS, CARDS_TOTAL
 
 logger = logging.getLogger(__name__)
 
-@draw_paginate
-def table_cards_data(item: CardsMessage) -> dict:
+@draw_paginate  # type: ignore
+def table_cards_data(item: CardsMessage) -> tuple:
     params = [item.user_id, item.offset * item.limit, item.limit]
     ls = [CardSelector.from_orm(it).model_dump() for it in Cards.objects.raw(raw_query=SQL_CARDS, params=params)]
 

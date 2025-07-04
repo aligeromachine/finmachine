@@ -1,4 +1,4 @@
-from api.model.main import MainModel
+from api.back.decore import MainModel
 from dataclasses import dataclass
 
 class DashboardMessage(MainModel):

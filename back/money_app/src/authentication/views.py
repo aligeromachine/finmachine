@@ -1,4 +1,4 @@
-from django.http import HttpRequest
+from django.http import HttpRequest, JsonResponse
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import authenticate
 from authentication.utils import create_jwt_tokens, verify_jwt_token
@@ -11,12 +11,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 @check_post
-def custom_logout(request: HttpRequest):
+def custom_logout(request: HttpRequest) -> JsonResponse:
     return token_response(token={}, code=200)
 
 @check_post
 @validate_auth(AuthLogin)
-def login_view(request: HttpRequest, data: AuthLogin):
+def login_view(request: HttpRequest, data: AuthLogin) -> JsonResponse:
 
     user: AbstractUser = authenticate(request, username=data.username, password=data.password)
     if not user:
@@ -30,7 +30,7 @@ def login_view(request: HttpRequest, data: AuthLogin):
 
 @check_post
 @validate_auth(AuthAccess)
-def protected_view(request: HttpRequest, data: AuthAccess):
+def protected_view(request: HttpRequest, data: AuthAccess) -> JsonResponse:
 
     payload, err = verify_jwt_token(token=data.access)
     if not payload:
@@ -40,7 +40,7 @@ def protected_view(request: HttpRequest, data: AuthAccess):
 
 @check_post
 @validate_auth(AuthRefresh)
-def refresh_token_view(request: HttpRequest, data: AuthRefresh):
+def refresh_token_view(request: HttpRequest, data: AuthRefresh) -> JsonResponse:
 
     payload, err = verify_jwt_token(token=data.refresh)
     if not payload:
@@ -49,9 +49,9 @@ def refresh_token_view(request: HttpRequest, data: AuthRefresh):
     jwt_token = create_jwt_tokens(user_id=payload['user_id'])
     return token_response(token={'access': jwt_token['access']})
 
-@check_post
-@validate_auth(AuthRegister)
-def register_view(request: HttpRequest, data: AuthRegister):
+@check_post  # type: ignore
+@validate_auth(AuthRegister)  # type: ignore
+def register_view(request: HttpRequest, data: AuthRegister) -> JsonResponse:
 
     if User.objects.filter(username=data.username).exists():
         return token_response(msg='User already exist')
