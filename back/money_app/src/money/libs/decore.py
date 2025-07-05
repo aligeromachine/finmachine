@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from functools import wraps
 import time
-from typing import Any
+from typing import Any, ParamSpec, TypeVar
 from django.http import HttpRequest, JsonResponse
 from pydantic import BaseModel
 
@@ -10,21 +10,23 @@ from money.libs.validate import validate_dict_conv
 import logging
 
 logger = logging.getLogger(__name__)
+R = TypeVar("R")
+P = ParamSpec("P")
 
 def token_response(token: dict | None = None, msg: str | None = None, code: int = 200) -> JsonResponse:
     return JsonResponse({'token': token, 'message': msg}, status=code)
 
-def check_post(view_func: Callable) -> Any:
-    def wrapper_view(request: HttpRequest) -> Any:
+def check_post(view_func: Callable[..., JsonResponse]) -> JsonResponse:
+    def wrapper_view(request: HttpRequest) -> JsonResponse:
         if request.method != 'POST':
             return token_response(msg='Method not allowed', code=405)
         return view_func(request)
     return wrapper_view
 
-def validate_auth(Model: type[BaseModel]) -> Any:
-    def decorator(func: Callable) -> Any:
+def validate_auth(Model: type[BaseModel]) -> JsonResponse:
+    def decorator(func: Callable[..., JsonResponse]) -> JsonResponse:
         @wraps(func)
-        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> Any:
+        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> JsonResponse:
 
             data: BaseModel = validate_dict_conv(response=request.body, Model=Model)
             if not data:
@@ -33,9 +35,9 @@ def validate_auth(Model: type[BaseModel]) -> Any:
         return wrapper
     return decorator
 
-def calculate_running_time(func: Callable) -> Any:
+def calculate_running_time(func: Callable[..., Any]) -> Any:
     @wraps(func)
-    def wrapper(*args: list, **kwargs: dict) -> Any:
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         begin = time.time()
         random_name = RandomName(5).lower()
 

@@ -3,8 +3,8 @@ import os
 
 def get_env(key: str, conv: bool = False) -> str | bool:
     if conv:
-        return bool(int(os.environ.get(key)))
-    return os.environ.get(key)
+        return bool(int(str(os.environ.get(key))))
+    return str(os.environ.get(key))
 
 def create_connect() -> dict:
     return {

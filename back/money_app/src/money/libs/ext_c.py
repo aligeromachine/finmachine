@@ -2,7 +2,7 @@ class CONST:
     POST = 'POST'
     GET = 'GET'
     PUT = 'PUT'
-    empty = ''
+    empty = str('')
     emptyb = b''
     emptyls = [empty, None]
     FormatT = '%d-%m-%Y %H:%M:%S'

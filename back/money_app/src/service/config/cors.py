@@ -2,8 +2,8 @@ from service.config.env import ENV_APP
 
 CONFIG: dict = ENV_APP['SERVICE']
 
-ALLOWED_HOSTS: str = str(CONFIG['ALLOWED']).split(",")
-CORS_ALLOWED_ORIGINS: str = str(CONFIG['CORS']).split(",")
+ALLOWED_HOSTS: list[str] = str(CONFIG['ALLOWED']).split(",")
+CORS_ALLOWED_ORIGINS: list[str] = str(CONFIG['CORS']).split(",")
 CORS_ALLOW_METHODS: list = [
     'DELETE',
     'GET',

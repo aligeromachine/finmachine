@@ -28,6 +28,7 @@ xSQL: Callable = lambda ls: ','.join([f"'{it}'" for it in ls])
 XELM: Callable = lambda ls: ls[0] if len(ls) > 0 else None
 XKEY: Callable = lambda key, d: d[key] if key in d else CONST.empty
 DEFAULT: Callable = lambda a: a if a else CONST.empty
+remove_spec: Callable = lambda x: re.sub(r"['\"]", r"", x) # noqa
 
 def CreateGuid() -> str:
     return str(uuid.uuid4())

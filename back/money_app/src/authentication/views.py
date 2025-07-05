@@ -10,12 +10,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@check_post
+@check_post  # type: ignore
 def custom_logout(request: HttpRequest) -> JsonResponse:
     return token_response(token={}, code=200)
 
-@check_post
-@validate_auth(AuthLogin)
+@check_post  # type: ignore
+@validate_auth(AuthLogin)  # type: ignore
 def login_view(request: HttpRequest, data: AuthLogin) -> JsonResponse:
 
     user: AbstractUser = authenticate(request, username=data.username, password=data.password)
@@ -28,8 +28,8 @@ def login_view(request: HttpRequest, data: AuthLogin) -> JsonResponse:
     tokens = create_jwt_tokens(user.pk)
     return token_response(token=tokens, code=200)
 
-@check_post
-@validate_auth(AuthAccess)
+@check_post  # type: ignore
+@validate_auth(AuthAccess)  # type: ignore
 def protected_view(request: HttpRequest, data: AuthAccess) -> JsonResponse:
 
     payload, err = verify_jwt_token(token=data.access)
@@ -38,8 +38,8 @@ def protected_view(request: HttpRequest, data: AuthAccess) -> JsonResponse:
 
     return token_response(token={'access': data.access})
 
-@check_post
-@validate_auth(AuthRefresh)
+@check_post  # type: ignore
+@validate_auth(AuthRefresh)  # type: ignore
 def refresh_token_view(request: HttpRequest, data: AuthRefresh) -> JsonResponse:
 
     payload, err = verify_jwt_token(token=data.refresh)

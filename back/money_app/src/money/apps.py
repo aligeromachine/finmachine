@@ -5,6 +5,6 @@ class MoneyConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'money'
 
-    def ready(self):
+    def ready(self) -> None:
         pass
         # import money.signals

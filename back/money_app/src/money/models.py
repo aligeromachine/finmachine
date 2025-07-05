@@ -11,8 +11,8 @@ class TimeStampedMixin(models.Model):
         on_delete=models.CASCADE,
     )
 
-    def __str__(self):
-        return self.title
+    def __str__(self) -> str:
+        return f'{self.title}'
 
     class Meta:
         abstract = True
@@ -82,7 +82,7 @@ class Buy(AmountMixin):
         verbose_name = "Buy"
         verbose_name_plural = "Buy"
 
-def validate_payload(value) -> None:
+def validate_payload(value: dict) -> None:
     if not isinstance(value, dict):
         raise ValidationError("payload must be a dictionary")
     if "year" not in value:

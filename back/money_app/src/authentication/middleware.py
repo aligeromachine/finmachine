@@ -2,11 +2,11 @@ from functools import wraps
 from django.http import HttpRequest, JsonResponse
 from authentication.utils import verify_jwt_token
 from money.libs.decore import token_response
-from typing import Callable
+from typing import Any, Callable
 
-def jwt_auth_required(view_func: Callable):
+def jwt_auth_required(view_func: Callable[..., JsonResponse]) -> JsonResponse:
     @wraps(view_func)
-    def wrapper(request: HttpRequest, *args, **kwargs) -> JsonResponse:
+    def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> JsonResponse:
         # Get the token from the Authorization header
         auth_header = request.headers.get('Authorization', '')
         if not auth_header.startswith('Bearer '):

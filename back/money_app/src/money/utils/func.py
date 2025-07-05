@@ -3,8 +3,7 @@ import os
 import re
 from money.libs.ext_utils import (
     AbsPath,
-    CreateDirectory,
-    DaysDeltaNow)
+    CreateDirectory)
 from service.settings import MEDIA_ROOT
 from datetime import datetime, timedelta
 from money.libs.ext_c import (
@@ -15,51 +14,52 @@ from django.contrib.auth.models import User
 
 logger = logging.getLogger(__name__)
 
-def create_task_dir(name: str, dt: datetime):
+def create_task_dir(name: str, dt: datetime) -> str:
     folder = CreateDirectory(a=MEDIA_ROOT, b=name)
     folder = CreateDirectory(a=folder, b=dt.strftime('%Y'))
     folder = CreateDirectory(a=folder, b=dt.strftime('%m'))
     folder = CreateDirectory(a=folder, b=dt.strftime('%d'))
 
-    return folder
+    return str(folder)
 
-def put_file_base(nf: str, dt: datetime, prefix: str):
+def put_file_base(nf: str, dt: datetime, prefix: str) -> str:
+    drv: str = CONST.empty
+
     if not dt:
-        return CONST.empty
+        return drv
     if nf in CONST.emptyls:
-        return CONST.empty
+        return drv
 
     folder = create_task_dir(name=prefix, dt=dt)
-    file_path = AbsPath(folder, nf)
+    file_path: str = AbsPath(folder, nf)
 
     return file_path
 
-def get_file_base(nf: str, dt: datetime, prefix: str):
+def get_file_base(nf: str, dt: datetime, prefix: str) -> str:
+    drv: str = CONST.empty
 
     if not dt:
-        return CONST.empty
+        return drv
     if nf in CONST.emptyls:
-        return CONST.empty
+        return drv
 
-    return AbsPath(MEDIA_ROOT, prefix, dt.strftime('%Y'), dt.strftime('%m'), dt.strftime('%d'), nf)
+    return str(AbsPath(MEDIA_ROOT, prefix, dt.strftime('%Y'), dt.strftime('%m'), dt.strftime('%d'), nf))
 
-def get_base_crusher(name: str):
+def get_base_crusher(name: str) -> str:
 
     folder = AbsPath(MEDIA_ROOT, PathNames.crusher)
     if not os.path.exists(folder):
         os.mkdir(folder)
 
-    return AbsPath(folder, name)
+    return str(AbsPath(folder, name))
 
-def get_raw_path():
+def get_raw_path() -> str:
 
     folder = AbsPath(MEDIA_ROOT, PathNames.raw)
     if not os.path.exists(folder):
         os.mkdir(folder)
 
-    return AbsPath(folder)
-
-remove_spec = lambda x: re.sub(r"['\" ]", r"", x) # noqa
+    return str(AbsPath(folder))
 
 def RULES_ROUTE(user: str) -> list:
     for it in User.objects.filter(username=user):
@@ -67,9 +67,8 @@ def RULES_ROUTE(user: str) -> list:
     return []
 
 def is_super_user(user: str) -> bool:
-
     for it in User.objects.filter(username=user):
-        return it.is_superuser
+        return bool(it.is_superuser)
     return False
 
 def UpdateSQl(query: str, values: list) -> None:
@@ -114,32 +113,18 @@ def daterange(begin: str, end: str) -> list:
     date2 = datetime.strptime(end, '%Y-%m-%d')
     return [(date1 + timedelta(days=x)).strftime(CONST.FDate) for x in range((date2 - date1).days + 1)]
 
-def context_date_range(begin: int = 7, end: int = 0) -> dict:
-    context = {
-        'begin': DaysDeltaNow(begin).strftime(CONST.FDate),
-        'end': DaysDeltaNow(end).strftime(CONST.FDate),
-    }
-
-    return context
-
-def parse_date(dt: str, context: dict = context_date_range()) -> str:
-
-    begin, end = date_to_tuple_dashboard(dt=dt, context=context)
-
-    return f" BETWEEN '{begin} {CONST.DAY_BEGIN}' AND '{end} {CONST.DAY_END}' "
-
 def CreateWorkDir(dt: datetime, name: str) -> str:
     folder = CreateDirectory(a=MEDIA_ROOT, b=name)
     folder = CreateDirectory(a=folder, b=dt.strftime('%Y'))
     folder = CreateDirectory(a=folder, b=dt.strftime('%m'))
     folder = CreateDirectory(a=folder, b=dt.strftime('%d'))
 
-    return folder
+    return str(folder)
 
 def GetResultFolder() -> str:
     return str(AbsPath(MEDIA_ROOT, PathNames.exchange))
 
-def serializing_dt_str(name: str) -> datetime:
+def serializing_dt_str(name: str) -> datetime | None:
     match = re.search(r"(\d+)-(\d+)-(\d+)_(\d+)-(\d+)-(\d+)", name)
 
     if not match:
@@ -155,7 +140,7 @@ def serializing_dt_str(name: str) -> datetime:
 
     return dt
 
-def PutDTResult(name: str) -> str:
+def PutDTResult(name: str) -> str | None:
     dt = serializing_dt_str(name)
     if not dt:
         return None
@@ -163,7 +148,7 @@ def PutDTResult(name: str) -> str:
 
     return str(AbsPath(folder, name))
 
-def GetDTResult(name: str) -> str:
+def GetDTResult(name: str) -> str | None:
     dt = serializing_dt_str(name)
     if not dt:
         return None
