@@ -1,4 +1,3 @@
-from machine.const.status import STATUS
 
 SQL_DONE: str = f"""
     WITH assigned_count as (
@@ -10,7 +9,7 @@ SQL_DONE: str = f"""
         JOIN
             content.tasks task on task.id = hash.task_id
         WHERE
-            task.crusher != '{STATUS.COMPLETE}'
+            task.crusher != 'COMPLETE'
         GROUP BY
             task.id
     ),
@@ -23,7 +22,7 @@ SQL_DONE: str = f"""
         JOIN
             content.tasks task on task.id = hash.task_id
         WHERE
-            task.crusher != '{STATUS.COMPLETE}'
+            task.crusher != 'COMPLETE'
         AND
             not hash.modified is null
         GROUP BY
@@ -33,7 +32,7 @@ SQL_DONE: str = f"""
         assigned.id
     FROM
         assigned_count assigned
-    FULL OUTER JOIN
+    FULL JOIN
         completed_count completed
     ON
         assigned.id = completed.id
@@ -57,7 +56,7 @@ FROM
 JOIN
     content.tasks task on task.id = hash.task_id
 WHERE
-    task.crusher = '{STATUS.VIRIFY}'
+    task.crusher = 'VIRIFY'
 AND
     hash.modified is null
 GROUP BY
@@ -101,6 +100,7 @@ GROUP BY
     user_id
 )
 SELECT
+    1 id,
     buy_stat.user_id, 
     COALESCE(jsonb_agg(jsonb_build_object(
         'year', buy_stat.year,
