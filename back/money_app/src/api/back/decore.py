@@ -42,7 +42,7 @@ def validate_model(Model: type[MainModel]) -> Callable[..., Callable[..., dict]]
         @wraps(func)
         def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> dict:
 
-            data: MainModel = validate_dict_conv(request.body, Model=Model)
+            data: MainModel = validate_dict_conv(request.body, Model=Model, prn=True)
             if not data:
                 return {'data': 'err', 'message': f'validate_dict_conv: {Model}'}
 

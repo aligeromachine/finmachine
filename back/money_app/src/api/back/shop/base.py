@@ -34,5 +34,5 @@ def edit_shop_data(item: ShopMessage) -> dict:
     return {'data': 'ok', 'message': f'update {item.pk=}'}
 
 def list_shop_data(item: ShopMessage) -> list:
-    ls: list = [ShopSignalKV(pk=it.pk, title=f"{it.title} - {it.address}").model_dump() for it in Shop.objects.filter(user=item.user_id)]
+    ls: list = [ShopSignalKV(id=it.pk, title=f"{it.title} - {it.address}").model_dump() for it in Shop.objects.filter(user=item.user_id)]
     return ls

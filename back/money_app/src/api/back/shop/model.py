@@ -13,7 +13,7 @@ class ShopSignal(BaseModelWithRawArray):
     address: str
 
 class ShopSignalKV(BaseModelWithRawArray):
-    pk: int
+    id: int
     title: str
 
 class ShopSelector(BaseModelWithRawArray):

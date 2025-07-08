@@ -16,3 +16,16 @@ export const Button = ({ title }) => {
     </CButton>
   );
 };
+
+export const ButtonBase = ({ title, onClick }) => {
+  return (
+    <CButton
+      color="secondary"
+      className="mb-3"
+      onClick={onClick}
+      style={{ width: "150px" }}
+    >
+      {title}
+    </CButton>
+  );
+};

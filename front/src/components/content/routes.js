@@ -39,4 +39,14 @@ export const routes = [
     name: "Shop",
     element: lazyImport("Shop"),
   },
+  {
+    path: "/logger",
+    name: "Logger",
+    element: lazyImport("Logger"),
+  },
+  {
+    path: "/config",
+    name: "Config",
+    element: lazyImport("Config"),
+  },
 ];

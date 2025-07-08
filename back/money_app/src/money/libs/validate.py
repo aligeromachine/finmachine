@@ -23,7 +23,7 @@ def validate_list(response: list, Model: type[BaseModel], prn: bool = False) -> 
 
 def validate_dict_conv(response: str, Model: type[BaseModel], prn: bool = False) -> BaseModel | None:
     try:
-        return validate_dict(response=orjson.loads(response), Model=Model)
+        return validate_dict(response=orjson.loads(response), Model=Model, prn=prn)
     except Exception as e:
         if prn:
             logger.error(f'{str(e)}, {response=}, {Model=}')

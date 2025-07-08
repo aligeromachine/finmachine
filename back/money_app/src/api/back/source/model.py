@@ -12,7 +12,7 @@ class SourceSignal(BaseModelWithRawArray):
     title: str
 
 class SourceSignalKV(BaseModelWithRawArray):
-    pk: int
+    id: int
     title: str
 
 class SourceSelector(BaseModelWithRawArray):

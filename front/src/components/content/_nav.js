@@ -14,6 +14,8 @@ import {
   cilRecycle,
   cilSpeedometer,
   cilStar,
+  cibBlogger,
+  cilAppsSettings,
 } from "@coreui/icons";
 import { CNavItem, CNavTitle } from "@coreui/react";
 
@@ -57,6 +59,18 @@ const _nav = [
     name: "Shop",
     to: "/shop",
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Logger",
+    to: "/logger",
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Config",
+    to: "/config",
+    icon: <CIcon icon={cilAppsSettings} customClassName="nav-icon" />,
   },
 ];
 
