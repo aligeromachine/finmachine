@@ -25,7 +25,7 @@ export const ProfitContent = ({
   onAdd,
 }) => {
   return (
-    <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
+    <CModal size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
         <CModalTitle>Products Data</CModalTitle>
       </CModalHeader>

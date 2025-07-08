@@ -11,15 +11,24 @@ const BigDatepicker = (props) => {
   );
 };
 
-export const SimpleDatePicker = () => {
-  const [startDate, setStartDate] = useState(new Date());
-
+export const DatePicElem = ({ onChange, value, name }) => {
+  const handleChange = (created) => {
+    // Simulate standard input event
+    const syntheticEvent = {
+      target: {
+        name: "created", // or whatever name you need
+        value: String(created).split("GMT")[0].trim(),
+      },
+    };
+    onChange(syntheticEvent);
+  };
   return (
     <BigDatepicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      dateFormat="dd.MM.yyyy"
+      selected={value}
+      onChange={handleChange}
+      dateFormat="dd-MM-yyyy"
       placeholderText="Выберите дату"
+      name={name}
       isClearable
     />
   );

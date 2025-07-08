@@ -22,7 +22,7 @@ export const CardsContent = ({
   onAdd,
 }) => {
   return (
-    <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
+    <CModal size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
         <CModalTitle>Cards Data</CModalTitle>
       </CModalHeader>

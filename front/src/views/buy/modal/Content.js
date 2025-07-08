@@ -17,6 +17,7 @@ import { AsyncFormSelect } from "../../../components/form/Select";
 import { getShopOptions } from "../../../services/shop/query";
 import { getCatalogOptions } from "../../../services/catalog/query";
 import { getProdOptions } from "../../../services/products/query";
+import { DatePicElem } from "../../../components/datetimepiker/BigDatepicker";
 
 export const ProfitContent = ({
   visible,
@@ -55,12 +56,19 @@ export const ProfitContent = ({
   }, [formData.cat]);
 
   return (
-    <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
+    <CModal size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
         <CModalTitle>Buys Data</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
+          <CCol xs={12}>
+            <DatePicElem
+              onChange={onChange}
+              value={formData.created}
+              name={"dt"}
+            />
+          </CCol>
           <CCol xs={12}>
             <AsyncFormSelect
               label={"Shop"}

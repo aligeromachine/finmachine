@@ -11,6 +11,7 @@ import {
 } from "@coreui/react";
 import { RedCAlert } from "../../../components/elems/RedCAlert";
 import { RedLable } from "../../../components/elems/RedCAlert";
+import { DatePicElem } from "../../../components/datetimepiker/BigDatepicker";
 
 export const ShopContent = ({
   visible,
@@ -22,12 +23,17 @@ export const ShopContent = ({
   onAdd,
 }) => {
   return (
-    <CModal backdrop="static" size="lg" visible={visible} onClose={onClose}>
+    <CModal size="lg" visible={visible} onClose={onClose}>
       <CModalHeader>
         <CModalTitle>Shop Data</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
+          <DatePicElem
+            onChange={onChange}
+            value={formData.created || new Date()}
+            name={"dt"}
+          />
           <CCol xs={12}>
             <CFormInput
               label="Title"

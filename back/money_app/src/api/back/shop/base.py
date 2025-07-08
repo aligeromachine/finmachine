@@ -6,7 +6,9 @@ from money.models import Shop
 logger = logging.getLogger(__name__)
 
 def add_shop_data(item: ShopMessage) -> dict:
-    Shop(title=item.title, address=item.address, user_id=item.user_id).save()
+    shop = Shop.objects.create(title=item.title, address=item.address, user_id=item.user_id)
+    shop.created = item.created
+    shop.save()
     max_id = model_max_id(model=Shop)
 
     return {'data': 'ok', 'message': f'adding shop key: {max_id}'}
@@ -27,6 +29,7 @@ def edit_shop_data(item: ShopMessage) -> dict:
 
         instance.title = item.title
         instance.address = item.address
+        instance.created = item.created
         instance.save()
     except: # noqa
         return {'data': 'err', 'message': 'pk does not exist'}
