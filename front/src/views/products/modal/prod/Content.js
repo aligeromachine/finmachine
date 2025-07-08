@@ -10,8 +10,8 @@ import {
   CCol,
   CForm,
 } from "@coreui/react";
-import { RedCAlert } from "../../../../components/redflag/RedCAlert";
-import { RedLable } from "../../../../components/redflag/RedLable";
+import { RedCAlert } from "../../../../components/elems/RedCAlert";
+import { RedLable } from "../../../../components/elems/RedCAlert";
 import { getCatalogOptions } from "../../../../services/catalog/query";
 import { AsyncFormSelect } from "../../../../components/form/Select";
 

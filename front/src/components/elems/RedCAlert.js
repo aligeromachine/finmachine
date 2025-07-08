@@ -1,5 +1,9 @@
 import React from "react";
-import { CFormLabel } from "@coreui/react";
+import { CAlert, CFormLabel } from "@coreui/react";
+
+export const RedCAlert = ({ title }) => {
+  return <>{title && <CAlert color="danger">{title}</CAlert>}</>;
+};
 
 export const RedLable = ({ title }) => {
   return (

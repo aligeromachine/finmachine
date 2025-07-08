@@ -12,8 +12,8 @@ import {
   CTabs,
 } from "@coreui/react";
 import { ModalProvider } from "../../components/hook/ModalContext";
-import { Header } from "../../components/view/Header";
-import { Button } from "../../components/view/Button";
+import { Header } from "../../components/elems/Header";
+import { Button } from "../../components/elems/Button";
 import { TableProd } from "./TableProd";
 import { TableCat } from "./TableCat";
 import { CatModal } from "./modal/cat/Base";

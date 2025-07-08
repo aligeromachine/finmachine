@@ -12,12 +12,13 @@ import {
   CCardHeader,
 } from "@coreui/react";
 import { ModalProvider } from "../../components/hook/ModalContext";
-import { Header } from "../../components/view/Header";
-import { ButtonBase } from "../../components/view/Button";
+import { Header } from "../../components/elems/Header";
+import { ButtonBase } from "../../components/elems/Button";
 import { Auth } from "../../components/auth/Auth";
 import { getLogger, delLogger } from "../../services/logger/query";
 import { MONEY, DJANGO, API } from "../../services/logger/const";
-import { CodeBlock } from "../../components/codeblock/CodeBlock";
+import { CodeBlock } from "../../components/elems/CodeBlock";
+import { handleDeleteLog } from "../../components/action/Action";
 
 export const Logger = () => {
   const [dataLog, setLog] = useState({});
@@ -34,8 +35,11 @@ export const Logger = () => {
   }, []);
 
   const baseClick = async (msg) => {
-    const data = await delLogger(msg);
-    setLog({ ...dataLog, ...{ [msg]: data.message } });
+    const freeCanvas = async () => {
+      const data = await delLogger(msg);
+      setLog({ ...dataLog, ...{ [msg]: data.message } });
+    };
+    handleDeleteLog(msg, freeCanvas);
   };
 
   return (

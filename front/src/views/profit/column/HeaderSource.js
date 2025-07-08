@@ -1,5 +1,5 @@
 import React from "react";
-import { handleDelete } from "../../../components/action/Action";
+import { handleDeleteRow } from "../../../components/action/Action";
 import st from "./row.module.css";
 import {
   deleteSourceRow,
@@ -31,7 +31,7 @@ export const columnsTbl = (openModal) => {
       header: "Action",
       cell: ({ row }) => (
         <span>
-          <i onClick={() => handleDelete(row.original.id, deleteSourceRow)}>
+          <i onClick={() => handleDeleteRow(row.original.id, deleteSourceRow)}>
             <img
               className={st.iconMl}
               src={"/static/img/delete.png"}

@@ -11,8 +11,8 @@ import {
   CTabPanel,
 } from "@coreui/react";
 import { ModalProvider } from "../../components/hook/ModalContext";
-import { Header } from "../../components/view/Header";
-import { Button } from "../../components/view/Button";
+import { Header } from "../../components/elems/Header";
+import { Button } from "../../components/elems/Button";
 import { TableProfit } from "./TableProfit";
 import { TableSource } from "./TableSource";
 import { SourceModal } from "./modal/source/Base";
