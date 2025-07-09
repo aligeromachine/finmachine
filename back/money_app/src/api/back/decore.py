@@ -35,9 +35,9 @@ class ExtModel(MainModel):
             if not dt:
                 try:
                     dt = datetime.strptime(self.created, "%Y-%m-%dT%H:%M:%S")
-                except ValueError as ex:
+                except ValueError:
                     pass
-            
+
             if not dt:
                 try:
                     dt = datetime.strptime(self.created, "%a %b %d %Y %H:%M:%S")
@@ -46,7 +46,7 @@ class ExtModel(MainModel):
 
             if not dt:
                 raise Exception(f"{self.created} does not match with {fmt_iso}, {fmt_js}")
-            
+
             self.created = dt
         return self
 

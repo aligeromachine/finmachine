@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Self
 from api.back.decore import ExtModel
 from decimal import Decimal
-from pydantic import Field, model_validator
+from pydantic import model_validator
 from money.libs.model import BaseModelWithRawArray
 from money.libs.ext_utils import dateDRF
 

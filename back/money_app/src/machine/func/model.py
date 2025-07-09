@@ -1,55 +1,65 @@
+from datetime import datetime
+from django.db.models import Sum
 from typing import Self
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
+from decimal import Decimal
+from money.libs.validate import validate_list_conv
+from money.models import AuditFin, Cards
+from money.libs.model import BaseModelWithRawArray
+from functools import reduce
 
-# flake8: noqa
-class AggInfo(BaseModel):
+class PayloadSelector(BaseModelWithRawArray):
+    year: int
+    buy: Decimal
+    profit: Decimal
 
-    @classmethod
-    def load_from_db(cls) -> "AggInfo":
-        g = globals()
+class ReduceInfo(BaseModel):
+    money_cash: Decimal = Decimal(0)
 
-        if 'speed_in_redis' not in g:
-            g['speed_in_redis'] = speed_mac_selector()
+    profit_sum: Decimal = Decimal(0)
+    profit_year: Decimal = Decimal(0)
+    profit_month: Decimal = Decimal(0)
 
-        raw_speed: list[SpeedMacSelector] = g['speed_in_redis']  # type ignore
-        return raw_speed
+    buy_sum: Decimal = Decimal(0)
+    buy_year: Decimal = Decimal(0)
+    buy_month: Decimal = Decimal(0)
 
-    @classmethod
-    def get_selector(cls, machine: str) -> list[str]:
-        raw_speed: list[SpeedMacSelector] = cls.get_speed()
+    card_sum: Decimal
+    payload: list[PayloadSelector]
 
-        selector: list[str] = []
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        self.profit_sum = reduce(lambda x, y: x + y, [it.profit for it in self.payload])
+        self.buy_sum = reduce(lambda x, y: x + y, [it.buy for it in self.payload])
+        self.money_cash = self.profit_sum - self.buy_sum - self.card_sum
 
-        for it in raw_speed:
-            if machine == it.machine:
-                selector.extend(it.hashtypes)
+        self.profit_year = reduce(lambda x, y: x + y, [it.profit for it in self.payload if it.year == datetime.now().year])
+        self.buy_year = reduce(lambda x, y: x + y, [it.buy for it in self.payload if it.year == datetime.now().year])
 
-        selector = sorted(selector, key=lambda x: int(x))
-
-        return selector
-
-    @classmethod
-    def get_other_selector(cls, id: str) -> list[str]:
-        raw_speed: list[SpeedMacSelector] = cls.get_speed()
-
-        selector: list[str] = []
-
-        for it in raw_speed:
-            if id != it.id:
-                selector.extend(it.hashtypes)
-
-        selector = sorted(selector, key=lambda x: int(x))
-
-        return selector
+        return self
 
     @classmethod
-    def get_mac(cls, hash_type: str) -> str:
-        from machine.const.code import MAC_KEY
-        raw_speed: list[SpeedMacSelector] = cls.get_speed()
+    def load_from_db(cls, user_id: int) -> "ReduceInfo":
+        payload: list[PayloadSelector] = []
+        for it in AuditFin.objects.filter(user_id=user_id):
+            payload = validate_list_conv(it.payload, PayloadSelector)
 
-        mac: str = ''
-        for ix in raw_speed:
-            if hash_type in ix.hashtypes:
-                mac = MAC_KEY[ix.machine]
+        card_sum: Decimal = Cards.objects.aggregate(total_amount=Sum('amount'))['total_amount']
 
-        return mac
+        raw: dict = dict(payload=payload, card_sum=card_sum)
+
+        return cls(**raw)
+
+    # @classmethod
+    # def get_selector(cls, machine: str) -> list[str]:
+    #     raw_speed: list[SpeedMacSelector] = cls.get_speed()
+
+    #     selector: list[str] = []
+
+    #     for it in raw_speed:
+    #         if machine == it.machine:
+    #             selector.extend(it.hashtypes)
+
+    #     selector = sorted(selector, key=lambda x: int(x))
+
+    #     return selector
