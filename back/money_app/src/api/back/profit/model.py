@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Self
-from pydantic import model_validator
+from pydantic import Field, model_validator
 from api.back.decore import ExtModel
 from decimal import Decimal
 from money.libs.model import BaseModelWithRawArray
@@ -12,7 +12,9 @@ class ProfitMessage(ExtModel):
 
 class ProfitSignal(BaseModelWithRawArray):
     title: str
-    source: int
+    amount: Decimal
+    source: int = Field(..., alias="source_id")
+    created: datetime
 
 class ProfitSelector(BaseModelWithRawArray):
     id: int

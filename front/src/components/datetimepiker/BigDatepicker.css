@@ -1,20 +1,20 @@
 /* Увеличиваем весь календарь */
 .react-datepicker {
-  font-size: 1.2em; /* Увеличиваем базовый размер шрифта */
+  font-size: 1em; /* Увеличиваем базовый размер шрифта */
   width: 100%;
 }
 
 /* Увеличиваем заголовок (месяц/год) */
 .react-datepicker__current-month {
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 /* Увеличиваем дни */
 .react-datepicker__day-name, 
 .react-datepicker__day {
-  width: 2em;
-  line-height: 2em;
-  margin: 0.166em;
+  width: 1em;
+  line-height: 1em;
+  margin: 1em;
   font-size: 1em;
 }
 
@@ -27,8 +27,8 @@
 
 /* Увеличиваем поле ввода */
 .react-datepicker__input-container input {
-  font-size: 1.2em;
-  padding: 0.5em;
+  font-size: 1em;
+  padding: 0.4em;
   width: 100%;
 }
 
@@ -38,5 +38,5 @@
 }
 
 .react-datepicker__header {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0e0;
 }

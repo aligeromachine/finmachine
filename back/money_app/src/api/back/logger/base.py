@@ -1,6 +1,6 @@
 import logging
 import os
-from api.back.logger.model import LOG_ALL, LOG_API, LOG_DJANGO, LOG_MONEY, LogAllSignal, LogMessage, LogSignal
+from api.back.logger.model import LOG_API, LOG_DJANGO, LOG_MONEY, LogAllSignal, LogMessage, LogSignal
 from money.libs.ext_c import CONST
 from money.libs.ext_utils import ClearFile, ReadFileContent
 
@@ -19,9 +19,8 @@ def call_file(item: LogMessage, fcall: str) -> dict:
 
     if item.command.startswith('delete'):
         ClearFile(pth=fname)
-
-    return LogSignal(message=get_log(fname=fname)).model_dump()
-
+    rv: dict = LogSignal(message=get_log(fname=fname)).model_dump()
+    return rv
 
 def call_all() -> dict:
 
@@ -30,4 +29,6 @@ def call_all() -> dict:
         api=get_log(fname=f'{BASE_LOG}/{LOG_API}.log'),
         django=get_log(fname=f'{BASE_LOG}/{LOG_DJANGO}.log'),
     )
-    return LogSignal(message=data.model_dump()).model_dump()
+
+    rv: dict = LogSignal(message=data.model_dump()).model_dump()
+    return rv

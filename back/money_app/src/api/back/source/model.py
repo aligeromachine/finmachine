@@ -10,6 +10,7 @@ class SourceMessage(ExtModel):
 
 class SourceSignal(BaseModelWithRawArray):
     title: str
+    created: datetime
 
 class SourceSignalKV(BaseModelWithRawArray):
     id: int

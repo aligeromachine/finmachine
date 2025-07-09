@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Self
-from pydantic import model_validator
+from pydantic import Field, model_validator
 from api.back.decore import ExtModel
 from money.libs.model import BaseModelWithRawArray
 from money.libs.ext_utils import dateDRF
@@ -10,7 +10,8 @@ class ProductsMessage(ExtModel):
 
 class ProdSignal(BaseModelWithRawArray):
     title: str
-    catalog: int
+    catalog: int = Field(..., alias="catalog_id")
+    created: datetime
 
 class ProdSignalKV(BaseModelWithRawArray):
     id: int

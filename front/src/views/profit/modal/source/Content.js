@@ -11,6 +11,7 @@ import {
 } from "@coreui/react";
 import { RedCAlert } from "../../../../components/elems/RedCAlert";
 import { RedLable } from "../../../../components/elems/RedCAlert";
+import { DatePicElem } from "../../../../components/datetimepiker/BigDatepicker";
 
 export const SourceContent = ({
   visible,
@@ -28,6 +29,11 @@ export const SourceContent = ({
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
+          <DatePicElem
+            onChange={onChange}
+            value={formData.created || new Date()}
+            name={"created"}
+          />
           <CCol xs={12}>
             <CFormInput
               label="Title"

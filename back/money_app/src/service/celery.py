@@ -13,9 +13,9 @@ app.autodiscover_tasks()
 def setup_periodic_tasks(sender: Any, **kwargs: Any) -> None:
 
     sender.add_periodic_task(
-        crontab(minute=30, hour=8), # Каждый день в 8:30 утра
+        crontab(minute=30, hour=8),  # Каждый день в 8:30 утра
         moneyAudit, name='moneyAudit')
-    
+
 @app.task  # type: ignore
 def moneyAudit() -> None:
     from machine.cron.celery import machine_audit

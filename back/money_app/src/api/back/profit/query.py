@@ -24,13 +24,3 @@ FROM
 WHERE
     prof.user_id = %s
 """
-PROFIT_ROW = """
-SELECT
-    prof.id,
-    prof.title,
-    prof.source_id source
-FROM
-    content.profit prof
-WHERE
-    prof.id = %s
-"""

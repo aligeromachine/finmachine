@@ -1,8 +1,9 @@
 from collections.abc import Callable
+from datetime import datetime, timedelta
 from functools import wraps
 import logging
-from typing import TypeVar, Any
-from pydantic import BaseModel
+from typing import Self, TypeVar, Any
+from pydantic import BaseModel, model_validator
 from django.http import HttpRequest
 from money.libs.validate import validate_dict_conv
 
@@ -23,6 +24,31 @@ class ExtModel(MainModel):
     limit: int = 0
     pk: int = 0
     title: str = ''
+    created: str | datetime = datetime.now() + timedelta(hours=3)
+
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        if isinstance(self.created, str) and self.created:
+            dt: datetime | None = None
+            fmt_iso: str = "%Y-%m-%dT%H:%M:%S"
+            fmt_js: str = "%a %b %d %Y %H:%M:%S"
+            if not dt:
+                try:
+                    dt = datetime.strptime(self.created, "%Y-%m-%dT%H:%M:%S")
+                except ValueError as ex:
+                    pass
+            
+            if not dt:
+                try:
+                    dt = datetime.strptime(self.created, "%a %b %d %Y %H:%M:%S")
+                except ValueError:
+                    pass
+
+            if not dt:
+                raise Exception(f"{self.created} does not match with {fmt_iso}, {fmt_js}")
+            
+            self.created = dt
+        return self
 
 def draw_paginate(func: Callable[..., dict]) -> Callable[..., dict]:
     @wraps(func)

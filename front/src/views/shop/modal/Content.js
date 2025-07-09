@@ -32,7 +32,7 @@ export const ShopContent = ({
           <DatePicElem
             onChange={onChange}
             value={formData.created || new Date()}
-            name={"dt"}
+            name={"created"}
           />
           <CCol xs={12}>
             <CFormInput

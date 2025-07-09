@@ -1,6 +1,7 @@
 from typing import Self
 from pydantic import BaseModel
 
+# flake8: noqa
 class AggInfo(BaseModel):
 
     @classmethod

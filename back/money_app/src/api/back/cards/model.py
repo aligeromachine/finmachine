@@ -14,6 +14,7 @@ class CardSignal(BaseModelWithRawArray):
     title: str
     amount: Decimal
     number: str
+    created: datetime
 
 class CardSelector(BaseModelWithRawArray):
     id: int

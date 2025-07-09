@@ -40,7 +40,6 @@ export const ModalProvider = ({ children }) => {
   };
 
   const onSet = (func) => {
-    console.log({ ...formData });
     dispatch(func({ ...formData }));
     setForm({});
   };

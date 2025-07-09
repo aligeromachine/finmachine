@@ -1,17 +1,14 @@
 import logging
 from api.back.shop.model import ShopMessage, ShopSignal, ShopSignalKV
-from money.utils.func import model_max_id
 from money.models import Shop
 
 logger = logging.getLogger(__name__)
 
 def add_shop_data(item: ShopMessage) -> dict:
-    shop = Shop.objects.create(title=item.title, address=item.address, user_id=item.user_id)
-    shop.created = item.created
-    shop.save()
-    max_id = model_max_id(model=Shop)
-
-    return {'data': 'ok', 'message': f'adding shop key: {max_id}'}
+    elem = Shop.objects.create(title=item.title, address=item.address, user_id=item.user_id)
+    elem.created = item.created
+    elem.save()
+    return {'data': 'ok', 'message': f'adding shop key: {elem.pk}'}
 
 def delete_shop_row(item: ShopMessage) -> dict:
     Shop.objects.filter(pk=item.pk).delete()
@@ -25,12 +22,12 @@ def get_shop_row(item: ShopMessage) -> dict:
 
 def edit_shop_data(item: ShopMessage) -> dict:
     try:
-        instance = Shop.objects.get(pk=item.pk)
+        elem = Shop.objects.get(pk=item.pk)
 
-        instance.title = item.title
-        instance.address = item.address
-        instance.created = item.created
-        instance.save()
+        elem.title = item.title
+        elem.address = item.address
+        elem.created = item.created
+        elem.save()
     except: # noqa
         return {'data': 'err', 'message': 'pk does not exist'}
 

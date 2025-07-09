@@ -14,6 +14,7 @@ import { RedCAlert } from "../../../../components/elems/RedCAlert";
 import { RedLable } from "../../../../components/elems/RedCAlert";
 import { getCatalogOptions } from "../../../../services/catalog/query";
 import { AsyncFormSelect } from "../../../../components/form/Select";
+import { DatePicElem } from "../../../../components/datetimepiker/BigDatepicker";
 
 export const ProfitContent = ({
   visible,
@@ -31,6 +32,11 @@ export const ProfitContent = ({
       </CModalHeader>
       <CModalBody>
         <CForm className="row g-3">
+          <DatePicElem
+            onChange={onChange}
+            value={formData.created || new Date()}
+            name={"created"}
+          />
           <CCol xs={12}>
             <AsyncFormSelect
               label={"Catalog"}

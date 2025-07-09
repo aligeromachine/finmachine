@@ -13,10 +13,11 @@ const BigDatepicker = (props) => {
 
 export const DatePicElem = ({ onChange, value, name }) => {
   const handleChange = (created) => {
+    if (!created) return "";
     // Simulate standard input event
     const syntheticEvent = {
       target: {
-        name: "created", // or whatever name you need
+        name,
         value: String(created).split("GMT")[0].trim(),
       },
     };
@@ -28,8 +29,6 @@ export const DatePicElem = ({ onChange, value, name }) => {
       onChange={handleChange}
       dateFormat="dd-MM-yyyy"
       placeholderText="Выберите дату"
-      name={name}
-      isClearable
     />
   );
 };

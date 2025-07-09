@@ -18,7 +18,7 @@ def invoke_response(request: HttpRequest, item: LogMessage) -> dict:
 
     if item.command.endswith(LOG_MONEY):
         respo = call_file(item, LOG_MONEY)
-    
+
     if item.command == LOG_ALL:
         respo = call_all()
 

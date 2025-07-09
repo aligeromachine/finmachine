@@ -1,20 +1,14 @@
 import logging
 from api.back.cards.model import CardSignal, CardsMessage
-from money.utils.func import model_max_id
 from money.models import Cards
 
 logger = logging.getLogger(__name__)
 
 def add_cards_data(item: CardsMessage) -> dict:
-    Cards(
-        title=item.title,
-        amount=item.amount,
-        number=item.number,
-        user_id=item.user_id
-    ).save()
-    max_id = model_max_id(model=Cards)
-
-    return {'data': 'ok', 'message': f'adding shop key: {max_id}'}
+    elem = Cards.objects.create(title=item.title, amount=item.amount, number=item.number, user_id=item.user_id)
+    elem.created = item.created
+    elem.save()
+    return {'data': 'ok', 'message': f'adding shop key: {elem.pk}'}
 
 def delete_cards_row(item: CardsMessage) -> dict:
     Cards.objects.filter(pk=item.pk).delete()
@@ -28,12 +22,13 @@ def get_cards_row(item: CardsMessage) -> dict:
 
 def edit_cards_data(item: CardsMessage) -> dict:
     try:
-        instance = Cards.objects.get(pk=item.pk)
+        elem = Cards.objects.get(pk=item.pk)
 
-        instance.title = item.title
-        instance.amount = item.amount
-        instance.number = item.number
-        instance.save()
+        elem.title = item.title
+        elem.amount = item.amount
+        elem.number = item.number
+        elem.created = item.created
+        elem.save()
     except: # noqa
         return {'data': 'err', 'message': 'pk does not exist'}
 

@@ -1,15 +1,14 @@
 import logging
 from api.back.source.model import SourceMessage, SourceSignal, SourceSignalKV
-from money.utils.func import model_max_id
 from money.models import Source
 
 logger = logging.getLogger(__name__)
 
 def add_source_data(item: SourceMessage) -> dict:
-    Source(title=item.title, user_id=item.user_id).save()
-    max_id = model_max_id(model=Source)
-
-    return {'data': 'ok', 'message': f'adding Source key: {max_id}'}
+    elem = Source.objects.create(title=item.title, user_id=item.user_id)
+    elem.created = item.created
+    elem.save()
+    return {'data': 'ok', 'message': f'adding Source key: {elem.pk}'}
 
 def delete_source_row(item: SourceMessage) -> dict:
     Source.objects.filter(pk=item.pk).delete()
@@ -23,10 +22,11 @@ def get_source_row(item: SourceMessage) -> dict:
 
 def edit_source_data(item: SourceMessage) -> dict:
     try:
-        instance = Source.objects.get(pk=item.pk)
+        elem = Source.objects.get(pk=item.pk)
 
-        instance.title = item.title
-        instance.save()
+        elem.title = item.title
+        elem.created = item.created
+        elem.save()
     except: # noqa
         return {'data': 'err', 'message': 'pk does not exist'}
 

@@ -1,18 +1,14 @@
 import logging
 from api.back.catalog.model import CatSignal, CatSignalKV, CatalogMessage
-from money.utils.func import model_max_id
 from money.models import Catalog
 
 logger = logging.getLogger(__name__)
 
 def add_cat_data(item: CatalogMessage) -> dict:
-    Catalog(
-        title=item.title,
-        user_id=item.user_id
-    ).save()
-    max_id = model_max_id(model=Catalog)
-
-    return {'data': 'ok', 'message': f'adding Catalog key: {max_id}'}
+    elem = Catalog.objects.create(title=item.title, user_id=item.user_id)
+    elem.created = item.created
+    elem.save()
+    return {'data': 'ok', 'message': f'adding Catalog key: {elem.pk}'}
 
 def delete_cat_row(item: CatalogMessage) -> dict:
     Catalog.objects.filter(pk=item.pk).delete()
@@ -26,10 +22,11 @@ def get_cat_row(item: CatalogMessage) -> dict:
 
 def edit_cat_data(item: CatalogMessage) -> dict:
     try:
-        instance = Catalog.objects.get(pk=item.pk)
+        elem = Catalog.objects.get(pk=item.pk)
 
-        instance.title = item.title
-        instance.save()
+        elem.title = item.title
+        elem.created = item.created
+        elem.save()
     except: # noqa
         return {'data': 'err', 'message': 'pk does not exist'}
 

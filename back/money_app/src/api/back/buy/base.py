@@ -1,22 +1,15 @@
 import logging
 from api.back.buy.model import BuyMessage, BuySignal
-from money.utils.func import model_max_id
 from money.models import Buy
 from api.back.buy.query import BUY_ROW
 
 logger = logging.getLogger(__name__)
 
 def add_buy_data(item: BuyMessage) -> dict:
-    Buy(
-        title=item.title,
-        amount=item.amount,
-        shop_id=item.shop,
-        products_id=item.prod,
-        user_id=item.user_id
-    ).save()
-    max_id = model_max_id(model=Buy)
-
-    return {'data': 'ok', 'message': f'adding Buy key: {max_id}'}
+    elem = Buy.objects.create(title=item.title, amount=item.amount, shop_id=item.shop, products_id=item.prod, user_id=item.user_id)
+    elem.created = item.created
+    elem.save()
+    return {'data': 'ok', 'message': f'adding Buy key: {elem.pk}'}
 
 def delete_buy_row(item: BuyMessage) -> dict:
     Buy.objects.filter(pk=item.pk).delete()
@@ -30,13 +23,14 @@ def get_buy_row(item: BuyMessage) -> dict:
 
 def edit_buy_data(item: BuyMessage) -> dict:
     try:
-        instance = Buy.objects.get(pk=item.pk)
+        elem = Buy.objects.get(pk=item.pk)
 
-        instance.title = item.title
-        instance.amount = item.amount
-        instance.shop_id = item.shop
-        instance.products_id = item.prod
-        instance.save()
+        elem.title = item.title
+        elem.amount = item.amount
+        elem.shop_id = item.shop
+        elem.products_id = item.prod
+        elem.created = item.created
+        elem.save()
     except: # noqa
         return {'data': 'err', 'message': 'pk does not exist'}
 

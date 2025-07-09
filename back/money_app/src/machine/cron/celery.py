@@ -20,4 +20,3 @@ def machine_audit() -> None:
             )
         else:
             AuditFin.objects.filter(user_id=it.user_id).update(payload=[mx.model_dump(exclude={"delta"}) for mx in it.payload])
-        

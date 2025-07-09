@@ -1,6 +1,5 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import logging
-import re
 from typing import Self
 from pydantic import model_validator
 from api.back.decore import ExtModel
@@ -11,13 +10,6 @@ logger = logging.getLogger(__name__)
 
 class ShopMessage(ExtModel):
     address: str = ''
-    created: datetime | str = datetime.now() + timedelta(hours=3)
-
-    @model_validator(mode='after')
-    def complete(self) -> Self:
-        if isinstance(self.created, str) and self.created:
-            self.created = datetime.strptime(self.created, "%a %b %d %Y %H:%M:%S")
-        return self
 
 class ShopSignal(BaseModelWithRawArray):
     title: str

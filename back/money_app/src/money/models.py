@@ -91,7 +91,7 @@ def validate_payload(value: list) -> None:
                 raise ValidationError("All items must be JSON objects")
     except (TypeError, ValueError):
         raise ValidationError("Invalid JSON structure")
-    
+
 class AuditFin(models.Model):
     user = models.ForeignKey(
         st.AUTH_USER_MODEL,

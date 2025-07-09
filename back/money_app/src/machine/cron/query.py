@@ -1,5 +1,4 @@
-
-SQL_DONE: str = f"""
+SQL_DONE: str = """
     WITH assigned_count as (
         SELECT
             task.id,
@@ -42,7 +41,7 @@ SQL_DONE: str = f"""
         assigned.id desc
 """
 
-TASK_TO_LOAD: str = f"""
+TASK_TO_LOAD: str = """
 SELECT
     task.id,
     task.hash_type,

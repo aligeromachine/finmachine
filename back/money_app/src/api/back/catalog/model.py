@@ -10,6 +10,7 @@ class CatalogMessage(ExtModel):
 
 class CatSignal(BaseModelWithRawArray):
     title: str
+    created: datetime
 
 class CatSignalKV(BaseModelWithRawArray):
     id: int
