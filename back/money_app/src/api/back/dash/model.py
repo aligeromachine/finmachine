@@ -1,8 +1,25 @@
+from decimal import Decimal
 from api.back.decore import MainModel
 from dataclasses import dataclass
+from money.libs.model import BaseModelWithRawArray
 
 class DashboardMessage(MainModel):
     pass
+
+class DashSignal(BaseModelWithRawArray):
+    money_cash: Decimal
+
+    profit_sum: Decimal
+    profit_year: Decimal
+    profit_month: Decimal
+    profit_week: Decimal
+
+    buy_sum: Decimal
+    buy_year: Decimal
+    buy_month: Decimal
+    buy_week: Decimal
+
+    card_sum: Decimal
 
 @dataclass
 class Organiz:

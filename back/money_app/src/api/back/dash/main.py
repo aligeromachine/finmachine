@@ -6,6 +6,7 @@ from api.back.dash.etl import (
     elt_trati, etl_prih, etl_prih_vid, etl_prod, etl_prod_vid, etl_shop, etl_visa)
 from api.back.decore import validate_model
 from api.back.dash.upt import update_products, update_profit, update_buy
+from api.back.dash.base import base_info
 
 logger = logging.getLogger(__name__)
 
@@ -42,5 +43,8 @@ def invoke_response(request: HttpRequest, item: DashboardMessage) -> dict:
 
     if item.command == "update_money_csv":
         respo = update_money_csv(item=item)
+
+    if item.command == "base_info":
+        respo = base_info(item=item)
 
     return respo

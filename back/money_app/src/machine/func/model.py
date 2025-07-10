@@ -1,13 +1,15 @@
 from datetime import datetime
 from django.db.models import Sum
-from typing import Self
+from typing import Self, TypeVar
 from pydantic import BaseModel, model_validator
 from decimal import Decimal
 from machine.func.query import SQL_TOTAL_WEEK_MONTH
-from money.libs.validate import validate_list_conv
+from money.libs.validate import validate_list
 from money.models import AuditFin, Cards
 from money.libs.model import BaseModelWithRawArray
 from functools import reduce
+
+T = TypeVar('T', bound='ReduceInfo')
 
 WEEK: int = 1
 MONTH: int = 2
@@ -36,8 +38,9 @@ class ReduceInfo(BaseModel):
     buy_week: Decimal = Decimal(0)
 
     card_sum: Decimal = Decimal(0)
-    payload: list[PayloadSelector]
-    wm: list[WM]
+
+    payload: list[PayloadSelector] = []
+    wm: list[WM] = []
 
     @model_validator(mode='after')
     def complete(self) -> Self:
@@ -58,17 +61,17 @@ class ReduceInfo(BaseModel):
         return self
 
     @classmethod
-    def load_from_db(cls, user_id: int) -> "ReduceInfo":
+    def load_from_db(cls: type[T], user_id: int) -> T:
         payload: list[PayloadSelector] = []
         for it in AuditFin.objects.filter(user_id=user_id):
-            payload = validate_list_conv(it.payload, PayloadSelector)
+            payload = validate_list(it.payload, PayloadSelector, prn=True)
 
         card_sum: Decimal = Cards.objects.aggregate(total_amount=Sum('amount'))['total_amount']
 
-        wm: list[WM] = [WM.from_orm(it) for it in AuditFin.objects.raw(raw_query=SQL_TOTAL_WEEK_MONTH, user_id=user_id)]
+        params = [user_id] * 4
+        wm: list[WM] = [WM.from_orm(it) for it in AuditFin.objects.raw(raw_query=SQL_TOTAL_WEEK_MONTH, params=params)]
 
         raw: dict = dict(payload=payload, card_sum=card_sum, wm=wm)
-
         return cls(**raw)
 
     # @classmethod

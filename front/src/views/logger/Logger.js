@@ -11,8 +11,6 @@ import {
   CTabs,
   CCardHeader,
 } from "@coreui/react";
-import { ModalProvider } from "../../components/hook/ModalContext";
-import { Header } from "../../components/elems/Header";
 import { ButtonBase } from "../../components/elems/Button";
 import { Auth } from "../../components/auth/Auth";
 import { getLogger, delLogger } from "../../services/logger/query";
