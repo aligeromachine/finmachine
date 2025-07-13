@@ -3,7 +3,7 @@ from django.db.models import Sum
 from typing import Self, TypeVar
 from pydantic import BaseModel, model_validator
 from decimal import Decimal
-from machine.func.query import SQL_TOTAL_WEEK_MONTH
+from machine.func.query import SQL_TOTAL_WEEK_MONTH_DAY
 from money.libs.validate import validate_list
 from money.models import AuditFin, Cards
 from money.libs.model import BaseModelWithRawArray
@@ -13,6 +13,7 @@ T = TypeVar('T', bound='ReduceInfo')
 
 WEEK: int = 1
 MONTH: int = 2
+DAY: int = 3
 
 class PayloadSelector(BaseModelWithRawArray):
     year: int
@@ -31,11 +32,13 @@ class ReduceInfo(BaseModel):
     profit_year: Decimal = Decimal(0)
     profit_month: Decimal = Decimal(0)
     profit_week: Decimal = Decimal(0)
+    profit_day: Decimal = Decimal(0)
 
     buy_sum: Decimal = Decimal(0)
     buy_year: Decimal = Decimal(0)
     buy_month: Decimal = Decimal(0)
     buy_week: Decimal = Decimal(0)
+    buy_day: Decimal = Decimal(0)
 
     card_sum: Decimal = Decimal(0)
 
@@ -58,6 +61,9 @@ class ReduceInfo(BaseModel):
         self.profit_week = reduce(lambda x, y: x + y, [it.profit for it in self.wm if it.raw == WEEK], Decimal(0))
         self.buy_week = reduce(lambda x, y: x + y, [it.buy for it in self.wm if it.raw == WEEK], Decimal(0))
 
+        self.profit_day = reduce(lambda x, y: x + y, [it.profit for it in self.wm if it.raw == DAY], Decimal(0))
+        self.buy_day = reduce(lambda x, y: x + y, [it.buy for it in self.wm if it.raw == DAY], Decimal(0))
+
         return self
 
     @classmethod
@@ -68,8 +74,8 @@ class ReduceInfo(BaseModel):
 
         card_sum: Decimal = Cards.objects.aggregate(total_amount=Sum('amount'))['total_amount']
 
-        params = [user_id] * 4
-        wm: list[WM] = [WM.from_orm(it) for it in AuditFin.objects.raw(raw_query=SQL_TOTAL_WEEK_MONTH, params=params)]
+        params = [user_id] * 6
+        wm: list[WM] = [WM.from_orm(it) for it in AuditFin.objects.raw(raw_query=SQL_TOTAL_WEEK_MONTH_DAY, params=params)]
 
         raw: dict = dict(payload=payload, card_sum=card_sum, wm=wm)
         return cls(**raw)

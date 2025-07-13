@@ -12,9 +12,8 @@ export const Dashboard = () => {
   useEffect(() => {
     const fetchOptions = async () => {
       const data = await getDash();
-      console.log(data);
       if (data) {
-        setDataDs(data.message);
+        setDataDs(data);
       }
     };
 
@@ -23,10 +22,9 @@ export const Dashboard = () => {
 
   return (
     <Auth>
-      <WidgetBase />
-      <WidgetSolid />
-      <WidgetSim />
-      <WidgetChart />
+      <WidgetSolid data={dataDs} />
+      <WidgetBase data={dataDs} />
+      <WidgetSim data={dataDs} />
       <BaseChart />
     </Auth>
   );

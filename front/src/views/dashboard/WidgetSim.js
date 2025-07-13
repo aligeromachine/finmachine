@@ -9,7 +9,7 @@ import {
   cilSpeech,
 } from "@coreui/icons";
 
-export const WidgetSim = () => {
+export const WidgetSim = ({ data }) => {
   return (
     <CCard className="mb-4">
       <CCardBody>
@@ -17,16 +17,16 @@ export const WidgetSim = () => {
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
               icon={<CIcon icon={cilPeople} height={36} />}
-              value="87.500"
-              title="Visitors"
+              value={data.money_cash}
+              title="В кошельке"
               progress={{ color: "info", value: 75 }}
             />
           </CCol>
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
               icon={<CIcon icon={cilUserFollow} height={36} />}
-              value="385"
-              title="New Clients"
+              value={data.card_sum}
+              title="На карточках"
               progress={{ color: "success", value: 75 }}
             />
           </CCol>

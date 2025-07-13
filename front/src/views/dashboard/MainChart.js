@@ -15,145 +15,54 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilCloudDownload } from "@coreui/icons";
+import Chart from "react-apexcharts";
 
-const MainChart = () => {
-  const chartRef = useRef(null);
+const LineChart = () => {
+  const options = {
+    chart: {
+      id: "styled-chart",
+      foreColor: " #3553",
+      toolbar: {
+        show: false,
+      },
+    },
+    colors: ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0"],
+    theme: {
+      mode: "light", // or 'dark'
+      palette: "palette1", // palette1 to palette10
+    },
+    stroke: {
+      curve: "smooth",
+      width: 3,
+    },
+    xaxis: {
+      categories: [
+        1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001,
+      ],
+    },
+  };
 
-  useEffect(() => {
-    document.documentElement.addEventListener("ColorSchemeChange", () => {
-      if (chartRef.current) {
-        setTimeout(() => {
-          chartRef.current.options.scales.x.grid.borderColor = getStyle(
-            "--cui-border-color-translucent",
-          );
-          chartRef.current.options.scales.x.grid.color = getStyle(
-            "--cui-border-color-translucent",
-          );
-          chartRef.current.options.scales.x.ticks.color =
-            getStyle("--cui-body-color");
-          chartRef.current.options.scales.y.grid.borderColor = getStyle(
-            "--cui-border-color-translucent",
-          );
-          chartRef.current.options.scales.y.grid.color = getStyle(
-            "--cui-border-color-translucent",
-          );
-          chartRef.current.options.scales.y.ticks.color =
-            getStyle("--cui-body-color");
-          chartRef.current.update();
-        });
-      }
-    });
-  }, [chartRef]);
-
-  const random = () => Math.round(Math.random() * 100);
+  const series = [
+    {
+      name: "series-1",
+      data: [30, 40, 45, 50, 49, 60, 70, 91, 34, 45, 67],
+    },
+  ];
 
   return (
-    <>
-      <CChartLine
-        ref={chartRef}
-        style={{ height: "300px", marginTop: "40px" }}
-        data={{
-          labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-          ],
-          datasets: [
-            {
-              label: "My First dataset",
-              backgroundColor: `rgba(${getStyle("--cui-info-rgb")}, .1)`,
-              borderColor: getStyle("--cui-info"),
-              pointHoverBackgroundColor: getStyle("--cui-info"),
-              borderWidth: 2,
-              data: [
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-              ],
-              fill: true,
-            },
-            {
-              label: "My Second dataset",
-              backgroundColor: "transparent",
-              borderColor: getStyle("--cui-success"),
-              pointHoverBackgroundColor: getStyle("--cui-success"),
-              borderWidth: 2,
-              data: [
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-                random(50, 200),
-              ],
-            },
-            {
-              label: "My Third dataset",
-              backgroundColor: "transparent",
-              borderColor: getStyle("--cui-danger"),
-              pointHoverBackgroundColor: getStyle("--cui-danger"),
-              borderWidth: 1,
-              borderDash: [8, 5],
-              data: [65, 65, 65, 65, 65, 65, 65],
-            },
-          ],
-        }}
-        options={{
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-          scales: {
-            x: {
-              grid: {
-                color: getStyle("--cui-border-color-translucent"),
-                drawOnChartArea: false,
-              },
-              ticks: {
-                color: getStyle("--cui-body-color"),
-              },
-            },
-            y: {
-              beginAtZero: true,
-              border: {
-                color: getStyle("--cui-border-color-translucent"),
-              },
-              grid: {
-                color: getStyle("--cui-border-color-translucent"),
-              },
-              max: 250,
-              ticks: {
-                color: getStyle("--cui-body-color"),
-                maxTicksLimit: 5,
-                stepSize: Math.ceil(250 / 5),
-              },
-            },
-          },
-          elements: {
-            line: {
-              tension: 0.4,
-            },
-            point: {
-              radius: 0,
-              hitRadius: 10,
-              hoverRadius: 4,
-              hoverBorderWidth: 3,
-            },
-          },
-        }}
-      />
-    </>
+    <div className="app">
+      <div className="row">
+        <div className="mixed-chart">
+          <Chart
+            options={options}
+            series={series}
+            type="line"
+            width="100%"
+            height="700"
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -182,29 +91,11 @@ export const BaseChart = () => {
         <CRow>
           <CCol sm={5}>
             <h4 id="traffic" className="card-title mb-0">
-              Traffic
+              Статистика
             </h4>
-            <div className="small text-body-secondary">January - July 2023</div>
-          </CCol>
-          <CCol sm={7} className="d-none d-md-block">
-            <CButton color="primary" className="float-end">
-              <CIcon icon={cilCloudDownload} />
-            </CButton>
-            <CButtonGroup className="float-end me-3">
-              {["Day", "Month", "Year"].map((value) => (
-                <CButton
-                  color="outline-secondary"
-                  key={value}
-                  className="mx-0"
-                  active={value === "Month"}
-                >
-                  {value}
-                </CButton>
-              ))}
-            </CButtonGroup>
           </CCol>
         </CRow>
-        <MainChart />
+        <LineChart />
       </CCardBody>
       <CCardFooter>
         <CRow

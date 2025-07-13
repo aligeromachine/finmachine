@@ -1,6 +1,6 @@
 import { CCard, CCardBody, CCol, CRow, CWidgetStatsB } from "@coreui/react";
 
-export const WidgetSolid = () => {
+export const WidgetSolid = ({ data }) => {
   return (
     <CCard className="mb-4">
       <CCardBody>
@@ -9,8 +9,8 @@ export const WidgetSolid = () => {
             <CWidgetStatsB
               color="success"
               inverse
-              value="89.9%"
-              title="Widget title"
+              value={data.buy_year}
+              title="Траты за год"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."
             />
@@ -19,8 +19,8 @@ export const WidgetSolid = () => {
             <CWidgetStatsB
               color="info"
               inverse
-              value="12.124"
-              title="Widget title"
+              value={data.buy_month}
+              title="Траты за месяц"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."
             />
@@ -29,8 +29,8 @@ export const WidgetSolid = () => {
             <CWidgetStatsB
               color="warning"
               inverse
-              value="$98.111,00"
-              title="Widget title"
+              value={data.buy_week}
+              title="Траты за неделю"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."
             />
@@ -39,8 +39,8 @@ export const WidgetSolid = () => {
             <CWidgetStatsB
               color="primary"
               inverse
-              value="2 TB"
-              title="Widget title"
+              value={data.buy_day}
+              title="Траты за день"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."
             />

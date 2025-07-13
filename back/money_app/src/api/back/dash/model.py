@@ -13,13 +13,16 @@ class DashSignal(BaseModelWithRawArray):
     profit_year: Decimal
     profit_month: Decimal
     profit_week: Decimal
+    profit_day: Decimal
 
     buy_sum: Decimal
     buy_year: Decimal
     buy_month: Decimal
     buy_week: Decimal
+    buy_day: Decimal
 
     card_sum: Decimal
+
 
 @dataclass
 class Organiz:
