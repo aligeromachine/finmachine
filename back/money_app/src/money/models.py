@@ -51,6 +51,7 @@ class Catalog(TimeStampedMixin):
 
 class Cards(AmountMixin):
     number = models.CharField(max_length=250)
+    checked = models.BooleanField(default=False)
 
     class Meta:
         db_table = "content\".\"cards"

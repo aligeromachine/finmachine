@@ -17,7 +17,7 @@ export const WidgetSim = ({ data }) => {
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
               icon={<CIcon icon={cilPeople} height={36} />}
-              value={data.money_cash}
+              value={data?.money_cash}
               title="В кошельке"
               progress={{ color: "info", value: 75 }}
             />
@@ -25,7 +25,7 @@ export const WidgetSim = ({ data }) => {
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
               icon={<CIcon icon={cilUserFollow} height={36} />}
-              value={data.card_sum}
+              value={data?.card_sum}
               title="На карточках"
               progress={{ color: "success", value: 75 }}
             />
@@ -33,8 +33,8 @@ export const WidgetSim = ({ data }) => {
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
               icon={<CIcon icon={cilBasket} height={36} />}
-              value="1238"
-              title="Products sold"
+              value={data?.capital_year}
+              title="Прибыль"
               progress={{ color: "warning", value: 75 }}
             />
           </CCol>

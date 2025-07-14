@@ -1,14 +1,33 @@
 from decimal import Decimal
+from pydantic import BaseModel, Field
 from api.back.decore import MainModel
 from dataclasses import dataclass
 from money.libs.model import BaseModelWithRawArray
+import logging
+
+logger = logging.getLogger(__name__)
 
 class DashboardMessage(MainModel):
     pass
 
-class DashSignal(BaseModelWithRawArray):
+class ProfitSignal(BaseModel):
+    year: Decimal = Field(..., alias="profit_year")
+    month: Decimal = Field(..., alias="profit_month")
+    week: Decimal = Field(..., alias="profit_week")
+    day: Decimal = Field(..., alias="profit_day")
+
+class BuySignal(BaseModel):
+    year: Decimal = Field(..., alias="profit_year")
+    month: Decimal = Field(..., alias="profit_year")
+    week: Decimal = Field(..., alias="profit_year")
+    day: Decimal = Field(..., alias="profit_year")
+
+class CashSignal(BaseModel):
+    card_sum: Decimal
+    capital_year: Decimal
     money_cash: Decimal
 
+class DashSignal(BaseModelWithRawArray):
     profit_sum: Decimal
     profit_year: Decimal
     profit_month: Decimal
@@ -22,7 +41,17 @@ class DashSignal(BaseModelWithRawArray):
     buy_day: Decimal
 
     card_sum: Decimal
+    capital_year: Decimal
+    money_cash: Decimal
 
+    def to_dash(self) -> dict:
+        raw = self.model_dump()
+        data: dict = {
+            "profit": ProfitSignal(**raw).model_dump(),
+            "buy": BuySignal(**raw).model_dump(),
+            "cash": CashSignal(**raw).model_dump()
+        }
+        return data
 
 @dataclass
 class Organiz:

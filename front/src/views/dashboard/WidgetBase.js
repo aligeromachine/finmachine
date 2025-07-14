@@ -11,7 +11,7 @@ export const WidgetBase = ({ data }) => {
             <CWidgetStatsF
               icon={<CIcon width={24} icon={cilMoon} size="xl" />}
               title="Доход за год"
-              value={data.profit_year}
+              value={data?.year}
               color="warning"
             />
           </CCol>
@@ -19,7 +19,7 @@ export const WidgetBase = ({ data }) => {
             <CWidgetStatsF
               icon={<CIcon width={24} icon={cilBell} size="xl" />}
               title="Доход за месяц"
-              value={data.profit_month}
+              value={data?.month}
               color="danger"
             />
           </CCol>
@@ -27,7 +27,7 @@ export const WidgetBase = ({ data }) => {
             <CWidgetStatsF
               icon={<CIcon width={24} icon={cilSettings} size="xl" />}
               title="Доход за неделю"
-              value={data.profit_week}
+              value={data?.week}
               color="primary"
             />
           </CCol>
@@ -35,7 +35,7 @@ export const WidgetBase = ({ data }) => {
             <CWidgetStatsF
               icon={<CIcon width={24} icon={cilUser} size="xl" />}
               title="Доход за день"
-              value={data.profit_day}
+              value={data?.day}
               color="info"
             />
           </CCol>

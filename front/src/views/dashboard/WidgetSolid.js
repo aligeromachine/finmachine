@@ -9,7 +9,7 @@ export const WidgetSolid = ({ data }) => {
             <CWidgetStatsB
               color="success"
               inverse
-              value={data.buy_year}
+              value={data?.year}
               title="Траты за год"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."
@@ -19,7 +19,7 @@ export const WidgetSolid = ({ data }) => {
             <CWidgetStatsB
               color="info"
               inverse
-              value={data.buy_month}
+              value={data?.month}
               title="Траты за месяц"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."
@@ -29,7 +29,7 @@ export const WidgetSolid = ({ data }) => {
             <CWidgetStatsB
               color="warning"
               inverse
-              value={data.buy_week}
+              value={data?.week}
               title="Траты за неделю"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."
@@ -39,7 +39,7 @@ export const WidgetSolid = ({ data }) => {
             <CWidgetStatsB
               color="primary"
               inverse
-              value={data.buy_day}
+              value={data?.day}
               title="Траты за день"
               progress={{ value: 89.9 }}
               text="Lorem ipsum dolor sit amet enim."

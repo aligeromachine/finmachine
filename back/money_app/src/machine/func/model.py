@@ -26,8 +26,6 @@ class WM(BaseModelWithRawArray):
     profit: Decimal
 
 class ReduceInfo(BaseModel):
-    money_cash: Decimal = Decimal(0)
-
     profit_sum: Decimal = Decimal(0)
     profit_year: Decimal = Decimal(0)
     profit_month: Decimal = Decimal(0)
@@ -40,7 +38,9 @@ class ReduceInfo(BaseModel):
     buy_week: Decimal = Decimal(0)
     buy_day: Decimal = Decimal(0)
 
+    money_cash: Decimal = Decimal(0)
     card_sum: Decimal = Decimal(0)
+    capital_year: Decimal = Decimal(0)
 
     payload: list[PayloadSelector] = []
     wm: list[WM] = []
@@ -63,6 +63,8 @@ class ReduceInfo(BaseModel):
 
         self.profit_day = reduce(lambda x, y: x + y, [it.profit for it in self.wm if it.raw == DAY], Decimal(0))
         self.buy_day = reduce(lambda x, y: x + y, [it.buy for it in self.wm if it.raw == DAY], Decimal(0))
+
+        self.capital_year = self.profit_year - self.buy_year
 
         return self
 
