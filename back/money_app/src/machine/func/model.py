@@ -3,7 +3,7 @@ from django.db.models import Sum
 from typing import Self, TypeVar
 from pydantic import BaseModel, model_validator
 from decimal import Decimal
-from machine.func.query import SQL_TOTAL_WEEK_MONTH_DAY
+from machine.func.query import SQL_ORDER_CARDS, SQL_TOTAL_WEEK_MONTH_DAY
 from money.libs.validate import validate_list
 from money.models import AuditFin, Cards
 from money.libs.model import BaseModelWithRawArray
@@ -25,6 +25,10 @@ class WM(BaseModelWithRawArray):
     buy: Decimal
     profit: Decimal
 
+class CardSelector(BaseModelWithRawArray):
+    title: str
+    amount: Decimal
+
 class ReduceInfo(BaseModel):
     profit_sum: Decimal = Decimal(0)
     profit_year: Decimal = Decimal(0)
@@ -42,8 +46,16 @@ class ReduceInfo(BaseModel):
     card_sum: Decimal = Decimal(0)
     capital_year: Decimal = Decimal(0)
 
+    card_one_name: str = ""
+    card_one_sum: Decimal = Decimal(0)
+    card_two_name: str = ""
+    card_two_sum: Decimal = Decimal(0)
+    card_three_name: str = ""
+    card_three_sum: Decimal = Decimal(0)
+
     payload: list[PayloadSelector] = []
     wm: list[WM] = []
+    ls_card: list[list] = []
 
     @model_validator(mode='after')
     def complete(self) -> Self:
@@ -66,6 +78,13 @@ class ReduceInfo(BaseModel):
 
         self.capital_year = self.profit_year - self.buy_year
 
+        self.card_one_name = self.ls_card[0][0]
+        self.card_one_sum = self.ls_card[0][1]
+        self.card_two_name = self.ls_card[1][0]
+        self.card_two_sum = self.ls_card[1][1]
+        self.card_three_name = self.ls_card[2][0]
+        self.card_three_sum = self.ls_card[2][1]
+
         return self
 
     @classmethod
@@ -79,7 +98,16 @@ class ReduceInfo(BaseModel):
         params = [user_id] * 6
         wm: list[WM] = [WM.from_orm(it) for it in AuditFin.objects.raw(raw_query=SQL_TOTAL_WEEK_MONTH_DAY, params=params)]
 
-        raw: dict = dict(payload=payload, card_sum=card_sum, wm=wm)
+        ls_card = [
+            ["", ""],
+            ["", ""],
+            ["", ""]
+        ]
+        for index, it in enumerate(Cards.objects.raw(raw_query=SQL_ORDER_CARDS)):
+            elem = CardSelector.from_orm(it)
+            ls_card[index] = [elem.title, elem.amount]
+        
+        raw: dict = dict(payload=payload, card_sum=card_sum, wm=wm, ls_card=ls_card)
         return cls(**raw)
 
     # @classmethod

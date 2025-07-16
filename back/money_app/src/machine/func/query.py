@@ -66,4 +66,5 @@ FROM
 ORDER BY 
     card.checked desc, 
     card.amount desc
+LIMIT 3
 """

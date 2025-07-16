@@ -17,15 +17,23 @@ class ProfitSignal(BaseModel):
     day: Decimal = Field(..., alias="profit_day")
 
 class BuySignal(BaseModel):
-    year: Decimal = Field(..., alias="profit_year")
-    month: Decimal = Field(..., alias="profit_year")
-    week: Decimal = Field(..., alias="profit_year")
-    day: Decimal = Field(..., alias="profit_year")
+    year: Decimal = Field(..., alias="buy_year")
+    month: Decimal = Field(..., alias="buy_month")
+    week: Decimal = Field(..., alias="buy_week")
+    day: Decimal = Field(..., alias="buy_day")
 
 class CashSignal(BaseModel):
     card_sum: Decimal
     capital_year: Decimal
     money_cash: Decimal
+
+class CardSignal(BaseModel):
+    one_name: str = Field(..., alias="card_one_name")
+    one_sum: Decimal = Field(..., alias="card_one_sum")
+    two_name: str = Field(..., alias="card_two_name")
+    two_sum: Decimal = Field(..., alias="card_two_sum")
+    three_name: str = Field(..., alias="card_three_name")
+    three_sum: Decimal = Field(..., alias="card_three_sum")
 
 class DashSignal(BaseModelWithRawArray):
     profit_sum: Decimal
@@ -44,12 +52,20 @@ class DashSignal(BaseModelWithRawArray):
     capital_year: Decimal
     money_cash: Decimal
 
+    card_one_name: str
+    card_one_sum: Decimal
+    card_two_name: str
+    card_two_sum: Decimal
+    card_three_name: str
+    card_three_sum: Decimal
+
     def to_dash(self) -> dict:
         raw = self.model_dump()
         data: dict = {
             "profit": ProfitSignal(**raw).model_dump(),
             "buy": BuySignal(**raw).model_dump(),
-            "cash": CashSignal(**raw).model_dump()
+            "cash": CashSignal(**raw).model_dump(),
+            "card": CardSignal(**raw).model_dump()
         }
         return data
 

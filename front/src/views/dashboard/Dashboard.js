@@ -15,12 +15,11 @@ export const Dashboard = () => {
     };
     fetchOptions();
   }, []);
-
   return (
     <Auth>
       <WidgetSolid data={data.buy} />
       <WidgetBase data={data.profit} />
-      <WidgetSim data={data.cash} />
+      <WidgetSim data={data.cash} card={data.card} />
       <BaseChart />
     </Auth>
   );
