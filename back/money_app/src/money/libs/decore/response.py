@@ -1,17 +1,26 @@
-from collections.abc import Callable
-from functools import wraps
-import time
-from typing import Any, ParamSpec, TypeVar
-from django.http import HttpRequest, JsonResponse
-from pydantic import BaseModel
-
-from money.libs.ext_utils import RandomName
-from money.libs.validate import validate_dict_conv
 import logging
+from functools import wraps
+import orjson
+from django.http import HttpRequest, JsonResponse
+from typing import Callable, Any
+from pydantic import BaseModel, ValidationError
+from money.libs.validate.exp import validate_dict_conv
+from money.libs.types.exp import F_Return
 
 logger = logging.getLogger(__name__)
-R = TypeVar("R")
-P = ParamSpec("P")
+
+def parse_api_model(Model: type[BaseModel]) -> Callable[..., Callable[..., F_Return | dict]]:
+    def decorator(func: Callable[..., F_Return | dict]) -> Callable[..., F_Return | dict]:
+        @wraps(func)
+        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> F_Return | dict:
+            try:
+                if not request.body:
+                    return {'data': 'err', 'message': 'body empty'}
+                return func(request, Model(**orjson.loads(request.body)), *args, **kwargs)
+            except ValidationError as e:
+                return {'data': 'err', 'message': e.json()}
+        return wrapper
+    return decorator
 
 def token_response(token: dict | None = None, msg: str | None = None, code: int = 200) -> JsonResponse:
     return JsonResponse({'token': token, 'message': msg}, status=code)
@@ -34,21 +43,3 @@ def validate_auth(Model: type[BaseModel]) -> JsonResponse:
             return func(request, data, *args, **kwargs)
         return wrapper
     return decorator
-
-def calculate_running_time(func: Callable[..., Any]) -> Any:
-    @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
-        begin = time.time()
-        random_name = RandomName(5).lower()
-
-        result = func(random_name, *args, **kwargs)
-        end = time.time()
-
-        elapsed = end - begin
-        elapsed_min = int(elapsed // 60)
-        elapsed_sec = int(elapsed % 60)
-
-        logger.info(f"{random_name} Время выполнения {func.__name__} {elapsed_min} минут {elapsed_sec} секунд.")
-
-        return result
-    return wrapper

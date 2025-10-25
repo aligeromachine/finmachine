@@ -40,3 +40,12 @@ class BaseModelWithRawArray(BaseModel):
             return cls(**raw_item.__dict__)
 
         raise ValueError(f"Unsupported raw item type: {type(raw_item)}")
+
+    @classmethod
+    def from_orm_index(cls: type[T], raw_item: Any, index: int) -> T:
+        if hasattr(raw_item, '__dict__'):
+            result = cls(**raw_item.__dict__)
+            result.index = index  # type: ignore
+            return result
+
+        raise ValueError(f"Unsupported raw item type: {type(raw_item)}")

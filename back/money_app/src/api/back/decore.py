@@ -2,12 +2,12 @@ from collections.abc import Callable
 from datetime import datetime, timedelta
 from functools import wraps
 import logging
-from typing import Self, TypeVar, Any
+from typing import Self, Any
 from pydantic import BaseModel, model_validator
 from django.http import HttpRequest
-from money.libs.validate import validate_dict_conv
+from money.libs.types.exp import F_Return
+from money.libs.validate.exp import validate_dict_conv
 
-R = TypeVar("R")
 logger = logging.getLogger(__name__)
 
 class MainModel(BaseModel):
@@ -63,15 +63,15 @@ def draw_paginate(func: Callable[..., dict]) -> Callable[..., dict]:
         return result
     return wrapper
 
-def validate_model(Model: type[MainModel]) -> Callable[..., Callable[..., dict]]:
-    def decorator(func: Callable[..., dict]) -> Callable[..., dict]:
+def validate_model(Model: type[MainModel]) -> Callable[..., Callable[..., F_Return | dict]]:
+    def decorator(func: Callable[..., F_Return | dict]) -> Callable[..., F_Return | dict]:
         @wraps(func)
-        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> dict:
-
+        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> F_Return | dict:
+            if not request.body:
+                return {'data': 'err', 'message': 'body empty'}
             data: MainModel = validate_dict_conv(request.body, Model=Model, prn=True)
             if not data:
                 return {'data': 'err', 'message': f'validate_dict_conv: {Model}'}
-
             data.user_id = request.user_id
             return func(request, data, *args, **kwargs)
         return wrapper

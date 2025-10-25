@@ -1,7 +1,7 @@
 from typing import Self
 from pydantic import model_validator
-from money.libs.validate import validate_list_conv
-from money.libs.model import BaseModelWithRawArray
+from money.libs.validate.exp import validate_list_conv
+from money.libs.model.exp import BaseModelWithRawArray
 
 class Payload(BaseModelWithRawArray):
     year: int

@@ -1,8 +1,9 @@
 import logging
 import os
 from api.back.logger.model import LOG_API, LOG_DJANGO, LOG_MONEY, LogAllSignal, LogMessage, LogSignal
-from money.libs.ext_c import CONST
-from money.libs.ext_utils import ClearFile, ReadFileContent
+from money.libs.const import CONST
+from money.libs.files.exp import ClearFile
+from money.libs.files.base import read_text_data
 
 logger = logging.getLogger(__name__)
 
@@ -11,7 +12,7 @@ BASE_LOG: str = '/home/data/media/log'
 logger = logging.getLogger(__name__)
 
 def get_log(fname: str) -> str:
-    rv: str = ReadFileContent(pth=fname) if os.path.isfile(fname) else CONST.empty
+    rv: str = read_text_data(pth=fname) if os.path.isfile(fname) else CONST.empty
     return rv
 
 def call_file(item: LogMessage, fcall: str) -> dict:

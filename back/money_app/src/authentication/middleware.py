@@ -1,7 +1,7 @@
 from functools import wraps
 from django.http import HttpRequest, JsonResponse
 from authentication.utils import verify_jwt_token
-from money.libs.decore import token_response
+from money.libs.decore.response import token_response
 from typing import Any, Callable
 
 def jwt_auth_required(view_func: Callable[..., JsonResponse]) -> JsonResponse:

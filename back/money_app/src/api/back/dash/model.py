@@ -2,7 +2,7 @@ from decimal import Decimal
 from pydantic import BaseModel, Field
 from api.back.decore import MainModel
 from dataclasses import dataclass
-from money.libs.model import BaseModelWithRawArray
+from money.libs.model.exp import BaseModelWithRawArray
 import logging
 
 logger = logging.getLogger(__name__)

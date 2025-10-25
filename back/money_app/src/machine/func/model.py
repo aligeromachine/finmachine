@@ -4,9 +4,9 @@ from typing import Self, TypeVar
 from pydantic import BaseModel, model_validator
 from decimal import Decimal
 from machine.func.query import SQL_ORDER_CARDS, SQL_TOTAL_WEEK_MONTH_DAY
-from money.libs.validate import validate_list
+from money.libs.validate.exp import validate_list
 from money.models import AuditFin, Cards
-from money.libs.model import BaseModelWithRawArray
+from money.libs.model.exp import BaseModelWithRawArray
 from functools import reduce
 
 T = TypeVar('T', bound='ReduceInfo')

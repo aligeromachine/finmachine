@@ -2,8 +2,8 @@ import os
 import gzip
 import base64
 import tarfile
-from money.libs.ext_c import CONST
-from money.libs.ext_utils import RemoveFile
+from money.libs.const import CONST
+from money.libs.files.exp import RemoveFile
 import zlib
 
 def compress_string(input_string: str) -> str:

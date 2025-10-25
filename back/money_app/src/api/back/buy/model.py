@@ -3,8 +3,8 @@ from typing import Self
 from api.back.decore import ExtModel
 from decimal import Decimal
 from pydantic import model_validator
-from money.libs.model import BaseModelWithRawArray
-from money.libs.ext_utils import dateDRF
+from money.libs.model.exp import BaseModelWithRawArray
+from money.libs.dt.utils import pretty_str
 
 class BuyMessage(ExtModel):
     amount: Decimal = Decimal(0)
@@ -31,5 +31,5 @@ class BuySelector(BaseModelWithRawArray):
     @model_validator(mode='after')
     def complete(self) -> Self:
         if isinstance(self.created, datetime):
-            self.created = dateDRF(self.created)
+            self.created = pretty_str(self.created)
         return self

@@ -1,7 +1,7 @@
 from typing import Any
 from django.http import JsonResponse, HttpRequest
 from authentication.middleware import jwt_auth_required
-from money.libs.decore import check_post
+from money.libs.decore.response import check_post
 from api.back.profit.main import invoke_response
 
 @jwt_auth_required  # type: ignore

@@ -30,6 +30,8 @@ def create_log() -> dict:
 
 def create_celery() -> dict:
     return {
+        'HOST': get_env('REDIS_HOST'),
+        'PORT': get_env('REDIS_PORT'),
         'BROKER': get_env('CELERY_BROKER'),
         'BACKEND': get_env('CELERY_BACKEND'),
     }
@@ -37,6 +39,9 @@ def create_celery() -> dict:
 def create_money() -> dict:
     return {
         'EXPIRED': get_env('MONEY_EXPIRED'),
+        'HOST': get_env('REDIS_HOST'),
+        'PORT': get_env('REDIS_PORT'),
+        'BASE': get_env('CACHE_BASE'),
     }
 
 def create_jwt() -> dict:

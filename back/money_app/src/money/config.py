@@ -2,4 +2,7 @@ from service.settings import ENV_APP
 
 CONFIG = ENV_APP['MONEY']
 
-EXPIRED = CONFIG['EXPIRED']
+REDIS_HOST: str = CONFIG['HOST']
+REDIS_PORT: str = CONFIG['PORT']
+CACHE_BASE: str = CONFIG['BASE']
+EXPIRED: str = CONFIG['EXPIRED']
