@@ -98,7 +98,7 @@ class AuditFin(models.Model):
         st.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    payload = models.JSONField(default=list, validators=[validate_payload])
+    payload = models.JSONField(default=list, validators=[validate_payload], null=True)
 
     class Meta:
         db_table = "content\".\"auditfin"

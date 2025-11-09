@@ -13,10 +13,5 @@ def machine_audit() -> None:
         if not it.payload:
             continue
 
-        if not AuditFin.objects.filter(user_id=it.user_id).count():
-            AuditFin.objects.create(
-                user_id=it.user_id,
-                payload=[mx.model_dump() for mx in it.payload]
-            )
-        else:
-            AuditFin.objects.filter(user_id=it.user_id).update(payload=[mx.model_dump() for mx in it.payload])
+        elem, created = AuditFin.objects.get_or_create(user_id=it.user_id)
+        elem.objects.update(payload=[mx.model_dump() for mx in it.payload])

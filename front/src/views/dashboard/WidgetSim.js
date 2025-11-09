@@ -1,12 +1,12 @@
 import { CCard, CCardBody, CCol, CRow, CWidgetStatsC } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import {
-  cilPeople,
-  cilUserFollow,
-  cilBasket,
+  cilBalanceScale,
+  cilBank,
+  cilCash,
   cilChartPie,
-  cilSpeedometer,
-  cilSpeech,
+  cilFire,
+  cilLibrary,
 } from "@coreui/icons";
 
 export const WidgetSim = ({ data, card }) => {
@@ -16,15 +16,7 @@ export const WidgetSim = ({ data, card }) => {
         <CRow xs={{ gutter: 4 }}>
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
-              icon={<CIcon icon={cilPeople} height={36} />}
-              value={data?.money_cash}
-              title="В кошельке"
-              progress={{ color: "info", value: 75 }}
-            />
-          </CCol>
-          <CCol xs={6} lg={4} xxl={2}>
-            <CWidgetStatsC
-              icon={<CIcon icon={cilUserFollow} height={36} />}
+              icon={<CIcon icon={cilBank} height={36} />}
               value={data?.card_sum}
               title="На карточках"
               progress={{ color: "success", value: 75 }}
@@ -32,9 +24,17 @@ export const WidgetSim = ({ data, card }) => {
           </CCol>
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
-              icon={<CIcon icon={cilBasket} height={36} />}
+              icon={<CIcon icon={cilCash} height={36} />}
+              value={data?.money_cash}
+              title="В кошельке"
+              progress={{ color: "info", value: 75 }}
+            />
+          </CCol>
+          <CCol xs={6} lg={4} xxl={2}>
+            <CWidgetStatsC
+              icon={<CIcon icon={cilBalanceScale} height={36} />}
               value={data?.capital_year}
-              title="Прибыль"
+              title="Прибыль за год"
               progress={{ color: "warning", value: 75 }}
             />
           </CCol>
@@ -48,17 +48,17 @@ export const WidgetSim = ({ data, card }) => {
           </CCol>
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
-              icon={<CIcon icon={cilSpeedometer} height={36} />}
-              value={card?.two_name}
-              title={card?.two_sum}
+              icon={<CIcon icon={cilFire} height={36} />}
+              value={card?.two_sum}
+              title={card?.two_name}
               progress={{ color: "danger", value: 75 }}
             />
           </CCol>
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
-              icon={<CIcon icon={cilSpeech} height={36} />}
-              value={card?.three_name}
-              title={card?.three_sum}
+              icon={<CIcon icon={cilLibrary} height={36} />}
+              value={card?.three_sum}
+              title={card?.three_name}
               progress={{ color: "info", value: 75 }}
             />
           </CCol>

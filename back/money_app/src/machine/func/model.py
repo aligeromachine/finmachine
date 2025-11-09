@@ -106,20 +106,6 @@ class ReduceInfo(BaseModel):
         for index, it in enumerate(Cards.objects.raw(raw_query=SQL_ORDER_CARDS)):
             elem = CardSelector.from_orm(it)
             ls_card[index] = [elem.title, elem.amount]
-        
+
         raw: dict = dict(payload=payload, card_sum=card_sum, wm=wm, ls_card=ls_card)
         return cls(**raw)
-
-    # @classmethod
-    # def get_selector(cls, machine: str) -> list[str]:
-    #     raw_speed: list[SpeedMacSelector] = cls.get_speed()
-
-    #     selector: list[str] = []
-
-    #     for it in raw_speed:
-    #         if machine == it.machine:
-    #             selector.extend(it.hashtypes)
-
-    #     selector = sorted(selector, key=lambda x: int(x))
-
-    #     return selector

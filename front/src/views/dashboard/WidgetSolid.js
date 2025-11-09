@@ -7,42 +7,30 @@ export const WidgetSolid = ({ data }) => {
         <CRow xs={{ gutter: 4 }}>
           <CCol xs={12} sm={6} xl={4} xxl={3}>
             <CWidgetStatsB
-              color="success"
-              inverse
               value={data?.year}
               title="Траты за год"
-              progress={{ value: 89.9 }}
-              text="Lorem ipsum dolor sit amet enim."
+              progress={{ color: "danger", value: 100 }}
             />
           </CCol>
           <CCol xs={12} sm={6} xl={4} xxl={3}>
             <CWidgetStatsB
-              color="info"
-              inverse
               value={data?.month}
               title="Траты за месяц"
-              progress={{ value: 89.9 }}
-              text="Lorem ipsum dolor sit amet enim."
+              progress={{ color: "primary", value: 100 }}
             />
           </CCol>
           <CCol xs={12} sm={6} xl={4} xxl={3}>
             <CWidgetStatsB
-              color="warning"
-              inverse
               value={data?.week}
               title="Траты за неделю"
-              progress={{ value: 89.9 }}
-              text="Lorem ipsum dolor sit amet enim."
+              progress={{ color: "info", value: 100 }}
             />
           </CCol>
           <CCol xs={12} sm={6} xl={4} xxl={3}>
             <CWidgetStatsB
-              color="primary"
-              inverse
               value={data?.day}
               title="Траты за день"
-              progress={{ value: 89.9 }}
-              text="Lorem ipsum dolor sit amet enim."
+              progress={{ color: "success", value: 100 }}
             />
           </CCol>
         </CRow>

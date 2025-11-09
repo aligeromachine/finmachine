@@ -28,6 +28,7 @@ class CONST:
     data: str = 'data'
     raw: str = 'raw'
 
+
 TIMEOUT: tuple = (2, 5)
 HEADERS: dict = {
     "Content-Type": "application/json", 

@@ -30,7 +30,7 @@ def write_csv_list(nfile: str, ls: list) -> None:
 
 def read_file_csv_list(pth: str) -> list:
     ls: list = []
-  
+
     if not file_exist(pth):
         return ls
 
