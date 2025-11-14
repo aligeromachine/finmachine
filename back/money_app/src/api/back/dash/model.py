@@ -1,7 +1,6 @@
-from decimal import Decimal
-from pydantic import BaseModel, Field
 from api.back.decore import MainModel
 from dataclasses import dataclass
+from machine.func.model.sub import Capital, CardsAgg, DateRng
 from money.libs.model.exp import BaseModelWithRawArray
 import logging
 
@@ -10,63 +9,19 @@ logger = logging.getLogger(__name__)
 class DashboardMessage(MainModel):
     pass
 
-class ProfitSignal(BaseModel):
-    year: Decimal = Field(..., alias="profit_year")
-    month: Decimal = Field(..., alias="profit_month")
-    week: Decimal = Field(..., alias="profit_week")
-    day: Decimal = Field(..., alias="profit_day")
-
-class BuySignal(BaseModel):
-    year: Decimal = Field(..., alias="buy_year")
-    month: Decimal = Field(..., alias="buy_month")
-    week: Decimal = Field(..., alias="buy_week")
-    day: Decimal = Field(..., alias="buy_day")
-
-class CashSignal(BaseModel):
-    card_sum: Decimal
-    capital_year: Decimal
-    money_cash: Decimal
-
-class CardSignal(BaseModel):
-    one_name: str = Field(..., alias="card_one_name")
-    one_sum: Decimal = Field(..., alias="card_one_sum")
-    two_name: str = Field(..., alias="card_two_name")
-    two_sum: Decimal = Field(..., alias="card_two_sum")
-    three_name: str = Field(..., alias="card_three_name")
-    three_sum: Decimal = Field(..., alias="card_three_sum")
-
 class DashSignal(BaseModelWithRawArray):
-    profit_sum: Decimal
-    profit_year: Decimal
-    profit_month: Decimal
-    profit_week: Decimal
-    profit_day: Decimal
-
-    buy_sum: Decimal
-    buy_year: Decimal
-    buy_month: Decimal
-    buy_week: Decimal
-    buy_day: Decimal
-
-    card_sum: Decimal
-    capital_year: Decimal
-    money_cash: Decimal
-
-    card_one_name: str
-    card_one_sum: Decimal
-    card_two_name: str
-    card_two_sum: Decimal
-    card_three_name: str
-    card_three_sum: Decimal
+    capital: Capital = Capital()
+    cards: CardsAgg = CardsAgg()
+    profit: DateRng = DateRng()
+    buy: DateRng = DateRng()
 
     def to_dash(self) -> dict:
-        raw = self.model_dump()
-        data: dict = {
-            "profit": ProfitSignal(**raw).model_dump(),
-            "buy": BuySignal(**raw).model_dump(),
-            "cash": CashSignal(**raw).model_dump(),
-            "card": CardSignal(**raw).model_dump()
-        }
+        data: dict = dict(
+            capital=self.capital.model_dump(),
+            cards=self.cards.model_dump(),
+            profit=self.profit.model_dump(),
+            buy=self.buy.model_dump(),
+        )
         return data
 
 @dataclass

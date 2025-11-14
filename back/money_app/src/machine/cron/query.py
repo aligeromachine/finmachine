@@ -1,23 +1,3 @@
-TASK_TO_LOAD: str = """
-SELECT
-    task.id,
-    task.hash_type,
-    COALESCE(jsonb_agg(jsonb_build_object(
-        'id', hash.id,
-        'login', hash.hash_login,
-        'hash', hash.hash
-    )) FILTER (WHERE hash.id is not null), '[]') js
-FROM
-    content.taskshash hash
-JOIN
-    content.tasks task on task.id = hash.task_id
-WHERE
-    task.crusher = 'VIRIFY'
-AND
-    hash.modified is null
-GROUP BY
-    task.id
-"""
 BUY_GROUP: str = """
 SELECT
     EXTRACT(YEAR FROM created) AS year,
@@ -34,26 +14,26 @@ ORDER BY year;
 
 GROUP_USER_YEAR_BUY_PROFIT: str = """
 WITH buy_stat as (
-SELECT
-    EXTRACT(YEAR FROM created) AS year,
-    SUM(amount) AS total_buy,
-    user_id
-FROM 
-    content.buy
-GROUP BY 
-    EXTRACT(YEAR FROM created),
-    user_id
+    SELECT
+        EXTRACT(YEAR FROM created) AS year,
+        SUM(amount) AS total_buy,
+        user_id
+    FROM 
+        content.buy
+    GROUP BY 
+        EXTRACT(YEAR FROM created),
+        user_id
 ),
 profit_stat as (
-SELECT
-    EXTRACT(YEAR FROM created) AS year,
-    SUM(amount) AS total_profit,
-    user_id
-FROM 
-    content.profit
-GROUP BY 
-    EXTRACT(YEAR FROM created),
-    user_id
+    SELECT
+        EXTRACT(YEAR FROM created) AS year,
+        SUM(amount) AS total_profit,
+        user_id
+    FROM 
+        content.profit
+    GROUP BY 
+        EXTRACT(YEAR FROM created),
+        user_id
 )
 SELECT
     1 id,

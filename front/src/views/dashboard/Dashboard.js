@@ -17,7 +17,7 @@ export const Dashboard = () => {
   }, []);
   return (
     <Auth>
-      <WidgetSim data={data.cash} card={data.card} />
+      <WidgetSim data={data.capital} card={data.cards} />
       <WidgetBase data={data.profit} />
       <WidgetSolid data={data.buy} />
       <BaseChart />
