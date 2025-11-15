@@ -8,6 +8,7 @@ class CONST:
     FormatT: str = '%d-%m-%Y %H:%M:%S'
     FormatDDP: str = '%Y-%m-%d %H:%M:%S'
     FormatFull: str = '%Y-%m-%dT%H:%M:%S.%fZ'
+    FormatJS: str = "%a %b %d %Y %H:%M:%S"
     FormatAccess: str = '%m/%d/%y %H:%M:%S'
     DtRaw: str = '%Y-%m-%d %H:%M:%S.%fz'
     FormatF: str = '%d-%m-%Y_%H-%M-%S'

@@ -3,6 +3,7 @@ from typing import Self
 from api.back.decore import ExtModel
 from decimal import Decimal
 from pydantic import model_validator
+from money.libs.math.exp import trim_decimal
 from money.libs.model.exp import BaseModelWithRawArray
 from money.libs.dt.utils import pretty_str
 
@@ -19,6 +20,11 @@ class BuySignal(BaseModelWithRawArray):
     prod: int
     created: datetime
 
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        self.amount = trim_decimal(self.amount)
+        return self
+
 class BuySelector(BaseModelWithRawArray):
     id: int
     created: datetime | str
@@ -32,4 +38,5 @@ class BuySelector(BaseModelWithRawArray):
     def complete(self) -> Self:
         if isinstance(self.created, datetime):
             self.created = pretty_str(self.created)
+        self.amount = trim_decimal(self.amount)
         return self

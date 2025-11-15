@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Self
+from money.libs.math.exp import trim_decimal
 from money.libs.dt.utils import pretty_str
 from pydantic import model_validator
 from api.back.decore import ExtModel
@@ -10,11 +11,21 @@ class CardsMessage(ExtModel):
     number: str = ''
     amount: Decimal = Decimal(0)
 
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        self.amount = trim_decimal(self.amount)
+        return self
+
 class CardSignal(BaseModelWithRawArray):
     title: str
     amount: Decimal
     number: str
     created: datetime
+
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        self.amount = trim_decimal(self.amount)
+        return self
 
 class CardSelector(BaseModelWithRawArray):
     id: int
@@ -27,4 +38,5 @@ class CardSelector(BaseModelWithRawArray):
     def complete(self) -> Self:
         if isinstance(self.created, datetime):
             self.created = pretty_str(self.created)
+        self.amount = trim_decimal(self.amount)
         return self

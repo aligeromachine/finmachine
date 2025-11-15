@@ -3,6 +3,7 @@ from typing import Self
 from pydantic import Field, model_validator
 from api.back.decore import ExtModel
 from decimal import Decimal
+from money.libs.math.exp import trim_decimal
 from money.libs.model.exp import BaseModelWithRawArray
 from money.libs.dt.utils import pretty_str
 
@@ -16,6 +17,11 @@ class ProfitSignal(BaseModelWithRawArray):
     source: int = Field(..., alias="source_id")
     created: datetime
 
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        self.amount = trim_decimal(self.amount)
+        return self
+
 class ProfitSelector(BaseModelWithRawArray):
     id: int
     created: datetime | str
@@ -27,4 +33,5 @@ class ProfitSelector(BaseModelWithRawArray):
     def complete(self) -> Self:
         if isinstance(self.created, datetime):
             self.created = pretty_str(self.created)
+        self.amount = trim_decimal(self.amount)
         return self

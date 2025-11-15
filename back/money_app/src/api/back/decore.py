@@ -5,8 +5,10 @@ import logging
 from typing import Self, Any
 from pydantic import BaseModel, model_validator
 from django.http import HttpRequest
+from money.libs.dt.utils import time_parse
 from money.libs.types.exp import F_Return
 from money.libs.validate.exp import validate_dict_conv
+from money.libs.const import CONST
 
 logger = logging.getLogger(__name__)
 
@@ -29,23 +31,9 @@ class ExtModel(MainModel):
     @model_validator(mode='after')
     def complete(self) -> Self:
         if isinstance(self.created, str) and self.created:
-            dt: datetime | None = None
-            fmt_iso: str = "%Y-%m-%dT%H:%M:%S"
-            fmt_js: str = "%a %b %d %Y %H:%M:%S"
+            dt: datetime | None = time_parse(raw=self.created)
             if not dt:
-                try:
-                    dt = datetime.strptime(self.created, "%Y-%m-%dT%H:%M:%S")
-                except ValueError:
-                    pass
-
-            if not dt:
-                try:
-                    dt = datetime.strptime(self.created, "%a %b %d %Y %H:%M:%S")
-                except ValueError:
-                    pass
-
-            if not dt:
-                raise Exception(f"{self.created} does not match with {fmt_iso}, {fmt_js}")
+                raise Exception(f"{self.created} does not match with {CONST.FormatFull}, {CONST.FormatJS}")
 
             self.created = dt
         return self
@@ -54,12 +42,12 @@ def draw_paginate(func: Callable[..., dict]) -> Callable[..., dict]:
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> dict:
         ls, count, offset, limit = func(*args, **kwargs)
-        result: dict = {
-            'recordsTotal': count,
-            'offset': offset,
-            'recordsDisplay': limit,
-            'draw': ls
-        }
+        result: dict = dict(
+            recordsTotal=count,
+            offset=offset,
+            recordsDisplay=limit,
+            draw=ls
+        )
         return result
     return wrapper
 
