@@ -3,9 +3,9 @@ from django.db.models import Sum
 from typing import Self, TypeVar
 from pydantic import BaseModel, model_validator
 from decimal import Decimal
-from machine.func.model.sub import Capital, CardSelector, CardsAgg, DateRng, Rng
-from machine.func.model.selector import WidgetYear, WidgetRange
-from machine.func.query import SQL_ORDER_CARDS, SQL_WIDGET_RANGE
+from machine.dash.model.sub import Capital, CardSelector, CardsAgg, DateRng, Rng
+from machine.dash.model.selector import WidgetYear, WidgetRange
+from machine.dash.query import SQL_ORDER_CARDS, SQL_WIDGET_RANGE
 from money.libs.validate.exp import validate_list
 from money.models import AuditFin, Cards
 from functools import reduce

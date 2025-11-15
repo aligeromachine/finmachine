@@ -1,6 +1,6 @@
 from api.back.decore import MainModel
 from dataclasses import dataclass
-from machine.func.model.sub import Capital, CardsAgg, DateRng
+from machine.dash.model.sub import Capital, CardsAgg, DateRng
 from money.libs.model.exp import BaseModelWithRawArray
 import logging
 
