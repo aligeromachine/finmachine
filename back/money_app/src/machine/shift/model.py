@@ -8,13 +8,13 @@ from api.back.buy.model import BuyMessage
 from money.libs.cache.redis import RedisClient
 from money.libs.types.exp import F_Return, F_Spec
 
-
 class BaseSignal(BaseModel):
     amount: Decimal
     created: datetime
-    
+
 class MacShift:
     KEY_BUY: str = 'row_buy_user_id'
+
     @staticmethod
     def row_save_redis(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
         @functools.wraps(func)
@@ -34,7 +34,7 @@ class MacShift:
                     red.set_key_json(key=raw, value=signal.model_dump())
             return result
         return wrapper
-    
+
     @staticmethod
     def raw_add_buy_data(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
         @functools.wraps(func)
@@ -43,6 +43,5 @@ class MacShift:
             model: BuyMessage = kwargs['item']
             result = func(*args, **kwargs)
 
-            
             return result
         return wrapper
