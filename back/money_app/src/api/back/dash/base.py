@@ -1,6 +1,6 @@
 import logging
 from api.back.dash.model import DashboardMessage, DashSignal
-from machine.dash.model.calc import ReduceInfo
+from machine.dash.calc import ReduceInfo
 
 logger = logging.getLogger(__name__)
 

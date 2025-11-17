@@ -68,6 +68,8 @@ SELECT
     card.amount
 FROM 
     content.cards card
+WHERE 
+    user_id = %s
 ORDER BY 
     card.checked desc, 
     card.amount desc

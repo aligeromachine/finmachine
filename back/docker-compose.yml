@@ -74,7 +74,7 @@ services:
   flower_app:
     image: back-money_app
     container_name: flower_app
-    command: bash -c "celery -A service --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1 flower --port=5555 --persistent=True --basic_auth=user:password"
+    command: bash -c "celery flower -A service --port=5555 --broker=redis://redis_money:6379/1 --result-backend=redis://redis_money:6379/2"
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src

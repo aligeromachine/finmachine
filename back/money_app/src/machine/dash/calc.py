@@ -1,20 +1,17 @@
 from datetime import datetime
-from django.db.models import Sum
 from typing import Self, TypeVar
 from pydantic import BaseModel, model_validator
 from decimal import Decimal
-from machine.dash.model.sub import Capital, CardSelector, CardsAgg, DateRng, Rng
-from machine.dash.model.selector import WidgetYear, WidgetRange
-from machine.dash.query import SQL_ORDER_CARDS, SQL_WIDGET_RANGE
-from money.libs.validate.exp import validate_list
-from money.models import AuditFin, Cards
+from machine.tools.selector import get_list_user_finance, get_top_user_cards, get_user_date_range, get_user_total_amount
+from machine.dash.model import Capital, CardsAgg, DateRng, Rng
+from machine.tools.model import WidgetRange
 from functools import reduce
 
 T = TypeVar('T', bound='ReduceInfo')
 
 class ReduceInfo(BaseModel):
     calcWgRange: list[WidgetRange] = []
-    calcWgYears: list[WidgetYear] = []
+    calcWgYears: list[WidgetRange] = []
     totalSumCards: Decimal = Decimal(0)
 
     capital: Capital = Capital()
@@ -49,24 +46,10 @@ class ReduceInfo(BaseModel):
 
     @classmethod
     def load_from_db(cls: type[T], user_id: int) -> T:
-        wgYears: list[WidgetYear] = []
-        for it in AuditFin.objects.filter(user_id=user_id):
-            wgYears = validate_list(it.payload, WidgetYear, prn=True)
-
-        cards: CardsAgg = CardsAgg()
-        for index, it in enumerate(Cards.objects.raw(raw_query=SQL_ORDER_CARDS)):
-            if index == 0:
-                cards.one = CardSelector.from_orm(it)
-            if index == 1:
-                cards.two = CardSelector.from_orm(it)
-            if index == 2:
-                cards.three = CardSelector.from_orm(it)
-
-        params = [user_id] * 6
         raw: dict = dict(
-            calcWgRange=[WidgetRange.from_orm(it) for it in AuditFin.objects.raw(raw_query=SQL_WIDGET_RANGE, params=params)],
-            calcWgYears=wgYears, 
-            totalSumCards=Cards.objects.aggregate(total_amount=Sum('amount'))['total_amount'], 
-            cards=cards
+            calcWgRange=get_user_date_range(user_id=user_id),
+            calcWgYears=get_list_user_finance(user_id=user_id), 
+            totalSumCards=get_user_total_amount(user_id=user_id), 
+            cards=get_top_user_cards(user_id=user_id)
         )
         return cls(**raw)

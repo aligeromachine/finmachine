@@ -39,7 +39,7 @@ SELECT
     1 id,
     buy_stat.user_id, 
     COALESCE(jsonb_agg(jsonb_build_object(
-        'year', buy_stat.year,
+        'dt', buy_stat.year,
         'buy', buy_stat.total_buy,
         'profit', profit_stat.total_profit
     )) FILTER (WHERE buy_stat.user_id is not null), '[]') payload

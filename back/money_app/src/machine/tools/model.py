@@ -7,6 +7,3 @@ class WidgetRange(BaseModelWithRawArray):
     dt: int
     buy: Decimal
     profit: Decimal
-
-class WidgetYear(WidgetRange):
-    dt: int = Field(..., alias="year") 

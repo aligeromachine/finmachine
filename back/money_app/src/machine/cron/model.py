@@ -4,7 +4,7 @@ from money.libs.validate.exp import validate_list_conv
 from money.libs.model.exp import BaseModelWithRawArray
 
 class Payload(BaseModelWithRawArray):
-    year: int
+    dt: int
     buy: float | None = None
     profit: float | None = None
 

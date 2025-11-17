@@ -2,11 +2,11 @@ from collections.abc import Callable
 from datetime import datetime, timedelta
 from functools import wraps
 import logging
-from typing import Self, Any
+from typing import Self
 from pydantic import BaseModel, model_validator
 from django.http import HttpRequest
 from money.libs.dt.utils import time_parse
-from money.libs.types.exp import F_Return
+from money.libs.types.exp import F_Return, F_Spec
 from money.libs.validate.exp import validate_dict_conv
 from money.libs.const import CONST
 
@@ -40,7 +40,7 @@ class ExtModel(MainModel):
 
 def draw_paginate(func: Callable[..., dict]) -> Callable[..., dict]:
     @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> dict:
+    def wrapper(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> dict:
         ls, count, offset, limit = func(*args, **kwargs)
         result: dict = dict(
             recordsTotal=count,
@@ -54,7 +54,7 @@ def draw_paginate(func: Callable[..., dict]) -> Callable[..., dict]:
 def validate_model(Model: type[MainModel]) -> Callable[..., Callable[..., F_Return | dict]]:
     def decorator(func: Callable[..., F_Return | dict]) -> Callable[..., F_Return | dict]:
         @wraps(func)
-        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> F_Return | dict:
+        def wrapper(request: HttpRequest, *args: F_Spec.args, **kwargs: F_Spec.kwargs) -> F_Return | dict:
             if not request.body:
                 return {'data': 'err', 'message': 'body empty'}
             data: MainModel = validate_dict_conv(request.body, Model=Model, prn=True)

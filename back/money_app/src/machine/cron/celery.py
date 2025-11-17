@@ -14,4 +14,5 @@ def machine_audit() -> None:
             continue
 
         elem, created = AuditFin.objects.get_or_create(user_id=it.user_id)
-        elem.objects.update(payload=[mx.model_dump() for mx in it.payload])
+        elem.payload=[mx.model_dump() for mx in it.payload]
+        elem.save()
