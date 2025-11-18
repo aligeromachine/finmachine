@@ -9,8 +9,6 @@ RUN apt update -y \
     && apt install -y \
     netcat-traditional
 
-WORKDIR /home/src
-
 COPY requirements /home
 COPY entrypoint.sh /home
 

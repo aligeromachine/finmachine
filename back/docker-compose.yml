@@ -44,7 +44,7 @@ services:
     # build: money_app
     container_name: money_app
     # restart: always
-    command: bash -c "gunicorn --bind 0.0.0.0:8000 --workers 4 service.wsgi:application"
+    command: bash -c "cd /home/src && gunicorn --bind 0.0.0.0:8000 --workers 4 service.wsgi:application"
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src
@@ -54,7 +54,7 @@ services:
   celery_app:
     image: back-money_app
     container_name: celery_app
-    command: bash -c "celery -A service worker -l info" 
+    command: bash -c "cd /home/src && celery -A service worker -l info" 
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src
@@ -64,7 +64,7 @@ services:
   celery_beat:
     image: back-money_app
     container_name: celery_beat_app
-    command: bash -c "celery -A service beat -l info"
+    command: bash -c "cd /home/src && celery -A service beat -l info"
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src
@@ -74,7 +74,7 @@ services:
   flower_app:
     image: back-money_app
     container_name: flower_app
-    command: bash -c "celery flower -A service --port=5555 --broker=redis://redis_money:6379/1 --result-backend=redis://redis_money:6379/2"
+    command: bash -c "cd /home/src && celery -A service flower --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1"
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src
