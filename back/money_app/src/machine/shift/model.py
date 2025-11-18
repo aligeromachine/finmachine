@@ -2,9 +2,11 @@ from datetime import datetime
 from decimal import Decimal
 import functools
 from typing import Callable
-
 from pydantic import BaseModel
 from api.back.buy.model import BuyMessage
+from back.money_app.src.machine.shift.writer import rewrite_payload
+from back.money_app.src.machine.tools.model import WidgetRange
+from back.money_app.src.machine.tools.selector import get_user_date_range
 from money.libs.cache.redis import RedisClient
 from money.libs.types.exp import F_Return, F_Spec
 
@@ -42,6 +44,13 @@ class MacShift:
 
             model: BuyMessage = kwargs['item']
             result = func(*args, **kwargs)
+
+            rng: list[WidgetRange] = get_user_date_range(user_id=model.user_id)
+            for it in rng:
+                if it.dt == model.created.year:
+                    it.buy += model.amount
+
+            rewrite_payload(user_id=model.user_id, rng=rng)
 
             return result
         return wrapper

@@ -1,10 +1,14 @@
 from decimal import Decimal
-from machine.tools.query import SQL_ORDER_CARDS, SQL_WIDGET_RANGE
-from machine.tools.model import WidgetRange
+from machine.tools.query import GROUP_USER_YEAR_BUY_PROFIT, SQL_ORDER_CARDS, SQL_WIDGET_RANGE
+from machine.tools.model import FinStat, WidgetRange
 from money.libs.validate.exp import validate_list
-from money.models import AuditFin, Cards
+from money.models import AuditFin, Buy, Cards
 from machine.dash.model import CardSelector, CardsAgg
 from django.db.models import Sum
+
+def list_audit() -> list[FinStat]:
+    ls: list[FinStat] = [FinStat.from_orm(it) for it in Buy.objects.raw(raw_query=GROUP_USER_YEAR_BUY_PROFIT)]
+    return ls
 
 def get_list_user_finance(user_id: int) -> list[WidgetRange]:
     finance_years: list[WidgetRange] = []
