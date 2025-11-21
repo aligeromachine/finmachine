@@ -15,8 +15,8 @@ class BaseSignal(BaseModel):
     amount: float
     created: datetime
 
-class MacShift:
-    KEY_BUY: str = 'row_buy_id'
+class MacBuyShift:
+    key_redis: str = 'row_buy_id'
     cmd_add: str = 'add_buy_data'
     cmd_del: str = 'delete_buy_row'
 
@@ -29,19 +29,14 @@ class MacShift:
             result = func(*args, **kwargs)
             signal: BaseSignal = BaseSignal(**result)
 
-            raw: str = f'{MacShift.KEY_BUY}_{model.pk}'
+            raw: str = f'{MacBuyShift.key_redis}_{model.pk}'
             with RedisClient() as red:
-
-                if red.exists_key(key=raw):
-                    red.delete_key(key=raw)
-
-                print(signal.model_dump())
                 red.set_key_json(key=raw, value=signal.model_dump())
             return result
         return wrapper
 
     @staticmethod
-    def row_change_buy_data(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
+    def row_change(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
         @functools.wraps(func)
         def wrapper(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> F_Return:
 
@@ -49,9 +44,9 @@ class MacShift:
             rng: list[WidgetRange] = get_list_user_finance(user_id=model.user_id)
             for it in rng:
                 if it.dt == model.created.year:
-                    if model.command == MacShift.cmd_add:
+                    if model.command == MacBuyShift.cmd_add:
                         it.buy += model.amount
-                    if model.command == MacShift.cmd_del:
+                    if model.command == MacBuyShift.cmd_del:
                         it.buy -= get_buy_amount_by_id(pk=model.pk)
 
             rewrite_payload(user_id=model.user_id, rng=rng)
@@ -60,14 +55,14 @@ class MacShift:
         return wrapper
 
     @staticmethod
-    def row_edit_buy_data(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
+    def row_edit(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
         @functools.wraps(func)
         def wrapper(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> F_Return:
 
             model: BuyMessage = kwargs['item']
             rng: list[WidgetRange] = get_list_user_finance(user_id=model.user_id)
 
-            raw: str = f'{MacShift.KEY_BUY}_{model.pk}'
+            raw: str = f'{MacBuyShift.key_redis}_{model.pk}'
             with RedisClient() as red:
 
                 signal: BaseSignal = BaseSignal(**red.get_key_json(key=raw))

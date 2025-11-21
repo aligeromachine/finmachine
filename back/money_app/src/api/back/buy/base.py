@@ -1,31 +1,31 @@
 import logging
 from api.back.buy.model import BuyMessage, BuySignal
-from machine.shift.model import MacShift
+from machine.shift.model.buy import MacBuyShift
 from money.models import Buy
 from api.back.buy.query import BUY_ROW
 
 logger = logging.getLogger(__name__)
 
-@MacShift.row_change_buy_data  # type: ignore
+@MacBuyShift.row_change  # type: ignore
 def add_buy_data(item: BuyMessage) -> dict:
     elem = Buy.objects.create(title=item.title, amount=item.amount, shop_id=item.shop, products_id=item.prod, user_id=item.user_id)
     elem.created = item.created
     elem.save()
     return {'data': 'ok', 'message': f'adding Buy key: {elem.pk}'}
 
-@MacShift.row_change_buy_data  # type: ignore
+@MacBuyShift.row_change  # type: ignore
 def delete_buy_row(item: BuyMessage) -> dict:
     Buy.objects.filter(pk=item.pk).delete()
     return {'data': 'ok', 'message': f'delete Buy key: {item.pk}'}
 
-@MacShift.row_save_redis  # type: ignore
+@MacBuyShift.row_save_redis  # type: ignore
 def get_buy_row(item: BuyMessage) -> dict:
     data: dict = {}
     for it in Buy.objects.raw(raw_query=BUY_ROW, params=[item.pk]):
         data = BuySignal.from_orm(it).model_dump()
     return data
 
-@MacShift.row_edit_buy_data 
+@MacBuyShift.row_edit 
 def edit_buy_data(item: BuyMessage) -> dict:
     try:
         elem = Buy.objects.get(pk=item.pk)
