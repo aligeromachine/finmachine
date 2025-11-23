@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from authentication.config import ACCESS_LIFETIME, REFRESH_LIFETIME, ALGORITHM, SECRET_KEY
 import jwt
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Any
 
 def create_jwt_tokens(sender: Any, instance: Any, created: bool, **kwargs: Any) -> None:
@@ -10,14 +10,14 @@ def create_jwt_tokens(sender: Any, instance: Any, created: bool, **kwargs: Any) 
         access_payload = {
             'user_id': instance.id,
             'type': 'access',
-            'exp': datetime.now(timezone.utc) + ACCESS_LIFETIME,
+            'exp': datetime.now(timezone.utc) + timedelta(minutes=ACCESS_LIFETIME),
             'iat': datetime.now(timezone.utc)
         }
 
         refresh_payload = {
             'user_id': instance.id,
             'type': 'refresh',
-            'exp': datetime.now(timezone.utc) + REFRESH_LIFETIME,
+            'exp': datetime.now(timezone.utc) + timedelta(minutes=REFRESH_LIFETIME),
             'iat': datetime.now(timezone.utc)
         }
 

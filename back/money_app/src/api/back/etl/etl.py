@@ -6,7 +6,7 @@ from money.libs.django.func import get_raw_path
 from money.libs.files.exp import read_file_csv_list
 from money.libs.const import CONST
 from django.contrib.auth.models import User
-from api.back.dash.model import Prod, Trati, Organiz, Prihvid, Prih, Prodvid, Visa
+from api.back.etl.model import Prod, Trati, Organiz, Prihvid, Prih, Prodvid, Visa
 from money.models import Buy, Cards, Products, Shop, Source, Profit, Catalog
 
 logger = logging.getLogger(__name__)

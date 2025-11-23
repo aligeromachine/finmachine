@@ -12,4 +12,5 @@ urlpatterns = [
     path(route='source/',   view=include('api.view.source.urls')),
     path(route='profit/',   view=include('api.view.profit.urls')),
     path(route='logger/',   view=include('api.view.logger.urls')),
+    path(route='etl/',      view=include('api.view.etl.urls')),
 ]
