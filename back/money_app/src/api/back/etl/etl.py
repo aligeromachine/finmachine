@@ -51,7 +51,8 @@ def etl_prih(user: User) -> None:
             user=user
         )
         p.save()
-        p.objects.update(created=conv_dt(cdt=chunk.data_prih))
+        p.created = conv_dt(cdt=chunk.data_prih)
+        p.save()
 
 # Prodvid -> Catalog
 def etl_prod_vid(user: User) -> None:
@@ -97,5 +98,5 @@ def elt_trati(user: User) -> None:
             user=user
         )
         p.save()
-
-        p.objects.update(created=conv_dt(cdt=chunk.data_tr))
+        p.created=conv_dt(cdt=chunk.data_tr)
+        p.save()

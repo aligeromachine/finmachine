@@ -1,10 +1,14 @@
 import logging
 from django.contrib.auth.models import User
+from django.http import HttpRequest
 from api.back.etl.etl import (
     elt_trati, etl_prih, etl_prih_vid, etl_prod, etl_prod_vid, etl_shop, etl_visa)
 from api.back.etl.upt import update_products, update_profit, update_buy
+from machine.cron.celery import machine_audit
 
 logger = logging.getLogger(__name__)
+
+
 
 def update_money_csv() -> dict:
     respo = {"data": "ok", "message": "update_money_csv"}
@@ -12,8 +16,6 @@ def update_money_csv() -> dict:
 
     def GetAddressWatchService() -> None:
 
-        return
-    
         user = User.objects.get(pk=1)
         logger.info('ETL')
         etl_shop(user=user)
@@ -36,3 +38,8 @@ def update_money_csv() -> dict:
     threading.Thread(target=GetAddressWatchService, args=()).start()
 
     return respo
+
+
+def audit_money_history() -> dict:
+    machine_audit()
+    return {}

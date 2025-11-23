@@ -1,41 +1,16 @@
 from django.contrib.auth import get_user_model
-from authentication.config import ACCESS_LIFETIME, REFRESH_LIFETIME, ALGORITHM, SECRET_KEY
-import jwt
-from datetime import datetime, timezone, timedelta
 from typing import Any
+from authentication.utils import create_jwt_tokens
 
-def create_jwt_tokens(sender: Any, instance: Any, created: bool, **kwargs: Any) -> None:
+def create_jwt(sender: Any, instance: Any, created: bool, **kwargs: Any) -> None:
     if created and instance.is_superuser:
         # Генерация токенов
-        access_payload = {
-            'user_id': instance.id,
-            'type': 'access',
-            'exp': datetime.now(timezone.utc) + timedelta(minutes=ACCESS_LIFETIME),
-            'iat': datetime.now(timezone.utc)
-        }
+        tokens = create_jwt_tokens(instance.id)
 
-        refresh_payload = {
-            'user_id': instance.id,
-            'type': 'refresh',
-            'exp': datetime.now(timezone.utc) + timedelta(minutes=REFRESH_LIFETIME),
-            'iat': datetime.now(timezone.utc)
-        }
-
-        access_token = jwt.encode(
-            access_payload,
-            SECRET_KEY,
-            algorithm=ALGORITHM
-        )
-
-        refresh_token = jwt.encode(
-            refresh_payload,
-            SECRET_KEY,
-            algorithm=ALGORITHM
-        )
         print(f'JWT Tokens for superuser {instance.username}:')
-        print(f'Access Token: {access_token}')
-        print(f'Refresh Token: {refresh_token}')
+        print(f'Access Token: {tokens['access']}')
+        print(f'Refresh Token: {tokens['refresh']}')
 
 def register_handlers() -> None:
     from django.db.models.signals import post_save
-    post_save.connect(create_jwt_tokens, sender=get_user_model())
+    post_save.connect(create_jwt, sender=get_user_model())

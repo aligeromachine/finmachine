@@ -36,7 +36,8 @@ def read_file_csv_list(pth: str) -> list:
 
     with open(pth) as csv_file:
         reader = csv.reader(csv_file, dialect=csv.excel)
-        ls = [str(row) for row in reader if row]
+        headings = next(reader)
+        ls = [row for row in reader if row]
 
     return ls
 
@@ -44,7 +45,8 @@ def read_payload_csv_list(payload: str) -> list:
     ls: list = []
 
     reader = csv.reader(StringIO(payload), dialect=csv.excel)
-    ls = [str(row) for row in reader if row]
+    headings = next(reader)
+    ls = [row for row in reader if row]
 
     return ls
 
