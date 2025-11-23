@@ -25,7 +25,7 @@ def get_buy_row(item: BuyMessage) -> dict:
         data = BuySignal.from_orm(it).model_dump()
     return data
 
-@MacBuyShift.row_edit 
+@MacBuyShift.row_edit  # type: ignore
 def edit_buy_data(item: BuyMessage) -> dict:
     try:
         elem = Buy.objects.get(pk=item.pk)

@@ -1,6 +1,5 @@
 from decimal import Decimal
-from money.models import Buy, Profit, Cards
-
+from money.models import Buy, Profit
 
 def get_buy_amount_by_id(pk: int) -> Decimal:
     elem = Buy.objects.get(pk=pk)

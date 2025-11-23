@@ -1,4 +1,4 @@
-from dataclasses import dataclass, fields
+from dataclasses import dataclass
 import logging
 
 logger = logging.getLogger(__name__)

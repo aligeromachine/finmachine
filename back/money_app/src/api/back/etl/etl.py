@@ -98,5 +98,5 @@ def elt_trati(user: User) -> None:
             user=user
         )
         p.save()
-        p.created=conv_dt(cdt=chunk.data_tr)
+        p.created = conv_dt(cdt=chunk.data_tr)
         p.save()

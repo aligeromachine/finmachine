@@ -1,13 +1,11 @@
 import logging
 from django.contrib.auth.models import User
-from django.http import HttpRequest
 from api.back.etl.etl import (
     elt_trati, etl_prih, etl_prih_vid, etl_prod, etl_prod_vid, etl_shop, etl_visa)
 from api.back.etl.upt import update_products, update_profit, update_buy
 from machine.cron.celery import machine_audit
 
 logger = logging.getLogger(__name__)
-
 
 
 def update_money_csv() -> dict:
