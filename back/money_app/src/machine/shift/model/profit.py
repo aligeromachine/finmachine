@@ -42,12 +42,21 @@ class MacProfitShift:
 
             model: ProfitMessage = kwargs['item']
             rng: list[WidgetRange] = get_list_user_finance(user_id=model.user_id)
-            for it in rng:
-                if it.dt == model.created.year:
-                    if model.command == MacProfitShift.cmd_add:
-                        it.profit += model.amount
-                    if model.command == MacProfitShift.cmd_del:
-                        it.profit -= get_profit_amount_by_id(pk=model.pk)
+            if model.created.year in [kt.dt for kt in rng]:
+                for it in rng:
+                    if it.dt == model.created.year:
+                        if model.command == MacProfitShift.cmd_add:
+                            it.profit += model.amount
+                        if model.command == MacProfitShift.cmd_del:
+                            it.profit -= get_profit_amount_by_id(pk=model.pk)
+            else:
+                profit: Decimal = Decimal(0)
+                if model.command == MacProfitShift.cmd_add:
+                    profit += model.amount
+                if model.command == MacProfitShift.cmd_del:
+                    profit -= get_profit_amount_by_id(pk=model.pk)
+                draw = WidgetRange(dt=model.created.year, profit=profit)
+                rng.append(draw)
 
             rewrite_payload(user_id=model.user_id, rng=rng)
 
