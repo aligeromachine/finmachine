@@ -40,8 +40,8 @@ services:
       - ./money_nginx/default.conf:/etc/nginx/conf.d/default.conf
 
   money_app:
-    # image: back-money_app
-    build: money_app
+    image: back-money_app
+    # build: money_app
     container_name: money_app
     # restart: always
     command: bash -c "gunicorn --bind 0.0.0.0:8000 --workers 4 service.wsgi:application"
@@ -51,32 +51,32 @@ services:
     env_file:
       - ./env/money.env
 
-  # celery_app:
-  #   image: back-money_app
-  #   container_name: celery_app
-  #   command: bash -c "celery -A service worker -l info" 
-  #   volumes:
-  #     - ./data:/home/data
-  #     - ./money_app/src:/home/src
-  #   env_file:
-  #     - ./env/money.env
+  celery_app:
+    image: back-money_app
+    container_name: celery_app
+    command: bash -c "celery -A service worker -l info" 
+    volumes:
+      - ./data:/home/data
+      - ./money_app/src:/home/src
+    env_file:
+      - ./env/money.env
 
-  # celery_beat:
-  #   image: back-money_app
-  #   container_name: celery_beat_app
-  #   command: bash -c "celery -A service beat -l info"
-  #   volumes:
-  #     - ./data:/home/data
-  #     - ./money_app/src:/home/src
-  #   env_file:
-  #     - ./env/money.env
+  celery_beat:
+    image: back-money_app
+    container_name: celery_beat_app
+    command: bash -c "celery -A service beat -l info"
+    volumes:
+      - ./data:/home/data
+      - ./money_app/src:/home/src
+    env_file:
+      - ./env/money.env
 
-  # flower_app:
-  #   image: back-money_app
-  #   container_name: flower_app
-  #   command: bash -c "celery -A service flower --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1"
-  #   volumes:
-  #     - ./data:/home/data
-  #     - ./money_app/src:/home/src
-  #   env_file:
-  #     - ./env/money.env
+  flower_app:
+    image: back-money_app
+    container_name: flower_app
+    command: bash -c "celery -A service flower --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1"
+    volumes:
+      - ./data:/home/data
+      - ./money_app/src:/home/src
+    env_file:
+      - ./env/money.env
