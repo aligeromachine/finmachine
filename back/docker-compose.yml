@@ -3,7 +3,7 @@ services:
   db_app:
     image: postgres
     container_name: db_app
-    restart: always        
+    restart: always
     env_file:
       - ./env/db_app.env
     volumes:
@@ -40,43 +40,43 @@ services:
       - ./money_nginx/default.conf:/etc/nginx/conf.d/default.conf
 
   money_app:
-    image: back-money_app
-    # build: money_app
+    # image: back-money_app
+    build: money_app
     container_name: money_app
     # restart: always
-    command: bash -c "cd /home/src && gunicorn --bind 0.0.0.0:8000 --workers 4 service.wsgi:application"
+    command: bash -c "gunicorn --bind 0.0.0.0:8000 --workers 4 service.wsgi:application"
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src
     env_file:
       - ./env/money.env
 
-  celery_app:
-    image: back-money_app
-    container_name: celery_app
-    command: bash -c "cd /home/src && celery -A service worker -l info" 
-    volumes:
-      - ./data:/home/data
-      - ./money_app/src:/home/src
-    env_file:
-      - ./env/money.env
-  
-  celery_beat:
-    image: back-money_app
-    container_name: celery_beat_app
-    command: bash -c "cd /home/src && celery -A service beat -l info"
-    volumes:
-      - ./data:/home/data
-      - ./money_app/src:/home/src
-    env_file:
-      - ./env/money.env
+  # celery_app:
+  #   image: back-money_app
+  #   container_name: celery_app
+  #   command: bash -c "celery -A service worker -l info" 
+  #   volumes:
+  #     - ./data:/home/data
+  #     - ./money_app/src:/home/src
+  #   env_file:
+  #     - ./env/money.env
 
-  flower_app:
-    image: back-money_app
-    container_name: flower_app
-    command: bash -c "cd /home/src && celery -A service flower --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1"
-    volumes:
-      - ./data:/home/data
-      - ./money_app/src:/home/src
-    env_file:
-      - ./env/money.env
+  # celery_beat:
+  #   image: back-money_app
+  #   container_name: celery_beat_app
+  #   command: bash -c "celery -A service beat -l info"
+  #   volumes:
+  #     - ./data:/home/data
+  #     - ./money_app/src:/home/src
+  #   env_file:
+  #     - ./env/money.env
+
+  # flower_app:
+  #   image: back-money_app
+  #   container_name: flower_app
+  #   command: bash -c "celery -A service flower --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1"
+  #   volumes:
+  #     - ./data:/home/data
+  #     - ./money_app/src:/home/src
+  #   env_file:
+  #     - ./env/money.env
