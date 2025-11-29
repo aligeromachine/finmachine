@@ -15,10 +15,17 @@ export const DatePicElem = ({ onChange, value, name }) => {
   const handleChange = (created) => {
     if (!created) return "";
     // Simulate standard input event
+    const year = created.getFullYear();
+    const month = String(created.getMonth() + 1).padStart(2, "0");
+    const day = String(created.getDate()).padStart(2, "0");
+    const hours = String(created.getHours()).padStart(2, "0");
+    const minutes = String(created.getMinutes()).padStart(2, "0");
+    const seconds = String(created.getSeconds()).padStart(2, "0");
+
     const syntheticEvent = {
       target: {
         name,
-        value: String(created).split("GMT")[0].trim(),
+        value: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
       },
     };
     onChange(syntheticEvent);
@@ -43,7 +50,8 @@ export const RangeDatePicker = () => {
       startDate={startDate}
       endDate={endDate}
       onChange={(update) => setDateRange(update)}
-      dateFormat="dd.MM.yyyy"
+      timeFormat="HH:mm"
+      dateFormat="dd-MM-yyyy"
       placeholderText="Выберите период"
       isClearable
     />

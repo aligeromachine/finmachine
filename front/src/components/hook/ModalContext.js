@@ -36,10 +36,14 @@ export const ModalProvider = ({ children }) => {
   }, []);
 
   const onChange = (e) => {
+    console.log("onChange");
     setForm({ ...formData, [e.target.name]: e.target.value });
+    console.log(formData);
   };
 
   const onSet = (func) => {
+    console.log("onSet");
+    console.log(formData);
     dispatch(func({ ...formData }));
     setForm({});
   };
