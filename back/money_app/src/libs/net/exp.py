@@ -1,7 +1,7 @@
 import re
 import ipaddress
-from money.libs.files.exp import RemoveFile
-from money.libs.files.base import abs_path, name_file, read_text_data
+from libs.files.exp import RemoveFile
+from libs.files.base import abs_path, name_file, read_text_data
 
 def CheckValidIP(_ip: str) -> bool:
     ret = False

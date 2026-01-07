@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import Self
 from pydantic import Field, model_validator
 from api.back.decore import ExtModel
-from money.libs.model.exp import BaseModelWithRawArray
-from money.libs.dt.utils import pretty_str
+from libs.model.exp import BaseModelWithRawArray
+from libs.dt.utils import pretty_str
 
 class ProductsMessage(ExtModel):
     catalog: int = 0

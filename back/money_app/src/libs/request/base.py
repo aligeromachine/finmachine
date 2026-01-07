@@ -2,10 +2,10 @@ import orjson
 import requests
 import urllib3
 import logging
-from money.libs.request.http import session_decorator
-from money.libs.const import HEADERS, TIMEOUT
-from money.libs.decore.lam import dump_model
-from money.libs.types.exp import TBaseModel
+from libs.request.http import session_decorator
+from libs.const import HEADERS, TIMEOUT
+from libs.decore.lam import dump_model
+from libs.types.exp import TBaseModel
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 logger = logging.getLogger(__name__)

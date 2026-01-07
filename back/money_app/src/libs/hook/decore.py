@@ -1,6 +1,6 @@
 import functools
 from typing import Any, Callable
-from money.libs.types.exp import F_Return, F_Spec
+from libs.types.exp import F_Return, F_Spec
 
 
 def hook(before: str = '', after: str = '') -> Callable[[Callable], Callable]:

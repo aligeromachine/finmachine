@@ -1,8 +1,8 @@
 from decimal import Decimal
 from typing import Self
 from pydantic import BaseModel, model_validator
-from money.libs.math.exp import trim_decimal
-from money.libs.model.exp import BaseModelWithRawArray
+from libs.math.exp import trim_decimal
+from libs.model.exp import BaseModelWithRawArray
 
 class Rng():
     WEEK: int = 1

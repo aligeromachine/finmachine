@@ -5,10 +5,11 @@ CONFIG: dict = ENV_APP['LOG']
 BASE_LOG: str = '/home/data/media/log'
 
 
-LOG_DJANGO: str = 'django.log'
-LOG_MONEY: str = 'money.log'
-LOG_AUTH: str = 'auth.log'
-LOG_API: str = 'api.log'
+LOG_DJANGO: str = 'django'
+LOG_MONEY: str = 'money'
+LOG_AUTH: str = 'auth'
+LOG_API: str = 'api'
+LOG_LIBS: str = 'libs'
 
 ONE_MB: int = 1024 * 1024
 BACKUP_COUNT: int = 2
@@ -25,7 +26,7 @@ def create_handler(fname: str, fmt: str) -> dict:
     return {
         "level": LOG_LEVEL,
         "class": "logging.handlers.RotatingFileHandler",
-        "filename": f'{BASE_LOG}/{fname}',
+        "filename": f'{BASE_LOG}/{fname}.log',
         "formatter": fmt,
         "maxBytes": ONE_MB,
         "backupCount": BACKUP_COUNT,
@@ -52,6 +53,7 @@ def create_handlers() -> dict:
         "file_money": create_handler(fname=LOG_MONEY, fmt="generic"),
         "file_auth": create_handler(fname=LOG_AUTH, fmt="generic"),
         "file_api": create_handler(fname=LOG_API, fmt="generic"),
+        "file_libs": create_handler(fname=LOG_LIBS, fmt="generic"),
     }    
 
 def create_loggers() -> dict:
@@ -60,6 +62,7 @@ def create_loggers() -> dict:
         "money": create_file(fname="file_money"),
         "authentication": create_file(fname="file_auth"),
         "api": create_file(fname="file_api"),
+        "libs": create_file(fname="file_libs"),
     }   
 
 

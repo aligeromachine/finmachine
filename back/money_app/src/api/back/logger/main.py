@@ -1,8 +1,9 @@
 from django.http import HttpRequest
 import logging
 from api.back.decore import validate_model
-from api.back.logger.model import LOG_ALL, LOG_API, LOG_DJANGO, LOG_MONEY, LogMessage
+from api.back.logger.model import LOG_ALL, LogMessage
 from api.back.logger.base import call_all, call_file
+from service.config.log import LOG_API, LOG_DJANGO, LOG_MONEY
 
 logger = logging.getLogger(__name__)
 

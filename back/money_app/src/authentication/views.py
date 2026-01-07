@@ -5,7 +5,7 @@ from authentication.utils import create_jwt_tokens, verify_jwt_token
 from django.contrib.auth.models import User
 from authentication.model import AuthLogin, AuthRefresh, AuthAccess, AuthRegister
 from django.utils import timezone
-from money.libs.decore.response import check_post, validate_auth, token_response
+from libs.decore.response import check_post, validate_auth, token_response
 import logging
 
 logger = logging.getLogger(__name__)

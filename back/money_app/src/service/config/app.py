@@ -9,4 +9,5 @@ INSTALLED_APPS: list = [
     'authentication',
     'money',
     'api',
+    'libs',
 ]

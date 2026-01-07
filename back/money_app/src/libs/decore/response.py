@@ -4,8 +4,8 @@ import orjson
 from django.http import HttpRequest, JsonResponse
 from typing import Callable, Any
 from pydantic import BaseModel, ValidationError
-from money.libs.validate.exp import validate_dict_conv
-from money.libs.types.exp import F_Return
+from libs.validate.exp import validate_dict_conv
+from libs.types.exp import F_Return
 
 logger = logging.getLogger(__name__)
 

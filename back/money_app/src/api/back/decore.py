@@ -5,10 +5,10 @@ import logging
 from typing import Self
 from pydantic import BaseModel, model_validator
 from django.http import HttpRequest
-from money.libs.dt.utils import time_parse
-from money.libs.types.exp import F_Return, F_Spec
-from money.libs.validate.exp import validate_dict_conv
-from money.libs.const import CONST
+from libs.dt.utils import time_parse
+from libs.types.exp import F_Return, F_Spec
+from libs.validate.exp import validate_dict_conv
+from libs.const import CONST
 
 logger = logging.getLogger(__name__)
 

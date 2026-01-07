@@ -1,9 +1,9 @@
 import time
 import logging
 from functools import wraps
-from money.libs.str.base import random_string
+from libs.str.base import random_string
 from typing import Callable, Any
-from money.libs.types.exp import F_Return
+from libs.types.exp import F_Return
 
 logger = logging.getLogger(__name__)
 

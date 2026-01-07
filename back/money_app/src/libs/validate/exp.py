@@ -2,7 +2,7 @@ from typing import Any
 import orjson
 from pydantic import ValidationError
 import logging
-from money.libs.types.exp import TBaseModel
+from libs.types.exp import TBaseModel
 
 logger = logging.getLogger(__name__)
 

@@ -3,8 +3,8 @@ import logging
 from typing import Self
 from pydantic import model_validator
 from api.back.decore import ExtModel
-from money.libs.model.exp import BaseModelWithRawArray
-from money.libs.dt.utils import pretty_str
+from libs.model.exp import BaseModelWithRawArray
+from libs.dt.utils import pretty_str
 
 logger = logging.getLogger(__name__)
 

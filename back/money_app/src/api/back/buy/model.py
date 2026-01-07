@@ -3,9 +3,9 @@ from typing import Self
 from api.back.decore import ExtModel
 from decimal import Decimal
 from pydantic import model_validator
-from money.libs.math.exp import trim_decimal
-from money.libs.model.exp import BaseModelWithRawArray
-from money.libs.dt.utils import pretty_str
+from libs.math.exp import trim_decimal
+from libs.model.exp import BaseModelWithRawArray
+from libs.dt.utils import pretty_str
 
 class BuyMessage(ExtModel):
     amount: Decimal = Decimal(0)

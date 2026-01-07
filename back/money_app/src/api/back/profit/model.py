@@ -3,9 +3,9 @@ from typing import Self
 from pydantic import Field, model_validator
 from api.back.decore import ExtModel
 from decimal import Decimal
-from money.libs.math.exp import trim_decimal
-from money.libs.model.exp import BaseModelWithRawArray
-from money.libs.dt.utils import pretty_str
+from libs.math.exp import trim_decimal
+from libs.model.exp import BaseModelWithRawArray
+from libs.dt.utils import pretty_str
 
 class ProfitMessage(ExtModel):
     amount: Decimal = Decimal(0)

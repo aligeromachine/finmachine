@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
-from money.libs.dt.model import DateParser
-from money.libs.const import CONST
+from libs.dt.model import DateParser
+from libs.const import CONST
 
 def time_durations(begin: str, end: str) -> str:
     begin_t = DateParser.load_str(raw=begin)

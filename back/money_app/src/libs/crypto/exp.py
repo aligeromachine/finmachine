@@ -1,4 +1,4 @@
-from money.libs.crypto.base import MD5Hasher, SHA256Hasher, SHABaseHasher
+from libs.crypto.base import MD5Hasher, SHA256Hasher, SHABaseHasher
 
 def sumBase(content: str, h: SHABaseHasher) -> str:
     h.update_str(content)

@@ -1,5 +1,5 @@
 from datetime import datetime
-from money.libs.dt.utils import pretty_Range_rev
+from libs.dt.utils import pretty_Range_rev
 
 def context_range_day() -> dict[str, str]:
     rv: dict[str, str] = pretty_Range_rev(begin=1, end=0)

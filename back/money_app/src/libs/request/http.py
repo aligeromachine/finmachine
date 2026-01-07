@@ -26,13 +26,13 @@ def session_decorator(func: Callable[..., dict | list | bytes | None]) -> Callab
 
 
 def update_token(client: requests.Session) -> None:
-    from money.libs.django.func import get_store_token
+    from libs.django.func import get_store_token
     if os.path.exists(get_store_token()):
         with open(get_store_token(), "rb") as f:
             client.cookies.update(pickle.load(f))
 
 def dump_token(client: requests.Session) -> None:
-    from money.libs.django.func import get_store_token
+    from libs.django.func import get_store_token
     if not os.path.exists(get_store_token()):
         with open(get_store_token(), "wb") as f:
             pickle.dump(client.cookies, f)

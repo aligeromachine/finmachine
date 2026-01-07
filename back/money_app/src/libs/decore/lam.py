@@ -1,6 +1,6 @@
 from typing import Callable
 import re
-from money.libs.types.exp import TBaseModel
+from libs.types.exp import TBaseModel
 
 X: Callable = lambda a: '' if not isinstance(a, list) else str(a[0]) if len(a) > 0 else ''
 XX: Callable = lambda a: a[0] if len(a) > 0 else ''

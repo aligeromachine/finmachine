@@ -1,10 +1,10 @@
 import orjson
 import requests
 import urllib3
-from money.libs.const import HEADERS_MOZILA, TIMEOUT, PROXY_CRUSH
-from money.libs.request.http import session_token_decorator
-from money.libs.types.exp import TBaseModel
-from money.libs.decore.lam import dump_model
+from libs.const import HEADERS_MOZILA, TIMEOUT, PROXY_CRUSH
+from libs.request.http import session_token_decorator
+from libs.types.exp import TBaseModel
+from libs.decore.lam import dump_model
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 

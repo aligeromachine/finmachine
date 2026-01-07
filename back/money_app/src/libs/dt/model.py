@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import re
 from typing import TypeVar
 from pydantic import BaseModel
-from money.libs.const import CONST
+from libs.const import CONST
 
 
 T = TypeVar('T', bound='DateParser')

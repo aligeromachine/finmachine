@@ -1,5 +1,5 @@
-from money.libs.request.base import get_data, post_data, patch_data, delete_data, get_ctx
-from money.libs.types.exp import TBaseModel
+from libs.request.base import get_data, post_data, patch_data, delete_data, get_ctx
+from libs.types.exp import TBaseModel
 
 def get_x(url: str, data: TBaseModel | dict | None = None) -> list | dict | None:
     try:

@@ -1,6 +1,6 @@
 from api.back.decore import MainModel
 from machine.dash.model import Capital, CardsAgg, DateRng
-from money.libs.model.exp import BaseModelWithRawArray
+from libs.model.exp import BaseModelWithRawArray
 import logging
 
 logger = logging.getLogger(__name__)

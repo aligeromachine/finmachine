@@ -8,8 +8,8 @@ from machine.shift.selector import get_profit_amount_by_id
 from machine.shift.writer import rewrite_payload
 from machine.tools.model import WidgetRange
 from machine.tools.selector import get_list_user_finance
-from money.libs.cache.redis import RedisClient
-from money.libs.types.exp import F_Return, F_Spec
+from libs.cache.redis import RedisClient
+from libs.types.exp import F_Return, F_Spec
 
 class BaseSignal(BaseModel):
     amount: float

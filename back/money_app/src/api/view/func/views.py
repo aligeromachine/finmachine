@@ -1,7 +1,7 @@
 from typing import Any
 from django.http import HttpRequest, JsonResponse
-from money.libs.const import CONST
-from money.libs.dt.utils import timeDelta
+from libs.const import CONST
+from libs.dt.utils import timeDelta
 from api.back.func.main import (
     context_range_week,
     context_range_month,

@@ -1,8 +1,8 @@
 from decimal import Decimal
-from money.libs.model.exp import BaseModelWithRawArray
+from libs.model.exp import BaseModelWithRawArray
 from typing import Self
 from pydantic import model_validator
-from money.libs.validate.exp import validate_list_conv
+from libs.validate.exp import validate_list_conv
 
 class Payload(BaseModelWithRawArray):
     dt: int

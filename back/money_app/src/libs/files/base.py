@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from money.libs.const import CONST
+from libs.const import CONST
 
 logger = logging.getLogger(__name__)
 
