@@ -49,24 +49,16 @@ export const Logger = () => {
               <strong>Logger</strong>
             </CCardHeader>
             <CCardBody>
-              <CTabs activeItemKey={1}>
-                <CTabList variant="underline-border">
-                  <CTab aria-controls="home-tab-pane" itemKey={1}>
-                    Money
-                  </CTab>
-                  <CTab aria-controls="profile-tab-pane" itemKey={2}>
-                    Api
-                  </CTab>
-                  <CTab aria-controls="contact-tab-pane" itemKey={3}>
-                    Django
-                  </CTab>
+
+              <CTabs defaultActiveItemKey="money">
+                <CTabList variant="tabs">
+                  <CTab itemKey="money">Money</CTab>
+                  <CTab itemKey="api">Api</CTab>
+                  <CTab itemKey="django">Django</CTab>
+
                 </CTabList>
                 <CTabContent>
-                  <CTabPanel
-                    className="py-3"
-                    aria-labelledby="home-tab-pane"
-                    itemKey={1}
-                  >
+                  <CTabPanel className="p-3" itemKey="money">
                     <ButtonBase
                       title={"Clear"}
                       onClick={() => {
@@ -75,11 +67,7 @@ export const Logger = () => {
                     />
                     <CodeBlock content={dataLog.money} />
                   </CTabPanel>
-                  <CTabPanel
-                    className="py-3"
-                    aria-labelledby="profile-tab-pane"
-                    itemKey={2}
-                  >
+                  <CTabPanel className="p-3" itemKey="api">
                     <ButtonBase
                       title={"Clear"}
                       onClick={() => {
@@ -88,11 +76,7 @@ export const Logger = () => {
                     />
                     <CodeBlock content={dataLog.api} />
                   </CTabPanel>
-                  <CTabPanel
-                    className="py-3"
-                    aria-labelledby="contact-tab-pane"
-                    itemKey={3}
-                  >
+                  <CTabPanel className="p-3" itemKey="django">
                     <ButtonBase
                       title={"Clear"}
                       onClick={() => {
@@ -103,6 +87,7 @@ export const Logger = () => {
                   </CTabPanel>
                 </CTabContent>
               </CTabs>
+
             </CCardBody>
           </CCard>
         </CCol>

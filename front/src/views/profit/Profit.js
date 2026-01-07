@@ -27,7 +27,7 @@ export const DataProfit = () => {
           <CCard className="mb-4">
             <Header title={"DataProfit"} />
             <CCardBody>
-              <CTabs activeItemKey="profit">
+              <CTabs defaultActiveItemKey="profit">
                 <CTabList variant="tabs">
                   <CTab itemKey="profit">Money Fit</CTab>
                   <CTab itemKey="source">Source</CTab>
