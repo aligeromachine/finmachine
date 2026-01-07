@@ -55,7 +55,7 @@ class MacBuyShift:
                     buy += model.amount
                 if model.command == MacBuyShift.cmd_del:
                     buy -= get_buy_amount_by_id(pk=model.pk)
-                draw = WidgetRange(dt=model.created.year,buy=buy)
+                draw = WidgetRange(dt=model.created.year, buy=buy)
                 rng.append(draw)
 
             rewrite_payload(user_id=model.user_id, rng=rng)

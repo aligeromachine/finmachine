@@ -9,17 +9,10 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
-import "./styles.css";
-
+import st from "./BasicTable.module.css";
 import {
   CButton,
-  CDropdown,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
 } from "@coreui/react";
-import { right } from "@popperjs/core";
-import { CPagination, CPaginationItem } from "@coreui/react";
 
 // Custom fuzzy filter function for approximate matches
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -36,17 +29,12 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
 };
 const totalPages = 100;
 
-const totalCount = 100000;
 
 export function BasicTable({ data, columns }) {
   // Define states for global filtering and sorting
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState([]);
   // Состояние пагинации
-  const [pagination, setPagination] = useState({
-    pageIndex: 0, // начинается с 0
-    pageSize: 10,
-  });
 
   // Create the table instance with necessary configurations
   const table = useReactTable({
@@ -58,7 +46,6 @@ export function BasicTable({ data, columns }) {
     state: {
       globalFilter, // Manage the global filter state
       sorting, // Manage the sorting state
-      pagination,
     },
     onGlobalFilterChange: setGlobalFilter, // Update the global filter state when it changes
     globalFilterFn: "fuzzy", // Specify the fuzzy filter function for global filtering
@@ -66,7 +53,6 @@ export function BasicTable({ data, columns }) {
     getCoreRowModel: getCoreRowModel(), // Core row model for displaying rows
     getFilteredRowModel: getFilteredRowModel(), // Enable filtering functionality
     getSortedRowModel: getSortedRowModel(), // Enable sorting functionality
-    onPaginationChange: setPagination,
     getPaginationRowModel: getPaginationRowModel(),
     pageCount: totalPages,
     manualPagination: true, // Важно: ручное управление пагинацией
@@ -81,7 +67,7 @@ export function BasicTable({ data, columns }) {
         placeholder="Search..."
         style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
       />
-      <table>
+      <table className={st.table} >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -93,7 +79,7 @@ export function BasicTable({ data, columns }) {
                   style={{
                     cursor: header.column.getCanSort() ? "pointer" : "default", // Indicate sortable columns with a pointer cursor
                   }}
-                  className="text-center"
+                  className={st.th}
                 >
                   {header.isPlaceholder
                     ? null
@@ -114,7 +100,7 @@ export function BasicTable({ data, columns }) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="text-center">
+                <td key={cell.id} className={st.td}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -124,7 +110,8 @@ export function BasicTable({ data, columns }) {
       </table>
 
       {/* Пагинация */}
-      <div className="flex items-center justify-between border-t border-gray-200">
+      <div 
+      className={st.rightAlign}>
         {/* Информация о странице */}
         <div className="text-sm text-gray-700">
           <span className="font-medium">
@@ -138,7 +125,7 @@ export function BasicTable({ data, columns }) {
           <CButton
             onClick={() => table.firstPage()}
             disabled={!table.getCanPreviousPage()}
-            color="primary"
+            color="secondary"
             className="rounded-0"
           >
             Первая
@@ -146,7 +133,7 @@ export function BasicTable({ data, columns }) {
           <CButton
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            color="secondary"
+            color="light"
             className="rounded-0"
           >
             Назад
@@ -155,13 +142,13 @@ export function BasicTable({ data, columns }) {
           <CButton
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            color="secondary"
+            color="light"
             className="rounded-0"
           >
             Вперед
           </CButton>
           <CButton
-            color="success"
+            color="secondary"
             className="rounded-0"
             onClick={() => table.lastPage()}
             disabled={!table.getCanNextPage()}

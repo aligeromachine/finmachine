@@ -1,5 +1,5 @@
 import { safeJsonParse } from "./func";
-import { ONE_HOUR, SEVEN_DAYS } from "./const";
+import { TWENTY_MIN, SEVEN_DAYS } from "./const";
 
 const setWithExpiry = (key, value, ttl) => {
   const now = new Date();
@@ -39,7 +39,7 @@ export const removeItem = (key) => {
 };
 
 const setAccessToken = (token) => {
-  setWithExpiry("accessToken", token, ONE_HOUR);
+  setWithExpiry("accessToken", token, TWENTY_MIN);
 };
 
 const setRefreshToken = (token) => {

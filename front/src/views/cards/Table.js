@@ -13,8 +13,7 @@ export const Table = () => {
   }, [dispatch]);
 
   const { openModal } = useModal();
-  const { draw } = useSelector((store) => store.cardsReducer);
+  const st = useSelector((store) => store.cardsReducer);
 
-  const columns = columnsTbl(openModal);
-  return <BasicTable data={draw} columns={columns} />;
+  return <BasicTable data={st.draw} columns={columnsTbl(openModal)} />;
 };
