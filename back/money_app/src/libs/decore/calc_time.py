@@ -2,14 +2,14 @@ import time
 import logging
 from functools import wraps
 from libs.str.base import random_string
-from typing import Callable, Any
-from libs.types.exp import F_Return
+from typing import Callable
+from libs.types.exp import F_Return, F_Spec
 
 logger = logging.getLogger(__name__)
 
-def calculate_running_time(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
+def calculate_running_time(func: Callable[F_Spec, F_Return]) -> Callable[F_Spec, F_Return]:  # type: ignore
     @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> F_Return:
+    def wrapper(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> F_Return:
         begin = time.time()
         random_name = random_string(5).lower()
 

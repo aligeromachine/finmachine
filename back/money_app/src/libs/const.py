@@ -8,29 +8,25 @@ class CONST:
     FormatT: str = '%d-%m-%Y %H:%M:%S'
     FormatDDP: str = '%Y-%m-%d %H:%M:%S'
     FormatFull: str = '%Y-%m-%dT%H:%M:%S.%fZ'
-    FormatJS: str = "%a %b %d %Y %H:%M:%S"
-    FormatAccess: str = '%m/%d/%y %H:%M:%S'
     DtRaw: str = '%Y-%m-%d %H:%M:%S.%fz'
     FormatF: str = '%d-%m-%Y_%H-%M-%S'
     FTime: str = '%H:%M:%S'
     FDate: str = '%Y-%m-%d'
     csrftoken: str = 'csrfmiddlewaretoken'
     timeout: int = 10
+    addr: str = 'addr'
     localhost: str = '127.0.0.1'
     UTF8: str = 'utf-8'
     ASCII: str = 'ascii'
+    admin: str = 'admin'
     session_null: bytes = b'\x00\x00\x00\x00'
     zero: str = '0'
     DAY_BEGIN: str = '00:00:00'
     DAY_END: str = '23:59:59'
     CHUNK_SIZE: int = 100
-    HASH_ID: str = 'hash_id'
-    TASK_ID: str = 'task_id'
-    data: str = 'data'
-    raw: str = 'raw'
 
 
-TIMEOUT: tuple = (2, 5)
+TIMEOUT: tuple = (5, 10)
 HEADERS: dict = {
     "Content-Type": "application/json", 
     "Cache-Control": "no-cache",

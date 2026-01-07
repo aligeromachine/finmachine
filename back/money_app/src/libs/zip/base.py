@@ -98,9 +98,7 @@ def B64Str_ContentByte(content: str) -> bytes:
     if not content:
         return bytes(CONST.emptyb)
 
-    content_bytes = base64.b64decode(content.encode())
-
-    return content_bytes
+    return base64.b64decode(content.encode())
 
 def ContentByte_B64Str(content_bytes: bytes) -> str:
 

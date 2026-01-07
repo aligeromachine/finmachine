@@ -42,3 +42,7 @@ def generate_digits_letters(length: int = 5) -> str:
     # Generate a random string of the specified length
     random_string = ''.join(random.choice(characters) for _ in range(length))
     return random_string
+
+def get_len_from_salt(fname: str) -> int:
+    match = re.search(r"\$6\$([^$]+)\$", fname)
+    return len(match.group(1)) if match else 0

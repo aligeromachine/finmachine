@@ -97,7 +97,7 @@ def validate_str(response: bytes, prn: bool = True) -> str | None:
         return None
 
     try:
-        return response.decode()        
+        return response.decode()
     except Exception as e:
         if prn: 
             logger.error(f'{str(e)}, {response=}')

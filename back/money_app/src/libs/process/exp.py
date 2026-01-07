@@ -26,10 +26,10 @@ def RunCMD(command: str) -> str:
         p.wait()
 
         if isinstance(output, bytes):
-            result = output.decode()
+            result = output.decode().strip()
 
         if isinstance(output, str):
-            result = output
+            result = output.strip()
 
     except: # noqa
         pass

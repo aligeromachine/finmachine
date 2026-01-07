@@ -5,14 +5,14 @@ from django.http import HttpRequest, JsonResponse
 from typing import Callable, Any
 from pydantic import BaseModel, ValidationError
 from libs.validate.exp import validate_dict_conv
-from libs.types.exp import F_Return
+from libs.types.exp import F_Return, F_Spec
 
 logger = logging.getLogger(__name__)
 
-def parse_api_model(Model: type[BaseModel]) -> Callable[..., Callable[..., F_Return | dict]]:
-    def decorator(func: Callable[..., F_Return | dict]) -> Callable[..., F_Return | dict]:
+def parse_api_model(Model: type[BaseModel]) -> Callable[F_Spec, Callable[F_Spec, F_Return | dict]]:  # type: ignore
+    def decorator(func: Callable[F_Spec, F_Return | dict]) -> Callable[F_Spec, F_Return | dict]:  # type: ignore
         @wraps(func)
-        def wrapper(request: HttpRequest, *args: Any, **kwargs: Any) -> F_Return | dict:
+        def wrapper(request: HttpRequest, *args: F_Spec.args, **kwargs: F_Spec.kwargs) -> F_Return | dict:
             try:
                 if not request.body:
                     return {'data': 'err', 'message': 'body empty'}

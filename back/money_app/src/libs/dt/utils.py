@@ -67,5 +67,19 @@ def timeDeltaDayRev(days: int = 0) -> datetime:
     return dt
 
 def isDevideFive() -> bool:
-    dt: datetime = DateParser.load_now()
+    dt: datetime = DateParser.load_now().to_now()
     return dt.second % 5 == 0
+
+def time_expired(raw: datetime, minutes: int) -> bool:
+    dt_rev: datetime = DateParser.load_now().to_dt_rev(minutes=minutes)
+    dtp: DateParser | None = DateParser.load_dt(raw=raw)
+
+    if isinstance(dtp, DateParser):
+        rv: bool = dt_rev > dtp.to_now()
+        return rv
+
+    return False
+
+def time_now() -> datetime:
+    dt: datetime = DateParser.load_now().to_now()
+    return dt

@@ -1,18 +1,19 @@
 import os
-from typing import Callable, Any
+from typing import Callable
 import requests
 from functools import wraps
 import logging
 import urllib3
 import pickle
+from libs.types.exp import F_Spec
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 logger = logging.getLogger(__name__)
 
-def session_decorator(func: Callable[..., dict | list | bytes | None]) -> Callable[..., dict | list | bytes | None]:
+def session_decorator(func: Callable[F_Spec, dict | list | bytes | None]) -> Callable[F_Spec, dict | list | bytes | None]:  # type: ignore
     @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> dict | list | bytes | None:
+    def wrapper(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> dict | list | bytes | None:
         try:
             with requests.Session() as client:
                 response: dict | list | bytes | None = func(client, *args, **kwargs)
@@ -37,9 +38,9 @@ def dump_token(client: requests.Session) -> None:
         with open(get_store_token(), "wb") as f:
             pickle.dump(client.cookies, f)
 
-def session_token_decorator(func: Callable[..., dict | list | bytes | None]) -> Callable[..., dict | list | bytes | None]: # noqa
+def session_token_decorator(func: Callable[F_Spec, dict | list | bytes | None]) -> Callable[F_Spec, dict | list | bytes | None]:  # type: ignore
     @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> dict | list | bytes | None:
+    def wrapper(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> dict | list | bytes | None:
         try:
             with requests.Session() as client:
                 update_token(client=client)

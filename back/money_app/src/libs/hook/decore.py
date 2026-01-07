@@ -3,9 +3,9 @@ from typing import Any, Callable
 from libs.types.exp import F_Return, F_Spec
 
 
-def hook(before: str = '', after: str = '') -> Callable[[Callable], Callable]:
+def hook(before: str = '', after: str = '') -> Callable[[Callable], Callable]:  # type: ignore
     """Декоратор‑хук для методов экземпляра."""
-    def decorator(func: Callable[..., F_Return]) -> Callable[..., F_Return]:
+    def decorator(func: Callable[F_Spec, F_Return]) -> Callable[F_Spec, F_Return]:  # type: ignore
         @functools.wraps(func)
         def wrapper(self: Any, *args: F_Spec.args, **kwargs: F_Spec.kwargs) -> F_Return:
             if before:

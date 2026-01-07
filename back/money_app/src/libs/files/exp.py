@@ -15,7 +15,7 @@ def ClearFile(pth: str) -> None:
     with open(pth, "w") as _:
         pass
 
-def create_directory(a: str, b: str) -> str:
+def create_directory(a: str, b: str) -> str | None:
     return make_dir(pth=abs_path(a, b))
 
 def write_csv_list(nfile: str, ls: list) -> None:
@@ -28,7 +28,7 @@ def write_csv_list(nfile: str, ls: list) -> None:
         for it in ls:
             csv_writer.writerow(it)
 
-def read_file_csv_list(pth: str) -> list:
+def read_file_csv_list(pth: str, next_header: bool = False) -> list:
     ls: list = []
 
     if not file_exist(pth):
@@ -36,16 +36,22 @@ def read_file_csv_list(pth: str) -> list:
 
     with open(pth) as csv_file:
         reader = csv.reader(csv_file, dialect=csv.excel)
-        headings = next(reader)  # noqa
+
+        if next_header:
+            next(reader)
+
         ls = [row for row in reader if row]
 
     return ls
 
-def read_payload_csv_list(payload: str) -> list:
+def read_payload_csv_list(payload: str, next_header: bool = False) -> list:
     ls: list = []
 
     reader = csv.reader(StringIO(payload), dialect=csv.excel)
-    headings = next(reader)  # noqa
+
+    if next_header:
+        next(reader)
+
     ls = [row for row in reader if row]
 
     return ls

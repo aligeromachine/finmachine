@@ -13,3 +13,5 @@ DEFAULT: Callable = lambda a: a if a else ''
 remove_spec = lambda x: re.sub(r"['\" ]", "", x)
 cal_bell: Callable = lambda ed, md: True if not ed and md else ed < md if md else False
 dump_model: Callable[[TBaseModel | dict | None], dict | None] = lambda data: (data if isinstance(data, dict) else data.model_dump()) if data else None
+slov_sorted: Callable[[dict[str, str]], dict[str, str]] = lambda slov: dict(sorted(slov.items(), key=lambda item: item[0].lower()))
+check_def: Callable[[str], str] = lambda x: x if x else "-"

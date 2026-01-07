@@ -62,6 +62,10 @@ class DateParser(BaseModel):
         delta = timedelta(days=days, hours=hours, minutes=minutes, seconds=seconds)
         return dt, delta
 
+    def to_now(self) -> datetime:
+        dt, _ = self.calc()
+        return dt
+
     def to_dt(self, days: int = 0, hours: int = 0, minutes: int = 0, seconds: int = 0) -> datetime:
         dt, delta = self.calc(days, hours, minutes, seconds)
         return dt + delta
