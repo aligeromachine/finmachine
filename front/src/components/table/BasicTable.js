@@ -18,6 +18,8 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from "@coreui/react";
+import { right } from "@popperjs/core";
+import { CPagination, CPaginationItem } from "@coreui/react";
 
 // Custom fuzzy filter function for approximate matches
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -122,71 +124,50 @@ export function BasicTable({ data, columns }) {
       </table>
 
       {/* Пагинация */}
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
-        <div className="flex-1 flex justify-between items-center flex-wrap gap-2">
-          {/* Информация о странице */}
-          <div className="text-sm text-gray-700">
-            Показано <span className="font-medium">{data.length}</span> из{" "}
-            <span className="font-medium">{totalCount}</span> записей
-          </div>
+      <div className="flex items-center justify-between border-t border-gray-200">
+        {/* Информация о странице */}
+        <div className="text-sm text-gray-700">
+          <span className="font-medium">
+            Страница {table.getState().pagination.pageIndex + 1}
+          </span>{" "}
+          из <span className="font-medium">{totalPages}</span>
+        </div>
 
-          {/* Элементы управления пагинацией */}
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => table.firstPage()}
-              disabled={!table.getCanPreviousPage()}
-              className="px-3 py-1 border rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-            >
-              Первая
-            </button>
-            <button
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-              className="px-3 py-1 border rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-            >
-              Назад
-            </button>
+        {/* Элементы управления пагинацией */}
+        <div className="flex items-center">
+          <CButton
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+            color="primary"
+            className="rounded-0"
+          >
+            Первая
+          </CButton>
+          <CButton
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            color="secondary"
+            className="rounded-0"
+          >
+            Назад
+          </CButton>
 
-            <span className="text-sm text-gray-700 mx-2">
-              Страница{" "}
-              <span className="font-medium">
-                {table.getState().pagination.pageIndex + 1}
-              </span>{" "}
-              из <span className="font-medium">{totalPages}</span>
-            </span>
-
-            <button
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-              className="px-3 py-1 border rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-            >
-              Вперед
-            </button>
-            <CButton
-              color="secondary"
-              variant="outline"
-              onClick={() => table.lastPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Последняя
-            </CButton>
-
-            {/* Выбор размера страницы */}
-
-            <select
-              value={table.getState().pagination.pageSize}
-              onChange={(e) => {
-                table.setPageSize(Number(e.target.value));
-              }}
-              className="border border-gray-300 rounded px-3 py-1 text-sm disabled:opacity-50"
-            >
-              {[5, 10, 20, 50].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  {pageSize}
-                </option>
-              ))}
-            </select>
-          </div>
+          <CButton
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            color="secondary"
+            className="rounded-0"
+          >
+            Вперед
+          </CButton>
+          <CButton
+            color="success"
+            className="rounded-0"
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Последняя
+          </CButton>
         </div>
       </div>
     </div>
