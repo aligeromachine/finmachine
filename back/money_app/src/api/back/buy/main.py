@@ -6,7 +6,7 @@ from api.back.buy.base import add_buy_data, delete_buy_row, edit_buy_data, get_b
 
 @validate_model(BuyMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: BuyMessage) -> dict:
-    respo = {"data": "err", "message": "undefinded"}
+    respo = dict(data="err", message="undefinded")
 
     if item.command == "table_buy_data":
         respo = table_buy_data(item=item)

@@ -11,12 +11,12 @@ def add_buy_data(item: BuyMessage) -> dict:
     elem = Buy.objects.create(title=item.title, amount=item.amount, shop_id=item.shop, products_id=item.prod, user_id=item.user_id)
     elem.created = item.created
     elem.save()
-    return {'data': 'ok', 'message': f'adding Buy key: {elem.pk}'}
+    return dict(data='ok', message=f'adding Buy key: {elem.pk}')
 
 @MacBuyShift.row_change  # type: ignore
 def delete_buy_row(item: BuyMessage) -> dict:
     Buy.objects.filter(pk=item.pk).delete()
-    return {'data': 'ok', 'message': f'delete Buy key: {item.pk}'}
+    return dict(data='ok', message=f'delete Buy key: {item.pk}')
 
 @MacBuyShift.row_save_redis  # type: ignore
 def get_buy_row(item: BuyMessage) -> dict:
@@ -37,6 +37,6 @@ def edit_buy_data(item: BuyMessage) -> dict:
         elem.created = item.created
         elem.save()
     except: # noqa
-        return {'data': 'err', 'message': 'pk does not exist'}
+        return dict(data='err', message='pk does not exist')
 
-    return {'data': 'ok', 'message': f'update {item.pk=}'}
+    return dict(data='ok', message=f'update {item.pk=}')

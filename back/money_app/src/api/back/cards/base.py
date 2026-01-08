@@ -8,11 +8,11 @@ def add_cards_data(item: CardsMessage) -> dict:
     elem = Cards.objects.create(title=item.title, amount=item.amount, number=item.number, user_id=item.user_id)
     elem.created = item.created
     elem.save()
-    return {'data': 'ok', 'message': f'adding shop key: {elem.pk}'}
+    return dict(data='ok', message=f'adding Shop key: {elem.pk}')
 
 def delete_cards_row(item: CardsMessage) -> dict:
     Cards.objects.filter(pk=item.pk).delete()
-    return {'data': 'ok', 'message': f'delete shop key: {item.pk}'}
+    return dict(data='ok', message=f'delete Shop key: {item.pk}')
 
 def get_cards_row(item: CardsMessage) -> dict:
     data: dict = {}
@@ -30,6 +30,6 @@ def edit_cards_data(item: CardsMessage) -> dict:
         elem.created = item.created
         elem.save()
     except: # noqa
-        return {'data': 'err', 'message': 'pk does not exist'}
+        return dict(data='err', message='pk does not exist')
 
-    return {'data': 'ok', 'message': f'update {item.pk=}'}
+    return dict(data='ok', message=f'update {item.pk=}')

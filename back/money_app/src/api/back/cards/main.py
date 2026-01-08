@@ -6,7 +6,7 @@ from api.back.cards.base import add_cards_data, delete_cards_row, edit_cards_dat
 
 @validate_model(CardsMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: CardsMessage) -> dict:
-    respo = {"data": "err", "message": "undefinded"}
+    respo = dict(data="err", message="undefinded")
 
     if item.command == "table_cards_data":
         respo = table_cards_data(item=item)
