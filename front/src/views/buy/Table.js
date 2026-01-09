@@ -4,7 +4,7 @@ import { useModal } from "../../components/hook/ModalContext";
 import { columnsTbl } from "./column/Header";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getBuysTable } from "../../services/buys/state";
+import { getBuysTable, setOffset } from "../../services/buys/state";
 
 export const TableBuy = () => {
   const dispatch = useDispatch();
@@ -13,8 +13,21 @@ export const TableBuy = () => {
   }, [dispatch]);
 
   const { openModal } = useModal();
-  const { draw } = useSelector((store) => store.buysReducer);
+  const st = useSelector((store) => store.buysReducer);
 
-  const columns = columnsTbl(openModal);
-  return <BasicTable data={draw} columns={columns} />;
+  async function onOffset(value) {
+    dispatch(setOffset({ offset: value }));
+    dispatch(getBuysTable());
+  }
+
+  return (
+    <BasicTable
+      columns={columnsTbl(openModal)}
+      onOffset={onOffset}
+      data={st.draw}
+      total={st.recordsTotal}
+      limit={st.recordsDisplay}
+      offset={st.offset}
+    />
+  );
 };

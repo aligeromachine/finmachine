@@ -23,6 +23,7 @@ export const ModalProvider = ({ children }) => {
   const [formData, setForm] = useState({});
   const [isEdit, setEdit] = useState({});
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const openModal = useCallback((isEdit = true) => {
     const data = store.getState().rowReducer.formData;
     setForm({ ...formData, ...data });
@@ -30,20 +31,17 @@ export const ModalProvider = ({ children }) => {
     setEdit(isEdit);
   }, []);
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const closeModal = useCallback(() => {
     dispatch(nullRowData());
     setIsModalOpen(false);
   }, []);
 
   const onChange = (e) => {
-    console.log("onChange");
     setForm({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
   };
 
   const onSet = (func) => {
-    console.log("onSet");
-    console.log(formData);
     dispatch(func({ ...formData }));
     setForm({});
   };

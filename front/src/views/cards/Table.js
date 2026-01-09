@@ -4,7 +4,7 @@ import { useModal } from "../../components/hook/ModalContext";
 import { columnsTbl } from "./column/Header";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCardsTable } from "../../services/cards/state";
+import { getCardsTable, setOffset } from "../../services/cards/state";
 
 export const Table = () => {
   const dispatch = useDispatch();
@@ -15,5 +15,19 @@ export const Table = () => {
   const { openModal } = useModal();
   const st = useSelector((store) => store.cardsReducer);
 
-  return <BasicTable data={st.draw} columns={columnsTbl(openModal)} />;
+  async function onOffset(value) {
+    dispatch(setOffset({ offset: value }));
+    dispatch(getCardsTable());
+  }
+
+  return (
+    <BasicTable
+      columns={columnsTbl(openModal)}
+      onOffset={onOffset}
+      data={st.draw}
+      total={st.recordsTotal}
+      limit={st.recordsDisplay}
+      offset={st.offset}
+    />
+  );
 };

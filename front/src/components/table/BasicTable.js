@@ -10,9 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import st from "./BasicTable.module.css";
-import {
-  CButton,
-} from "@coreui/react";
+import { CButton } from "@coreui/react";
 
 // Custom fuzzy filter function for approximate matches
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -27,14 +25,14 @@ const fuzzyFilter = (row, columnId, value, addMeta) => {
   // Return whether the item passes the filter
   return itemRank.passed;
 };
-const totalPages = 100;
 
-
-export function BasicTable({ data, columns }) {
+export function BasicTable({ columns, onOffset, data, total, limit, offset }) {
+  // console.log(`total: ${total}, limit: ${limit}, offset: ${offset}`);
+  const totalPages = Math.floor(total / limit) + 1;
+  const currentPage = offset + 1;
   // Define states for global filtering and sorting
   const [globalFilter, setGlobalFilter] = useState("");
   const [sorting, setSorting] = useState([]);
-  // Состояние пагинации
 
   // Create the table instance with necessary configurations
   const table = useReactTable({
@@ -54,7 +52,7 @@ export function BasicTable({ data, columns }) {
     getFilteredRowModel: getFilteredRowModel(), // Enable filtering functionality
     getSortedRowModel: getSortedRowModel(), // Enable sorting functionality
     getPaginationRowModel: getPaginationRowModel(),
-    pageCount: totalPages,
+    pageCount: 1,
     manualPagination: true, // Важно: ручное управление пагинацией
   });
 
@@ -67,7 +65,7 @@ export function BasicTable({ data, columns }) {
         placeholder="Search..."
         style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
       />
-      <table className={st.table} >
+      <table className={st.table}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -110,29 +108,26 @@ export function BasicTable({ data, columns }) {
       </table>
 
       {/* Пагинация */}
-      <div 
-      className={st.rightAlign}>
+      <div className={st.rightAlign}>
         {/* Информация о странице */}
         <div className="text-sm text-gray-700">
-          <span className="font-medium">
-            Страница {table.getState().pagination.pageIndex + 1}
-          </span>{" "}
-          из <span className="font-medium">{totalPages}</span>
+          <span className="font-medium">Страница {currentPage}</span> из{" "}
+          <span className="font-medium">{totalPages}</span>
         </div>
 
         {/* Элементы управления пагинацией */}
         <div className="flex items-center">
           <CButton
-            onClick={() => table.firstPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => onOffset(0)}
+            disabled={currentPage === 0}
             color="secondary"
             className="rounded-0"
           >
             Первая
           </CButton>
           <CButton
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => onOffset(offset - 1)}
+            disabled={currentPage === 0}
             color="light"
             className="rounded-0"
           >
@@ -140,8 +135,8 @@ export function BasicTable({ data, columns }) {
           </CButton>
 
           <CButton
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={() => onOffset(offset + 1)}
+            disabled={totalPages === currentPage}
             color="light"
             className="rounded-0"
           >
@@ -150,8 +145,8 @@ export function BasicTable({ data, columns }) {
           <CButton
             color="secondary"
             className="rounded-0"
-            onClick={() => table.lastPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={() => onOffset(totalPages - 1)}
+            disabled={totalPages === currentPage}
           >
             Последняя
           </CButton>

@@ -18,7 +18,11 @@ export const getCatTable = createAsyncThunk(
 export const stateCatalog = createSlice({
   name: "stateCatalog",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setOffset: (state, action) => {
+      state.offset = action.payload.offset;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCatTable.pending, (state) => {
@@ -37,4 +41,5 @@ export const stateCatalog = createSlice({
   },
 });
 
+export const { setOffset } = stateCatalog.actions;
 export const catalogReducer = stateCatalog.reducer;

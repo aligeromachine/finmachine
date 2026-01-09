@@ -18,7 +18,11 @@ export const getProfitTable = createAsyncThunk(
 export const stateProfit = createSlice({
   name: "stateProfit",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setOffset: (state, action) => {
+      state.offset = action.payload.offset;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getProfitTable.pending, (state) => {
@@ -37,4 +41,5 @@ export const stateProfit = createSlice({
   },
 });
 
+export const { setOffset } = stateProfit.actions;
 export const profitReducer = stateProfit.reducer;

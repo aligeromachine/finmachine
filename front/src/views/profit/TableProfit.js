@@ -4,7 +4,7 @@ import { useModal } from "../../components/hook/ModalContext";
 import { columnsTbl } from "./column/HeaderProfit";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProfitTable } from "../../services/profit/state";
+import { getProfitTable, setOffset } from "../../services/profit/state";
 
 export const TableProfit = () => {
   const dispatch = useDispatch();
@@ -13,8 +13,20 @@ export const TableProfit = () => {
   }, [dispatch]);
 
   const { openModal } = useModal();
-  const { draw } = useSelector((store) => store.profitReducer);
+  const st = useSelector((store) => store.profitReducer);
 
-  const columns = columnsTbl(openModal);
-  return <BasicTable data={draw} columns={columns} />;
+  async function onOffset(value) {
+    dispatch(setOffset({ offset: value }));
+    dispatch(getProfitTable());
+  }
+  return (
+    <BasicTable
+      columns={columnsTbl(openModal)}
+      onOffset={onOffset}
+      data={st.draw}
+      total={st.recordsTotal}
+      limit={st.recordsDisplay}
+      offset={st.offset}
+    />
+  );
 };

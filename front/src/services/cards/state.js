@@ -18,7 +18,11 @@ export const getCardsTable = createAsyncThunk(
 export const stateCards = createSlice({
   name: "stateCards",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setOffset: (state, action) => {
+      state.offset = action.payload.offset;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCardsTable.pending, (state) => {
@@ -37,4 +41,5 @@ export const stateCards = createSlice({
   },
 });
 
+export const { setOffset } = stateCards.actions;
 export const cardsReducer = stateCards.reducer;
