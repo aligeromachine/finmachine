@@ -20,3 +20,15 @@ FROM
 WHERE
     catalog.user_id = %s
 """
+
+SQL_CATALOG_SORT = """
+SELECT
+    catalog.id,
+    catalog.title
+FROM
+    content.catalog catalog
+WHERE
+    catalog.user_id = %s
+ORDER BY
+    catalog.title
+"""

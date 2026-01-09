@@ -20,3 +20,14 @@ FROM
 WHERE
     src.user_id = %s
 """
+SOURCE_SORTED = """
+SELECT
+    src.id,
+    src.title
+FROM
+    content.source src
+WHERE
+    src.user_id = %s
+ORDER BY
+    src.title
+"""

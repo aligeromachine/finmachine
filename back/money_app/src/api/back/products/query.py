@@ -23,3 +23,16 @@ FROM
 WHERE
     prod.user_id = %s
 """
+PRODUCTS_SORTED = """
+SELECT
+    prod.id,
+    prod.title
+FROM
+    content.products prod
+WHERE
+    prod.user_id = %s 
+AND
+    prod.catalog_id = %s
+ORDER BY
+    prod.title
+"""

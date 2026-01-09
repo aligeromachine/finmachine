@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 @validate_model(ProductsMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: ProductsMessage) -> dict:
-    respo = {"data": "err", "message": "undefinded"}
+    respo = dict(data="err", message="undefinded")
 
     if item.command == "table_prod_data":
         respo = table_prod_data(item=item)

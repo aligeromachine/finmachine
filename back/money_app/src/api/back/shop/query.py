@@ -21,3 +21,16 @@ FROM
 WHERE
     shop.user_id = %s
 """
+SHOP_SORTED = """
+SELECT
+    shop.id,
+    shop.created,
+    shop.title,
+    shop.address
+FROM
+    content.shop shop
+WHERE
+    shop.user_id = %s
+ORDER BY
+    shop.title
+"""

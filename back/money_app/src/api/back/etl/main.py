@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def update_money_csv() -> dict:
-    respo = {"data": "ok", "message": "update_money_csv"}
+    respo = dict(data="ok", message="update_money_csv")
     logger.info('ETL before')
 
     def GetAddressWatchService() -> None:

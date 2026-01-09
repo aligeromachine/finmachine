@@ -1,5 +1,6 @@
 import logging
 from api.back.source.model import SourceMessage, SourceSignal, SourceSignalKV
+from api.back.source.query import SOURCE_SORTED
 from money.models import Source
 
 logger = logging.getLogger(__name__)
@@ -33,5 +34,7 @@ def edit_source_data(item: SourceMessage) -> dict:
     return {'data': 'ok', 'message': f'update {item.pk=}'}
 
 def list_source_data(item: SourceMessage) -> list:
-    ls: list = [SourceSignalKV.from_orm(it).model_dump() for it in Source.objects.filter(user=item.user_id)]
+    sql: str = SOURCE_SORTED
+    params = [item.user_id]
+    ls: list = [SourceSignalKV.from_orm(it).model_dump() for it in Source.objects.raw(raw_query=sql, params=params)]
     return ls

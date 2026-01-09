@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 @validate_model(LogMessage)  # type: ignore
 def invoke_response(request: HttpRequest, item: LogMessage) -> dict:
-    respo = {"data": "err", "message": "undefinded"}
+    respo = dict(data="err", message="undefinded")
 
     if item.command.endswith(LOG_DJANGO):
         respo = call_file(item, LOG_DJANGO)
