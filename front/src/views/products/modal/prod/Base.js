@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
 import { useModal } from "../../../../components/hook/ModalContext";
 import { setRowState } from "../../../../services/row/state";
@@ -6,7 +7,7 @@ import { ProfitContent } from "./Content";
 import { UseValid } from "./Validate";
 
 export const ProdModal = () => {
-  const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();
+  const { isModalOpen, closeModal, formData, onChange, onSet, isEdit } = useModal();
   const { validate, validateForm, repErr, setRepErr } = UseValid();
 
   async function onAdd() {
@@ -20,7 +21,9 @@ export const ProdModal = () => {
       setRepErr(response.message);
       return;
     }
-    closeModal();
+    if (isEdit) {
+      closeModal();
+    }
   }
 
   return (

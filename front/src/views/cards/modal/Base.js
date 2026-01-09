@@ -6,7 +6,8 @@ import { CardsContent } from "./Content";
 import { UseValid } from "./Validate";
 
 export const CardsModal = () => {
-  const { isModalOpen, closeModal, formData, onChange, onSet } = useModal();
+  // eslint-disable-next-line prettier/prettier
+  const { isModalOpen, closeModal, formData, onChange, onSet, isEdit } = useModal();
   const { validate, validateForm, repErr, setRepErr } = UseValid();
 
   async function onAdd() {
@@ -20,7 +21,9 @@ export const CardsModal = () => {
       setRepErr(response.message);
       return;
     }
-    closeModal();
+    if (isEdit) {
+      closeModal();
+    }
   }
 
   return (

@@ -30,6 +30,7 @@ export const DatePicElem = ({ onChange, value, name }) => {
     };
     onChange(syntheticEvent);
   };
+  handleChange();
   return (
     <BigDatepicker
       selected={value}

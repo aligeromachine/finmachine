@@ -22,7 +22,9 @@ export const BuysModal = () => {
       setRepErr(response.message);
       return;
     }
-    closeModal();
+    if (isEdit) {
+      closeModal();
+    }
   }
 
   return (

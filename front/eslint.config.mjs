@@ -33,6 +33,7 @@ export default [
     },
     rules: {
       ...eslintPluginReactHooks.configs.recommended.rules,
+      'max-len': ['error', { code: 140 }] // Переопределить на 120
     },
   },
   eslintPluginPrettierRecommended,
