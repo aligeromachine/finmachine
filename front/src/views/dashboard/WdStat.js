@@ -9,19 +9,11 @@ import {
   cilLibrary,
 } from "@coreui/icons";
 
-export const WidgetSim = ({ data, card }) => {
+export const WdStat = ({ data, card }) => {
   return (
     <CCard className="mb-4">
       <CCardBody>
         <CRow xs={{ gutter: 4 }}>
-          <CCol xs={6} lg={4} xxl={2}>
-            <CWidgetStatsC
-              icon={<CIcon icon={cilBank} height={36} />}
-              value={data?.cards}
-              title="На карточках"
-              progress={{ color: "success", value: 100 }}
-            />
-          </CCol>
           <CCol xs={6} lg={4} xxl={2}>
             <CWidgetStatsC
               icon={<CIcon icon={cilCash} height={36} />}
@@ -36,6 +28,14 @@ export const WidgetSim = ({ data, card }) => {
               value={data?.year}
               title="Прибыль за год"
               progress={{ color: "warning", value: 100 }}
+            />
+          </CCol>
+          <CCol xs={6} lg={4} xxl={2}>
+            <CWidgetStatsC
+              icon={<CIcon icon={cilBank} height={36} />}
+              value={data?.cards}
+              title="Сумма на карточках"
+              progress={{ color: "success", value: 100 }}
             />
           </CCol>
           <CCol xs={6} lg={4} xxl={2}>

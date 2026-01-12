@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { Auth } from "../../components/auth/Auth";
-import { BaseChart } from "./MainChart";
-import { WidgetSolid } from "./WidgetSolid";
-import { WidgetBase } from "./WidgetBase";
-import { WidgetSim } from "./WidgetSim";
-import { WidgetDaily } from "./WidgetDaily";
-import { WdBase } from "./WdBase";
+import { WdChart } from "./WdChart";
+import { WdProfit } from "./WdProfit";
+import { WdStat } from "./WdStat";
+import { WdBuy } from "./WdBuy";
 import { getDash } from "../../services/dash/query";
 
 export const Dashboard = () => {
@@ -19,12 +17,10 @@ export const Dashboard = () => {
   }, []);
   return (
     <Auth>
-      <WidgetSim data={data.capital} card={data.cards} />
-      <WidgetBase data={data.profit} />
-      <WidgetSolid data={data.buy} />
-      <WdBase data={data.buy} />
-      <WidgetDaily data={data.buy} />
-      <BaseChart />
+      <WdStat data={data.capital} card={data.cards} />
+      <WdProfit data={data.profit} />
+      <WdBuy data={data.buy} />
+      <WdChart />
     </Auth>
   );
 };

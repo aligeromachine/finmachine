@@ -7,10 +7,10 @@ import {
   CCardHeader,
 } from "@coreui/react";
 
-export const WidgetSolid = ({ data }) => {
+export const WdProfit = ({ data }) => {
   return (
     <CCard className="mb-4">
-      <CCardHeader>{"Траты за"}</CCardHeader>
+      <CCardHeader>{"Доход"}</CCardHeader>
       <CCardBody>
         <CRow xs={{ gutter: 4 }}>
           <CCol xs={12} sm={6} xl={4} xxl={3}>

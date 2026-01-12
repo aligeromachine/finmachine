@@ -5,7 +5,7 @@ import classNames from "classnames";
 import {
   CAvatar,
   CButton,
-  CButtonGroup,
+  CCardHeader,
   CCard,
   CCardBody,
   CCardFooter,
@@ -66,7 +66,7 @@ const LineChart = () => {
   );
 };
 
-export const BaseChart = () => {
+export const WdChart = () => {
   const progressExample = [
     { title: "Visits", value: "29.703 Users", percent: 40, color: "success" },
     { title: "Unique", value: "24.093 Users", percent: 20, color: "info" },
@@ -87,14 +87,8 @@ export const BaseChart = () => {
 
   return (
     <CCard className="mb-4">
+      <CCardHeader>{"График"}</CCardHeader>
       <CCardBody>
-        <CRow>
-          <CCol sm={5}>
-            <h4 id="traffic" className="card-title mb-0">
-              Статистика
-            </h4>
-          </CCol>
-        </CRow>
         <LineChart />
       </CCardBody>
       <CCardFooter>
