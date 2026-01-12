@@ -2,9 +2,9 @@ from datetime import datetime
 from typing import Self, TypeVar
 from pydantic import BaseModel, model_validator
 from decimal import Decimal
-from machine.tools.selector import get_list_user_finance, get_top_user_cards, get_user_date_range, get_user_total_amount
+from machine.tools.selector import get_list_user_finance, get_top_user_cards, get_top_user_daily, get_top_user_shop, get_user_date_range, get_user_total_amount
 from machine.dash.model import Capital, CardsAgg, DateRng, Rng
-from machine.tools.model import WidgetRange
+from machine.tools.model import WidgetDaily, WidgetRange, WidgetShop
 from functools import reduce
 
 T = TypeVar('T', bound='ReduceInfo')
@@ -18,6 +18,9 @@ class ReduceInfo(BaseModel):
     cards: CardsAgg = CardsAgg()
     profit: DateRng = DateRng()
     buy: DateRng = DateRng()
+
+    topDaily: list[WidgetDaily] = []
+    topShop: list[WidgetShop] = []
 
     @model_validator(mode='after')
     def complete(self) -> Self:
@@ -50,6 +53,8 @@ class ReduceInfo(BaseModel):
             calcWgRange=get_user_date_range(user_id=user_id),
             calcWgYears=get_list_user_finance(user_id=user_id), 
             totalSumCards=get_user_total_amount(user_id=user_id), 
-            cards=get_top_user_cards(user_id=user_id)
+            cards=get_top_user_cards(user_id=user_id),
+            topDaily=get_top_user_daily(user_id=user_id),
+            topShop=get_top_user_shop(user_id=user_id),
         )
         return cls(**raw)

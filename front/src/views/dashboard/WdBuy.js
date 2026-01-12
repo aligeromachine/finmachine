@@ -40,17 +40,7 @@ import {
   cilEuro,
 } from "@coreui/icons";
 
-export const WdBuy = ({ data }) => {
-  const daily = [
-    { title: "Male", value: 53 },
-    { title: "Female", value: 43 },
-  ];
-
-  const shop = [
-    { title: "Organic Search", value: "191,235" },
-    { title: "Facebook", value: "51,223" },
-  ];
-
+export const WdBuy = ({ data, daily, shop }) => {
   return (
     <CRow>
       <CCol xs>
@@ -96,29 +86,29 @@ export const WdBuy = ({ data }) => {
             </CCol>
             <CRow>
               <CCol xs={6}>
-                {daily.map((item, index) => (
+                {daily?.map((item, index) => (
                   <div className="progress-group mb-4" key={index}>
                     <div className="progress-group-header">
                       <CIcon className="me-2" icon={cilCalendar} size="lg" />
                       <span>{item.title}</span>
-                      <span className="ms-auto fw-semibold">{item.value}</span>
+                      <span className="ms-auto">{item.amount}</span>
                     </div>
                     <div className="progress-group-bars">
-                      <CProgress thin color="info" value={100} />
+                      <CProgress thin color="info" value={25} />
                     </div>
                   </div>
                 ))}
               </CCol>
               <CCol xs={6}>
-                {shop.map((item, index) => (
+                {shop?.map((item, index) => (
                   <div className="progress-group mb-4" key={index}>
                     <div className="progress-group-header">
                       <CIcon className="me-2" icon={cilDollar} size="lg" />
                       <span>{item.title}</span>
-                      <span className="ms-auto fw-semibold">{item.value}</span>
+                      <span className="ms-auto">{item.amount}</span>
                     </div>
                     <div className="progress-group-bars">
-                      <CProgress thin color="success" value={100} />
+                      <CProgress thin color="success" value={25} />
                     </div>
                   </div>
                 ))}

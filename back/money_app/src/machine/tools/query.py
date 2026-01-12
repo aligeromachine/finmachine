@@ -109,9 +109,41 @@ SELECT
 FROM 
     content.cards card
 WHERE 
-    user_id = %s
+    card.user_id = %s
 ORDER BY 
     card.checked desc, 
     card.amount desc
 LIMIT 3
+"""
+TOP_DAILY: str = """
+SELECT 
+    1 id,
+    buy.created::date dt,
+    sum(buy.amount) amount
+FROM 
+    content.buy buy
+WHERE 
+    buy.user_id = %s
+GROUP BY 
+    dt
+ORDER BY
+    dt desc
+LIMIT 10
+"""
+TOP_SHOP: str = """
+SELECT 
+    1 id,
+	buy.created::date dt,
+    shop.title,
+    sum(buy.amount) amount
+FROM 
+    content.buy buy
+JOIN content.shop shop ON shop.id = buy.shop_id
+WHERE 
+    buy.user_id = %s
+GROUP BY 
+    dt, shop.id
+ORDER BY
+    dt desc, shop.id desc
+LIMIT 10
 """

@@ -15,11 +15,13 @@ export const Dashboard = () => {
     };
     fetchOptions();
   }, []);
+
+  console.log(data?.daily);
   return (
     <Auth>
       <WdStat data={data.capital} card={data.cards} />
       <WdProfit data={data.profit} />
-      <WdBuy data={data.buy} />
+      <WdBuy data={data.buy} daily={data.daily} shop={data.shop} />
       <WdChart />
     </Auth>
   );

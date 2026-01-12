@@ -48,3 +48,12 @@ class CardsAgg(BaseModel):
     one: CardSelector = CardSelector()
     two: CardSelector = CardSelector()
     three: CardSelector = CardSelector()
+
+class TopTitle(BaseModel):
+    title: str
+    amount: Decimal = Decimal(0)
+
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        self.amount = trim_decimal(self.amount)
+        return self

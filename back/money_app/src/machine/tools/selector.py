@@ -1,10 +1,13 @@
 from decimal import Decimal
-from machine.tools.query import GROUP_USER_YEAR_BUY_PROFIT, SQL_ORDER_CARDS, SQL_WIDGET_RANGE
-from machine.tools.model import FinStat, WidgetRange
+import logging
+from machine.tools.query import GROUP_USER_YEAR_BUY_PROFIT, SQL_ORDER_CARDS, SQL_WIDGET_RANGE, TOP_DAILY, TOP_SHOP
+from machine.tools.model import FinStat, WidgetDaily, WidgetRange, WidgetShop
 from libs.validate.exp import validate_list
 from money.models import AuditFin, Buy, Cards
 from machine.dash.model import CardSelector, CardsAgg
 from django.db.models import Sum
+
+logger = logging.getLogger(__name__)
 
 def list_audit() -> list[FinStat]:
     ls: list[FinStat] = [FinStat.from_orm(it) for it in Buy.objects.raw(raw_query=GROUP_USER_YEAR_BUY_PROFIT)]
@@ -38,3 +41,14 @@ def get_user_date_range(user_id: int) -> list[WidgetRange]:
     params = [user_id] * 6
     finance_rng: list[WidgetRange] = [WidgetRange.from_orm(it) for it in AuditFin.objects.raw(raw_query=SQL_WIDGET_RANGE, params=params)]
     return finance_rng
+
+
+def get_top_user_daily(user_id: int) -> list[WidgetDaily]:
+    params = [user_id]
+    daily: list[WidgetDaily] = [WidgetDaily.from_orm(it) for it in Buy.objects.raw(raw_query=TOP_DAILY, params=params)]
+    return daily
+
+def get_top_user_shop(user_id: int) -> list[WidgetShop]:
+    params = [user_id]
+    shop: list[WidgetShop] = [WidgetShop.from_orm(it) for it in Buy.objects.raw(raw_query=TOP_SHOP, params=params)]
+    return shop
