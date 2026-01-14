@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "./BigDatepicker.css"; // Файл со стилями из первого примера
 import "react-datepicker/dist/react-datepicker.css";
@@ -30,7 +30,11 @@ export const DatePicElem = ({ onChange, value, name }) => {
     };
     onChange(syntheticEvent);
   };
-  handleChange();
+  useEffect(() => {
+    if (!value) {
+      handleChange(new Date());
+    }
+  }, []);
   return (
     <BigDatepicker
       selected={value}

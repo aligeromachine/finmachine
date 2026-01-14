@@ -65,7 +65,7 @@ export const ProfitContent = ({
           <CCol xs={12}>
             <DatePicElem
               onChange={onChange}
-              value={formData.created || new Date()}
+              value={formData.created}
               name={"created"}
             />
           </CCol>

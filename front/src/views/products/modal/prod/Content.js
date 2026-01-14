@@ -34,7 +34,7 @@ export const ProfitContent = ({
         <CForm className="row g-3">
           <DatePicElem
             onChange={onChange}
-            value={formData.created || new Date()}
+            value={formData.created}
             name={"created"}
           />
           <CCol xs={12}>
