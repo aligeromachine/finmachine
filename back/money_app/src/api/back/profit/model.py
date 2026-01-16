@@ -1,11 +1,10 @@
 from datetime import datetime
 from typing import Self
 from pydantic import Field, model_validator
-from api.back.decore import BaseMessage
+from api.back.decore import BaseMessage, BaseSelector
 from decimal import Decimal
 from libs.math.exp import trim_decimal
 from libs.model.exp import BaseModelWithRawArray
-from libs.dt.utils import pretty_str
 
 class ProfitMessage(BaseMessage):
     amount: Decimal = Decimal(0)
@@ -22,16 +21,11 @@ class ProfitSignal(BaseModelWithRawArray):
         self.amount = trim_decimal(self.amount)
         return self
 
-class ProfitSelector(BaseModelWithRawArray):
-    id: int
-    created: datetime | str
-    title: str
+class ProfitSelector(BaseSelector):
     amount: Decimal
     source: str
 
     @model_validator(mode='after')
     def complete(self) -> Self:
-        if isinstance(self.created, datetime):
-            self.created = pretty_str(self.created)
         self.amount = trim_decimal(self.amount)
         return self

@@ -30,7 +30,7 @@ class BaseMessage(MainModel):
     created: str | datetime = datetime.now() + timedelta(hours=3)
 
     @model_validator(mode='after')
-    def complete(self) -> Self:
+    def base_message(self) -> Self:
         if isinstance(self.created, str) and self.created:
             dt: datetime | None = time_parse(raw=self.created)
             if not dt:
@@ -45,11 +45,10 @@ class BaseSelector(BaseModelWithRawArray):
     title: str
 
     @model_validator(mode='after')
-    def complete(self) -> Self:
+    def base_selector(self) -> Self:
         if isinstance(self.created, datetime):
             self.created = pretty_str(self.created)
         return self
-
 
 def validate_model(Model: type[MainModel]) -> Callable[F_Spec, Callable[F_Spec, dict]]:  # type: ignore
     def decorator(func: Callable[F_Spec, dict]) -> Callable[F_Spec, dict]:  # type: ignore

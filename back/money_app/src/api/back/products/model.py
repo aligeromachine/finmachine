@@ -1,9 +1,7 @@
 from datetime import datetime
-from typing import Self
-from pydantic import Field, model_validator
-from api.back.decore import BaseMessage
+from pydantic import Field
+from api.back.decore import BaseMessage, BaseSelector
 from libs.model.exp import BaseModelWithRawArray
-from libs.dt.utils import pretty_str
 
 class ProductsMessage(BaseMessage):
     catalog: int = 0
@@ -17,14 +15,5 @@ class ProdSignalKV(BaseModelWithRawArray):
     id: int
     title: str
 
-class ProdSelector(BaseModelWithRawArray):
-    id: int
-    created: datetime | str
-    title: str
+class ProdSelector(BaseSelector):
     catalog: str
-
-    @model_validator(mode='after')
-    def complete(self) -> Self:
-        if isinstance(self.created, datetime):
-            self.created = pretty_str(self.created)
-        return self

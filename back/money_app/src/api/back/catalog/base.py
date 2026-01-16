@@ -9,7 +9,7 @@ def add_cat_data(item: CatalogMessage) -> dict:
     elem = Catalog.objects.create(title=item.title, user_id=item.user_id)
     elem.created = item.created
     elem.save()
-    return dict(data='ok', message=f'adding Catalog key: {elem.pk}')
+    return dict(data='ok', message=f'adding {item.__name__} key: {elem.pk}')
 
 def delete_cat_row(item: CatalogMessage) -> dict:
     Catalog.objects.filter(pk=item.pk).delete()
