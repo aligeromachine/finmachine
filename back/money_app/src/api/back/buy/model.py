@@ -1,13 +1,12 @@
 from datetime import datetime
 from typing import Self
-from api.back.decore import ExtModel
+from api.back.decore import BaseMessage, BaseSelector
 from decimal import Decimal
 from pydantic import model_validator
 from libs.math.exp import trim_decimal
 from libs.model.exp import BaseModelWithRawArray
-from libs.dt.utils import pretty_str
 
-class BuyMessage(ExtModel):
+class BuyMessage(BaseMessage):
     amount: Decimal = Decimal(0)
     shop: int = 0
     prod: int = 0
@@ -25,10 +24,7 @@ class BuySignal(BaseModelWithRawArray):
         self.amount = trim_decimal(self.amount)
         return self
 
-class BuySelector(BaseModelWithRawArray):
-    id: int
-    created: datetime | str
-    title: str
+class BuySelector(BaseSelector):
     amount: Decimal
     shop: str
     cat: str
@@ -36,7 +32,5 @@ class BuySelector(BaseModelWithRawArray):
 
     @model_validator(mode='after')
     def complete(self) -> Self:
-        if isinstance(self.created, datetime):
-            self.created = pretty_str(self.created)
         self.amount = trim_decimal(self.amount)
         return self

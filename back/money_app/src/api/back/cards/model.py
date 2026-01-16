@@ -3,11 +3,11 @@ from typing import Self
 from libs.math.exp import trim_decimal
 from libs.dt.utils import pretty_str
 from pydantic import model_validator
-from api.back.decore import ExtModel
+from api.back.decore import BaseMessage
 from decimal import Decimal
 from libs.model.exp import BaseModelWithRawArray
 
-class CardsMessage(ExtModel):
+class CardsMessage(BaseMessage):
     number: str = ''
     amount: Decimal = Decimal(0)
 

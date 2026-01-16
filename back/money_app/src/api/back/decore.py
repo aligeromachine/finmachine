@@ -5,7 +5,8 @@ import logging
 from typing import Self
 from pydantic import BaseModel, model_validator
 from django.http import HttpRequest
-from libs.dt.utils import time_parse
+from libs.model.exp import BaseModelWithRawArray
+from libs.dt.utils import pretty_str, time_parse
 from libs.types.exp import F_Spec
 from libs.validate.exp import validate_dict_conv
 from libs.const import CONST
@@ -21,7 +22,7 @@ class FData(BaseModel):
     name: str
     type: str
 
-class ExtModel(MainModel):
+class BaseMessage(MainModel):
     offset: int = 0
     limit: int = 0
     pk: int = 0
@@ -38,18 +39,17 @@ class ExtModel(MainModel):
             self.created = dt
         return self
 
-def draw_paginate(func: Callable[F_Spec, dict]) -> Callable[F_Spec, dict]:  # type: ignore
-    @wraps(func)
-    def wrapper(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> dict:
-        ls, count, offset, limit = func(*args, **kwargs)
-        result = dict(
-            recordsTotal=count,
-            offset=offset,
-            recordsDisplay=limit,
-            draw=ls
-        )
-        return result
-    return wrapper
+class BaseSelector(BaseModelWithRawArray):
+    id: int
+    created: datetime | str
+    title: str
+
+    @model_validator(mode='after')
+    def complete(self) -> Self:
+        if isinstance(self.created, datetime):
+            self.created = pretty_str(self.created)
+        return self
+
 
 def validate_model(Model: type[MainModel]) -> Callable[F_Spec, Callable[F_Spec, dict]]:  # type: ignore
     def decorator(func: Callable[F_Spec, dict]) -> Callable[F_Spec, dict]:  # type: ignore

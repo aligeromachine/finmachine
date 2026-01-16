@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Self
 from pydantic import Field, model_validator
-from api.back.decore import ExtModel
+from api.back.decore import BaseMessage
 from libs.model.exp import BaseModelWithRawArray
 from libs.dt.utils import pretty_str
 
-class ProductsMessage(ExtModel):
+class ProductsMessage(BaseMessage):
     catalog: int = 0
 
 class ProdSignal(BaseModelWithRawArray):

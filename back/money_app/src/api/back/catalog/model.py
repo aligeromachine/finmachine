@@ -1,11 +1,8 @@
 from datetime import datetime
-from typing import Self
-from pydantic import model_validator
-from api.back.decore import ExtModel
+from api.back.decore import BaseMessage, BaseSelector
 from libs.model.exp import BaseModelWithRawArray
-from libs.dt.utils import pretty_str
 
-class CatalogMessage(ExtModel):
+class CatalogMessage(BaseMessage):
     pass
 
 class CatSignal(BaseModelWithRawArray):
@@ -16,13 +13,5 @@ class CatSignalKV(BaseModelWithRawArray):
     id: int
     title: str
 
-class CatSelector(BaseModelWithRawArray):
-    id: int
-    created: datetime | str
-    title: str
-
-    @model_validator(mode='after')
-    def complete(self) -> Self:
-        if isinstance(self.created, datetime):
-            self.created = pretty_str(self.created)
-        return self
+class CatSelector(BaseSelector):
+    pass

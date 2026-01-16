@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Self
 from pydantic import model_validator
-from api.back.decore import ExtModel
+from api.back.decore import BaseMessage
 from libs.model.exp import BaseModelWithRawArray
 from libs.dt.utils import pretty_str
 
-class SourceMessage(ExtModel):
+class SourceMessage(BaseMessage):
     pass
 
 class SourceSignal(BaseModelWithRawArray):

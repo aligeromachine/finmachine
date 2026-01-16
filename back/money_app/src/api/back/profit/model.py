@@ -1,13 +1,13 @@
 from datetime import datetime
 from typing import Self
 from pydantic import Field, model_validator
-from api.back.decore import ExtModel
+from api.back.decore import BaseMessage
 from decimal import Decimal
 from libs.math.exp import trim_decimal
 from libs.model.exp import BaseModelWithRawArray
 from libs.dt.utils import pretty_str
 
-class ProfitMessage(ExtModel):
+class ProfitMessage(BaseMessage):
     amount: Decimal = Decimal(0)
     source: int = 0
 

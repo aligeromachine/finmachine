@@ -2,13 +2,13 @@ from datetime import datetime
 import logging
 from typing import Self
 from pydantic import model_validator
-from api.back.decore import ExtModel
+from api.back.decore import BaseMessage
 from libs.model.exp import BaseModelWithRawArray
 from libs.dt.utils import pretty_str
 
 logger = logging.getLogger(__name__)
 
-class ShopMessage(ExtModel):
+class ShopMessage(BaseMessage):
     address: str = ''
 
 class ShopSignal(BaseModelWithRawArray):

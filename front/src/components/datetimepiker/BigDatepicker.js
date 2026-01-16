@@ -34,7 +34,7 @@ export const DatePicElem = ({ onChange, value, name }) => {
     if (!value) {
       handleChange(new Date());
     }
-  }, []);
+  }, [value]);
   return (
     <BigDatepicker
       selected={value}
