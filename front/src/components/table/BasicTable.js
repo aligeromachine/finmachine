@@ -57,99 +57,103 @@ export function BasicTable({ columns, onOffset, data, total, limit, offset }) {
   });
 
   return (
-    <div>
-      <input
-        type="text"
-        value={globalFilter}
-        onChange={(e) => setGlobalFilter(e.target.value)} // Update filter value on user input
-        placeholder="Search..."
-        style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
-      />
-      <table className={st.table}>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  colSpan={header.colSpan}
-                  onClick={header.column.getToggleSortingHandler()} // Add sorting on column headers
-                  style={{
-                    cursor: header.column.getCanSort() ? "pointer" : "default", // Indicate sortable columns with a pointer cursor
-                  }}
-                  className={st.th}
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header, // Render the header content
-                        header.getContext(),
-                      )}
-                  {{
-                    asc: " 🔼", // Display ascending sort indicator
-                    desc: " 🔽", // Display descending sort indicator
-                  }[header.column.getIsSorted()] ?? null}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className={st.td}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="card-block table-border-style">
+      <div className="table-responsive">
+        <input
+          type="text"
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)} // Update filter value on user input
+          placeholder="Search..."
+          style={{ marginBottom: "10px", padding: "5px", width: "100%" }}
+        />
+        <table className={st.table}>
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    onClick={header.column.getToggleSortingHandler()} // Add sorting on column headers
+                    style={{
+                      cursor: header.column.getCanSort()
+                        ? "pointer"
+                        : "default", // Indicate sortable columns with a pointer cursor
+                    }}
+                    className={st.th}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header, // Render the header content
+                          header.getContext(),
+                        )}
+                    {{
+                      asc: " 🔼", // Display ascending sort indicator
+                      desc: " 🔽", // Display descending sort indicator
+                    }[header.column.getIsSorted()] ?? null}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className={st.td}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      {/* Пагинация */}
-      <div className={st.rightAlign}>
-        {/* Информация о странице */}
-        <div className="text-sm text-gray-700">
-          <span className="font-medium">Страница {currentPage}</span> из{" "}
-          <span className="font-medium">{totalPages}</span>
-        </div>
+        {/* Пагинация */}
+        <div className={st.rightAlign}>
+          {/* Информация о странице */}
+          <div className="text-sm text-gray-700">
+            <span className="font-medium">Страница {currentPage}</span> из{" "}
+            <span className="font-medium">{totalPages}</span>
+          </div>
 
-        {/* Элементы управления пагинацией */}
-        <div className="flex items-center">
-          <CButton
-            onClick={() => onOffset(0)}
-            disabled={currentPage === 0}
-            color="secondary"
-            className="rounded-0"
-          >
-            Первая
-          </CButton>
-          <CButton
-            onClick={() => onOffset(offset - 1)}
-            disabled={currentPage === 0}
-            color="light"
-            className="rounded-0"
-          >
-            Назад
-          </CButton>
+          {/* Элементы управления пагинацией */}
+          <div className="flex items-center">
+            <CButton
+              onClick={() => onOffset(0)}
+              disabled={currentPage === 0}
+              color="secondary"
+              className="rounded-0"
+            >
+              Первая
+            </CButton>
+            <CButton
+              onClick={() => onOffset(offset - 1)}
+              disabled={currentPage === 0}
+              color="light"
+              className="rounded-0"
+            >
+              Назад
+            </CButton>
 
-          <CButton
-            onClick={() => onOffset(offset + 1)}
-            disabled={totalPages === currentPage}
-            color="light"
-            className="rounded-0"
-          >
-            Вперед
-          </CButton>
-          <CButton
-            color="secondary"
-            className="rounded-0"
-            onClick={() => onOffset(totalPages - 1)}
-            disabled={totalPages === currentPage}
-          >
-            Последняя
-          </CButton>
+            <CButton
+              onClick={() => onOffset(offset + 1)}
+              disabled={totalPages === currentPage}
+              color="light"
+              className="rounded-0"
+            >
+              Вперед
+            </CButton>
+            <CButton
+              color="secondary"
+              className="rounded-0"
+              onClick={() => onOffset(totalPages - 1)}
+              disabled={totalPages === currentPage}
+            >
+              Последняя
+            </CButton>
+          </div>
         </div>
       </div>
     </div>
