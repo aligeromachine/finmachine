@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from api.back.decore import MainModel
+from api.back.model import MainModel
 
 LOG_ALL: str = 'all'
 

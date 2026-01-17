@@ -1,5 +1,5 @@
 from datetime import datetime
-from api.back.decore import BaseMessage, BaseSelector
+from api.back.model import BaseMessage, BaseSelector
 from libs.model.exp import BaseModelWithRawArray
 
 class CatalogMessage(BaseMessage):

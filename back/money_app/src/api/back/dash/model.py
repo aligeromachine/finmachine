@@ -1,4 +1,4 @@
-from api.back.decore import MainModel
+from api.back.model import MainModel
 from machine.dash.model import Capital, CardsAgg, DateRng, TopTitle
 from libs.model.exp import BaseModelWithRawArray
 import logging
