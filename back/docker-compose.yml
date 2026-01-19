@@ -1,27 +1,27 @@
 services:
 
-  db_app:
+  money_pg:
     image: postgres
-    container_name: db_app
+    container_name: money_pg
     restart: always
     env_file:
       - ./env/db_app.env
     volumes:
       - /home/money_postgres:/var/lib/postgresql/data/
 
-  db_view:
+  money_pgadmin:
     image: dpage/pgadmin4
-    container_name: db_view
+    container_name: money_pgadmin
     restart: always
     env_file:
       - ./env/db_view.env
     volumes:
       - /home/money_pgadmin:/var/lib/pgadmin # sudo chown -R 5050:5050 pgadmin
 
-  redis_money:
+  money_redis:
     image: redis
     restart: always
-    container_name: redis_money
+    container_name: money_redis
 
   money_nginx:
     image: nginx:latest
@@ -51,9 +51,9 @@ services:
     env_file:
       - ./env/money.env
 
-  celery_app:
+  money_celery:
     image: back-money_app
-    container_name: celery_app
+    container_name: money_celery
     command: bash -c "celery -A service worker -l info" 
     volumes:
       - ./data:/home/data
@@ -61,9 +61,9 @@ services:
     env_file:
       - ./env/money.env
 
-  celery_beat:
+  money_beat:
     image: back-money_app
-    container_name: celery_beat_app
+    container_name: money_beat
     command: bash -c "celery -A service beat -l info"
     volumes:
       - ./data:/home/data
@@ -71,10 +71,10 @@ services:
     env_file:
       - ./env/money.env
 
-  flower_app:
+  money_flower:
     image: back-money_app
-    container_name: flower_app
-    command: bash -c "celery -A service flower --broker=redis://redis_money:6379/0 --result-backend=redis://redis_money:6379/1"
+    container_name: money_flower
+    command: bash -c "celery -A service flower --broker=redis://money_redis:6379/0 --result-backend=redis://money_redis:6379/1"
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src
