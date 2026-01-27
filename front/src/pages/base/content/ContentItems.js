@@ -19,7 +19,7 @@ import {
 } from "@coreui/icons";
 import { CNavItem, CNavTitle } from "@coreui/react";
 
-const _nav = [
+export const contentItems = [
   {
     component: CNavItem,
     name: "Доска",
@@ -73,5 +73,3 @@ const _nav = [
     icon: <CIcon icon={cilAppsSettings} customClassName="nav-icon" />,
   },
 ];
-
-export default _nav;

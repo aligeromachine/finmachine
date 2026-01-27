@@ -21,7 +21,6 @@ export const stateBuys = createSlice({
   reducers: {
     setOffset: (state, action) => {
       state.offset = action.payload.offset;
-      console.log(action.payload);
     },
   },
   extraReducers: (builder) => {

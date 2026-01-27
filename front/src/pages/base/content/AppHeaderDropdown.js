@@ -24,9 +24,8 @@ import CIcon from "@coreui/icons-react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { logoutThunk } from "../../services/token/state";
-
-import avatar8 from "../../assets/images/avatars/8.jpg";
+import { logoutThunk } from "../../../services/token/state";
+import avatar8 from "../../../assets/images/avatars/8.jpg";
 
 export const AppHeaderDropdown = () => {
   const dispatch = useDispatch();

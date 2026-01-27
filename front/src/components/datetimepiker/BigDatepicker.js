@@ -1,7 +1,29 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "./BigDatepicker.css"; // Файл со стилями из первого примера
 import "react-datepicker/dist/react-datepicker.css";
+
+export const timeF = (created) => {
+  if (!created) return "";
+  if (created instanceof Date) {
+    const year = created.getFullYear();
+    const month = String(created.getMonth() + 1).padStart(2, "0");
+    const day = String(created.getDate()).padStart(2, "0");
+    const hours = String(created.getHours()).padStart(2, "0");
+    const minutes = String(created.getMinutes()).padStart(2, "0");
+    const seconds = String(created.getSeconds()).padStart(2, "0");
+    return new Date(year, month, day, hours, minutes, seconds);
+  } else {
+    const regex = /(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2}):(\d{2})/;
+    const raw = String(created).match(regex);
+    if (!raw){
+      return new Date();
+    }
+    const [, day, month, year, hours, minutes, seconds ] = raw;
+    return new Date(year, month, day, hours, minutes, seconds);
+  }
+};
 
 const BigDatepicker = (props) => {
   return (
@@ -14,18 +36,10 @@ const BigDatepicker = (props) => {
 export const DatePicElem = ({ onChange, value, name }) => {
   const handleChange = (created) => {
     if (!created) return "";
-    // Simulate standard input event
-    const year = created.getFullYear();
-    const month = String(created.getMonth() + 1).padStart(2, "0");
-    const day = String(created.getDate()).padStart(2, "0");
-    const hours = String(created.getHours()).padStart(2, "0");
-    const minutes = String(created.getMinutes()).padStart(2, "0");
-    const seconds = String(created.getSeconds()).padStart(2, "0");
-
     const syntheticEvent = {
       target: {
         name,
-        value: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
+        value: timeF(created),
       },
     };
     onChange(syntheticEvent);

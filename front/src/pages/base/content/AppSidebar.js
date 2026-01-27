@@ -11,13 +11,12 @@ import {
 } from "@coreui/react";
 
 import { AppSidebarNav } from "./AppSidebarNav";
-import { changeSideShow, changeSideUnfo } from "../../services/bar/state";
+import { changeSideShow, changeSideUnfo } from "../../../services/bar/state";
 
-import navigation from "./_nav";
+import { contentItems } from "./ContentItems";
+import imageIco from "../../../assets/brand/chart.png";
 
-import imageIco from "../../assets/brand/chart.png";
-
-const AppSidebar = () => {
+export const AppSidebar = React.memo(() => {
   const dispatch = useDispatch();
   const { sidebarShow, sidebarUnfoldable } = useSelector(
     (state) => state.barReducer,
@@ -44,7 +43,7 @@ const AppSidebar = () => {
           onClick={() => dispatch(changeSideShow(false))}
         />
       </CSidebarHeader>
-      <AppSidebarNav items={navigation} />
+      <AppSidebarNav items={contentItems} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler
           onClick={() => dispatch(changeSideUnfo(!sidebarUnfoldable))}
@@ -52,6 +51,4 @@ const AppSidebar = () => {
       </CSidebarFooter>
     </CSidebar>
   );
-};
-
-export default React.memo(AppSidebar);
+});

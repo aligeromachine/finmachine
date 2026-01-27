@@ -24,8 +24,8 @@ import {
   cilSun,
 } from "@coreui/icons";
 
-import { AppHeaderDropdown } from "../content/AppHeaderDropdown";
-import { changeSideShow, changeTheme } from "../../services/bar/state";
+import { AppHeaderDropdown } from "./AppHeaderDropdown";
+import { changeSideShow, changeTheme } from "../../../services/bar/state";
 
 export const AppHeader = () => {
   const headerRef = useRef();

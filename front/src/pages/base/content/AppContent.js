@@ -1,23 +1,23 @@
 import React, { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { CContainer, CSpinner } from "@coreui/react";
-import { routes } from "./routes";
+import { contentRoutes } from "./ContentRoutes.js";
 
 function lazyImport(exportName) {
   return React.lazy(async () => {
-    const module = await (() => import("../../pages/"))();
+    const module = await (() => import("../../index.js"))();
     return { default: module[exportName] };
   });
 }
 
 const Page404 = lazyImport("Page404");
 
-const AppContent = () => {
+export const AppContent = React.memo(() => {
   return (
     <CContainer className="px-4" fluid>
       <Suspense fallback={<CSpinner color="secondary" />}>
         <Routes>
-          {routes.map((route, idx) => {
+          {contentRoutes.map((route, idx) => {
             return (
               route.element && (
                 <Route
@@ -36,6 +36,4 @@ const AppContent = () => {
       </Suspense>
     </CContainer>
   );
-};
-
-export default React.memo(AppContent);
+});

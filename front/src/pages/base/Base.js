@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  AppContent,
-  AppSidebar,
-  AppFooter,
-  AppHeader,
-} from "../../components/content/index";
+import { AppContent, AppSidebar, AppFooter, AppHeader } from "./content/index";
 
-export const Layout = () => {
+export const Base = () => {
   return (
     <div>
       <AppSidebar />

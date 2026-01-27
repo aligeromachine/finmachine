@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { store } from "../../services/store";
 import { nullRowData } from "../../services/row/state";
+import { dateUtils } from "../../utils/func";
 
 // Создаем контекст с начальными значениями
 const ModalContext = createContext({
@@ -42,6 +43,11 @@ export const ModalProvider = ({ children }) => {
   };
 
   const onSet = (func) => {
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] instanceof Date) {
+        formData[key] = dateUtils.toReduxFormat(formData[key]);
+      }
+    });
     dispatch(func({ ...formData }));
     setForm({});
   };

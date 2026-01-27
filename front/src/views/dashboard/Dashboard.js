@@ -16,7 +16,6 @@ export const Dashboard = () => {
     fetchOptions();
   }, []);
 
-  console.log(data?.daily);
   return (
     <Auth>
       <WdStat data={data.capital} card={data.cards} />

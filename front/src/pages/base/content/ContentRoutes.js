@@ -2,12 +2,12 @@ import React from "react";
 
 function lazyImport(exportName) {
   return React.lazy(async () => {
-    const module = await (() => import("../../views/"))();
+    const module = await (() => import("../../../views/index.js"))();
     return { default: module[exportName] };
   });
 }
 
-export const routes = [
+export const contentRoutes = [
   { path: "/", exact: true, name: "Home" },
   {
     path: "/dashboard",

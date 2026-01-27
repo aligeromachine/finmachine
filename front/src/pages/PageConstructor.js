@@ -1,25 +1,25 @@
 import React, { Suspense } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { CSpinner } from "@coreui/react";
-import { GuestGuard, AuthGuard } from "./components/auth/Protect";
+import { GuestGuard, AuthGuard } from "../components/auth/Protect.js";
 
-import "./scss/style.scss";
-import "./scss/examples.scss";
+import "../scss/style.scss";
+import "../scss/examples.scss";
 
 function lazyImport(exportName) {
   return React.lazy(async () => {
-    const module = await (() => import("./pages/"))();
+    const module = await (() => import("./index.js"))();
     return { default: module[exportName] };
   });
 }
 
-const Layout = lazyImport("Layout");
+const Base = lazyImport("Base");
 const Login = lazyImport("Login");
 const Register = lazyImport("Register");
 const Page404 = lazyImport("Page404");
 const Page500 = lazyImport("Page500");
 
-const App = () => {
+export const PageConstructor = () => {
   return (
     <HashRouter>
       <Suspense
@@ -57,12 +57,10 @@ const App = () => {
           <Route
             path="*"
             name="Home"
-            element={<AuthGuard inner={<Layout />} />}
+            element={<AuthGuard inner={<Base />} />}
           />
         </Routes>
       </Suspense>
     </HashRouter>
   );
 };
-
-export default App;
