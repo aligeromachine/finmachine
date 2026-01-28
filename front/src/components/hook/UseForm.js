@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export const UseForm = () => {
-  const [formData, setForm] = useState({});
-  const dispatch = useDispatch();
+    const [formData, setForm] = useState({});
+    const dispatch = useDispatch();
 
-  const onChange = (e) => {
-    e.preventDefault();
+    const onChange = e => {
+        e.preventDefault();
 
-    setForm({ ...formData, [e.target.name]: e.target.value });
-  };
+        setForm({ ...formData, [e.target.name]: e.target.value });
+    };
 
-  const onSet = (func) => {
-    dispatch(func({ ...formData }));
-    setForm({});
-  };
+    const onSet = func => {
+        dispatch(func({ ...formData }));
+        setForm({});
+    };
 
-  const onOpen = (data) => {
-    setForm({ ...formData, ...data });
-  };
+    const onOpen = data => {
+        setForm({ ...formData, ...data });
+    };
 
-  return { formData, setForm, onChange, onSet, onOpen };
+    return { formData, setForm, onChange, onSet, onOpen };
 };

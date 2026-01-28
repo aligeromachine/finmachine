@@ -1,14 +1,14 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { refreshThunk } from "../../services/token/state";
-import { getAccessToken } from "../../utils/storage";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { refreshThunk } from '../../services/token/state';
+import { getAccessToken } from '../../utils/storage';
 
 export const Auth = ({ children }) => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!getAccessToken()) dispatch(refreshThunk());
-  }, [dispatch]);
+    useEffect(() => {
+        if (!getAccessToken()) dispatch(refreshThunk());
+    }, [dispatch]);
 
-  return children;
+    return children;
 };

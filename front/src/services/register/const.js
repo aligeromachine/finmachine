@@ -1,1 +1,1 @@
-export const PREFIX_URL = "/auth/register/";
+export const PREFIX_URL = '/auth/register/';

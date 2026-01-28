@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export const UseTable = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const onSet = (func, value) => {
-    dispatch(func({ [value]: value }));
-  };
+    const onSet = (func, value) => {
+        dispatch(func({ [value]: value }));
+    };
 
-  return { onSet };
+    return { onSet };
 };

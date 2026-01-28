@@ -1,5 +1,5 @@
 export const initialState = {
-  sidebarShow: true,
-  sidebarUnfoldable: false,
-  theme: "light",
+    sidebarShow: true,
+    sidebarUnfoldable: false,
+    theme: 'light',
 };

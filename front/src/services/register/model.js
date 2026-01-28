@@ -1,5 +1,5 @@
 export const initialState = {
-  register: false,
-  error: "",
-  loading: "empty",
+    register: false,
+    error: '',
+    loading: 'empty',
 };
