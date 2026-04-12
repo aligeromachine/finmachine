@@ -1,13 +1,6 @@
 // src/BasicTable.jsx
 import { useEffect, useState } from 'react';
-import {
-    useReactTable,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getSortedRowModel,
-    getPaginationRowModel,
-    flexRender,
-} from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, getFilteredRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import st from './BasicTable.module.css';
 import { CButton, CFormInput, CInputGroup, CInputGroupText } from '@coreui/react';
@@ -149,7 +142,7 @@ export function BasicTable({ columns, onOffset, data, total, limit, offset }) {
                                         ></CFormInput>
                                         <CButton
                                             onClick={() => onOffset(pageOnOffset - 1)}
-                                            color="success"
+                                            color="info"
                                             className="rounded-0"
                                             style={{ marginRight: '10px' }}
                                         >

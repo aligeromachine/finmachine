@@ -44,7 +44,7 @@ services:
     # build: money_app
     container_name: money_app
     # restart: always
-    command: bash -c "gunicorn --bind 0.0.0.0:8000 --workers 4 service.wsgi:application"
+    command: bash -c "granian service.wsgi:application --interface wsgi --host 0.0.0.0 --port 8000 --workers 4 --blocking-threads 4"
     volumes:
       - ./data:/home/data
       - ./money_app/src:/home/src
