@@ -1,0 +1,16 @@
+.iconMl {
+  margin-left: 3px;  
+}
+
+.buttonFlex {
+  display: flex; 
+  gap: 2px; 
+  justify-content: center; 
+}
+
+.iconFlex {
+  display: flex; 
+  gap: 15px; 
+  justify-content: center; 
+  text-decoration: none;
+}

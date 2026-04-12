@@ -1,0 +1,36 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: center;
+  padding: 8px 12px;
+  border: 1px solid #7996ba;
+  overflow-wrap: break-word; /* Перенос длинных слов */
+  white-space: normal; /* Разрешаем перенос текста */
+  max-width: 1200px; /* Опционально: максимальная ширина ячейки */
+}
+
+th {
+  background-color: #d3cece;
+  font-weight: bold;
+}
+
+.rightAlign {
+  text-align: right;
+}
+
+.flexPaginations {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.divSpaceDetween {
+  display: flex;
+  justify-content: space-between;
+  width: '100%';
+}

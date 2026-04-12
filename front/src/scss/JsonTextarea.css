@@ -1,0 +1,214 @@
+/* JsonTextarea.css */
+.json-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.json-header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.json-header h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+  background: #48bb78;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #38a169;
+  transform: translateY(-2px);
+}
+
+.btn-example {
+  background: #4299e1;
+  color: white;
+}
+
+.btn-example:hover {
+  background: #3182ce;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: #f56565;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #e53e3e;
+  transform: translateY(-2px);
+}
+
+.json-textarea {
+  width: 100%;
+  min-height: 400px;
+  padding: 20px;
+  font-family: 'Courier New', 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  resize: vertical;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.json-textarea:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+.json-textarea::placeholder {
+  color: #888;
+  font-family: monospace;
+}
+
+/* Стили для подсветки синтаксиса в textarea (имитация) */
+.json-textarea::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.json-textarea::-webkit-scrollbar-track {
+  background: #2d2d2d;
+  border-radius: 10px;
+}
+
+.json-textarea::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.json-textarea::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
+}
+
+.json-message {
+  margin-top: 15px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+.json-message.error {
+  background: #fed7d7;
+  color: #c53030;
+  border-left: 4px solid #fc8181;
+}
+
+.json-message.success {
+  background: #c6f6d5;
+  color: #22543d;
+  border-left: 4px solid #48bb78;
+}
+
+.json-footer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+  font-size: 12px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.char-count {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .json-container {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .json-textarea {
+    min-height: 300px;
+    font-size: 12px;
+  }
+  
+  .json-footer {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+}
+
+/* Анимация для кнопок при нажатии */
+.btn:active {
+  transform: translateY(0);
+}
