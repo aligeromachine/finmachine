@@ -1,7 +1,7 @@
 Django>=5.0,<6.0
 django-cors-headers==4.9.0
 granian==2.7.3
-pydantic==2.12.5
+pydantic==2.13.2
 pydantic-settings==2.13.1
 orjson==3.11.8
 requests==2.33.1
